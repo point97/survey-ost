@@ -186,6 +186,11 @@ dpkg_package "elastic search" do
     action :install
 end
 
+
+# Keep the elasticsearch process crashing due to running out of memory
+ENV['ES_MAX_MEM'] = "512m"
+
+
 # And finally start the elastic search server
 execute "start elasticsearch server" do
     command 'sudo /etc/init.d/elasticsearch start'
