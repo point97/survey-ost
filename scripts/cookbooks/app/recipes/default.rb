@@ -187,11 +187,33 @@ dpkg_package "elastic search" do
 end
 
 
-# Keep the elasticsearch process crashing due to running out of memory
-ENV['ES_MAX_MEM'] = "512m"
 
+### Begin: In response to OST production server running out of memory. ###
 
-# And finally start the elastic search server
+ruby_block 'adjust elasticsearch config to keep jvm in memory (set bootstrap.mlockall to true)' do
+  block do
+    # Uncomment mlockall setting
+    f = Chef::Util::FileEdit.new('/etc/elasticsearch/elasticsearch.yml')
+    f.search_file_replace(/#bootstrap.mlockall: true/, 'bootstrap.mlockall: true')
+    f.write_file
+  end
+end
+
+ruby_block 'add ES_HEAP_SIZE=512m to elasticsearch init script' do
+  block do
+    # Uncomment and adjust ES_HEAP_SIZE setting
+    f = Chef::Util::FileEdit.new('/etc/init.d/elasticsearch')
+    f.search_file_replace(/#ES_HEAP_SIZE=2g/, 'ES_HEAP_SIZE=512m')
+    f.write_file
+  end
+end
+
+execute "set permissions of init elasticsearch script" do
+    command "sudo chmod 755 /etc/init.d/elasticsearch"
+end
+
+### End ###
+
 execute "start elasticsearch server" do
     command 'sudo /etc/init.d/elasticsearch start'
 end
