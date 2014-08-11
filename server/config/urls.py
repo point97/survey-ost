@@ -56,8 +56,6 @@ urlpatterns = patterns('',
     (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
     url(r'^admin/', include(admin.site.urls)),
 
-    url('', include('social.apps.django_app.urls', namespace='social')),
-
     url(r'^account/', include('apps.account.urls')),
     url(r'^mobile/', include('apps.mobile.urls')),
     url(r'^report/', include(report_urls)),
