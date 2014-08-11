@@ -348,3 +348,6 @@ form.search {
     border: none; }
   form.search .input-group-btn button:hover {
     color: #70afb6 !important; }
+
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer; }
