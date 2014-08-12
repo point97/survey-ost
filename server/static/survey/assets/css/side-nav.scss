@@ -176,6 +176,7 @@ form.search {
     }
 
     button {
+        margin-left: 0 !important;
         color: #444444;
     }
     input {
@@ -189,7 +190,7 @@ form.search {
         margin-top: 10px;
         padding-left: 20px;
         padding-right: 20px;
-        border-right:2px solid $os-border-grey;
+        border-right:1px solid $os-border-grey;
     }
     .input-group-addon {
         font-size: 16px;

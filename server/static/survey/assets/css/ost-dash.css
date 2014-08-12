@@ -372,6 +372,7 @@ form.search {
     font-weight: 400;
     font-style: normal; }
   form.search button {
+    margin-left: 0 !important;
     color: #444444; }
   form.search input {
     border: none;
@@ -380,7 +381,7 @@ form.search {
     margin-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    border-right: 2px solid #D6D6D6; }
+    border-right: 1px solid #D6D6D6; }
     form.search input:focus {
       box-shadow: none;
       border-color: #D6D6D6; }
