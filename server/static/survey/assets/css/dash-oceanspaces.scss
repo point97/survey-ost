@@ -61,8 +61,21 @@ h1, h2, h3, h4, h5, h6 {
     color:$os-darkblue;
 }
 
+h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .panel-default .panel-title, .pane-blog-posts-recent-blog-posts .pane-title, .node-type-ecosystem .panel-region-bottom .pane-title, .page-user-profile .pane-about .pane-title, h3, h4, h5, h1 a, h2 a, .page-blog .field-static-banner-caption a, .page-contact .pane-contact .panel-default .panel-title a, .pane-blog-posts-recent-blog-posts .pane-title a, .node-type-ecosystem .panel-region-bottom .pane-title a, .page-user-profile .pane-about .pane-title a, h3 a {
+    font-family: 'Gotham Rounded SSm A','Gotham Rounded SSm B';
+    font-weight: 400;
+    font-style: normal;
+    color: #004c72;
+    margin-top: 0;
+    line-height: 120%;
+}
 
-
+.sidebar_nav {
+    font-size: 20px;
+    font-family: "HelveticaNeue-Light";
+    line-height: 135%;
+    margin-bottom: 30px;
+}
 
 .main-content {
     margin-left:4px;
@@ -148,9 +161,17 @@ form {
         border-radius:0;
         font-size: 14px;
     }
-    .nav-tabs-inverse li {
-        float:left;
+    .nav-tabs-inverse {
+        font-weight: 500;
+        li {
+            float:left;
+        }
     }
+
+}
+
+.nav-tabs-inverse > li:first-child,.nav-tabs-inverse > li.first {
+    border-left: 0;
 }
 
 .os-btn:hover {
