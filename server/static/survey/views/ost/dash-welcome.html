@@ -1,46 +1,35 @@
 <div ng-include="'/static/survey/views/sideNav.html'"></div>
-<div class="container-fluid dash-welcome" ng-cloak>
-   
-    <div class="row">
-        <div class="col-lg-9 col-md-8 col-sm-8">
-            <div class="row" ost-header></div>
+<div class="main dash-welcome" ng-cloak>
+    <div class="row" ost-header></div>
 
-            <div class="main-content">
-                <div class="row">
-                    <div class="col-sm-7">
-                        <p>Use this interactive dashboard to explore results of the Central Coast Monitoring Survey. The tabs on the left will help you to learn more:<p>
-                        <ul>
-                            <li>Community Overview: learn about the different kinds of organizations that are gathering data about the Central California coast and ocean.</li>
-                            <li>Explore Monitoring Activities: learn about the different kinds of monitoring in habitats such as kelp forests and deep water ecosystems, and human activities.</li>
-                        </ul> 
-                        <p>The Ocean Science Trust and its partners at the California Department of Fish and Wildlife and California Ocean Protection Council are using these results to help design and implement the next phase of MPA monitoring in the Central Coast. Click here to learn more about the survey and monitoring planning efforts in the Central Coast.</p>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-7">
+                <p>Use this interactive dashboard to explore results of the Central Coast Monitoring Survey. The tabs on the left will help you to learn more:<p>
+                <ul>
+                    <li>Community Overview: learn about the different kinds of organizations that are gathering data about the Central California coast and ocean.</li>
+                    <li>Explore Monitoring Activities: learn about the different kinds of monitoring in habitats such as kelp forests and deep water ecosystems, and human activities.</li>
+                </ul> 
+                <p>The Ocean Science Trust and its partners at the California Department of Fish and Wildlife and California Ocean Protection Council are using these results to help design and implement the next phase of MPA monitoring in the Central Coast. Click here to learn more about the survey and monitoring planning efforts in the Central Coast.</p>
 
-                    </div>
-                    <div class="col-sm-5 center">
-                        <img class="welcome-small" src="/static/survey/assets/img/welcome_image_small.jpg" alt="">
-                        <div class="centered margin-top">
-                            <a href="#" class="os-btn default">
-                                Learn More - CC Community
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row centered">
-                    <div class="col-sm-12">
-                        <img class="welcome" src="/static/survey/assets/img/oceanspaces_ca_cc_region.jpg" alt="">
-                    </div>
-                </div>
-                </div> <!-- End main content -->
-            <div class="row">
-                <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
             </div>
-            
-
+            <div class="col-sm-5 center">
+                <img class="welcome-small" src="/static/survey/assets/img/welcome_image_small.jpg" alt="">
+                <div class="centered margin-top">
+                    <a href="#" class="os-btn default">
+                        Learn More - CC Community
+                    </a>
+                </div>
+            </div>
         </div>
 
-
-
+        <div class="row centered">
+            <div class="col-sm-12">
+                <img class="welcome" src="/static/survey/assets/img/oceanspaces_ca_cc_region.jpg" alt="">
+            </div>
+        </div>
+        </div> <!-- End main content -->
+    <div class="row">
+        <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
     </div>
-
 </div> 

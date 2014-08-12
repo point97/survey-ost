@@ -5,17 +5,17 @@
     </a>
     <div class="stats" loading-survey survey="survey">
         <div class="row">
-            <div id="side_total" class="col-sm-12 col-md-12 box">
+            <div id="side_total" class="col-xs-12 box">
                 <h1>{{survey.completes || 0}}</h1>
                 <p>Total Projects</p>
             </div>
         </div>
         <div class="row">
-            <div id="side_started" class="col-sm-6 col-md-6 box">
+            <div id="side_started" class="col-xs-6 box">
                 <h1>{{survey.num_orgs || 0}}</h1>
                 <p>Participants</p>
             </div>
-            <div id="side_completed" class="col-sm-6 col-md-6 box">
+            <div id="side_completed" class="col-xs-6 box">
                 <h1>{{survey.total_sites || 0}}</h1>
                 <p>Total Sites</p>
             </div>
@@ -45,7 +45,7 @@
                     <li>
                         <div help-modal></div>
                     </li>
-                    <li class="center" ng-show="activePage == 'overview'">
+                    <li class="control center" ng-show="activePage == 'overview'">
                          <span class="help-link">Filter by Ecosystem</span>
                          <div dash-filter 
                              class=""

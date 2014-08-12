@@ -6,6 +6,9 @@ to build it.
 
 */
 
+html {
+    min-width: 840px;
+}
 #topnav {
     background: #005072;
     margin-top:0;
@@ -30,6 +33,18 @@ img.welcome-small {
 
 .dashboard {
     margin:0;
+    .main {
+        margin-left: 275px;
+    }
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#sidenav {
+    width:275px;
+    position:absolute;
 }
 
 .dash-map-ost { 
