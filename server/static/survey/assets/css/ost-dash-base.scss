@@ -6,6 +6,14 @@ to build it.
 
 */
 
+html {
+    min-width: 840px;
+}
+
+html, body, .dashboard {
+    height: 100%;
+}
+
 #topnav {
     background: #005072;
     margin-top:0;
@@ -30,6 +38,38 @@ img.welcome-small {
 
 .dashboard {
     margin:0;
+}
+
+.main, footer {
+    margin-left: 275px;
+}
+
+// Sticky footer
+$footer-height: 117px;
+.main {
+    margin-bottom: -$footer-height;
+    min-height: 100%;
+}
+
+.main:after {
+    height: $footer-height;   
+    display: block;
+    content: ""; 
+}
+
+footer, .main:after {
+    height: $footer-height;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#sidenav {
+    width:275px;
+    // margin-right:275px;
+    position:absolute;
+    min-height: 100%;
 }
 
 .dash-map-ost { 

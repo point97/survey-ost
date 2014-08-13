@@ -1,63 +1,55 @@
 <div ng-include="'/static/survey/views/sideNav.html'"></div>
-<div class="container-fluid dash-overview" ng-cloak>
-    <div class="row">
-        <div class="col-lg-9 col-md-8 col-sm-8">
-            
-            <div class="row" ost-header></div>
-            <div class="main-content">
-            
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p>Color-coded dots in the map below represent monitoring sites reported in the Central Coast Monitoring Survey. Each color represents a different ecosystem or category of human use.</p>
+<div class="main dash-overview" ng-cloak>
+    <div class="row" ost-header></div>
+    <div class="main-content">
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Color-coded dots in the map below represent monitoring sites reported in the Central Coast Monitoring Survey. Each color represents a different ecosystem or category of human use.</p>
 
-                        <p>To explore monitoring in more detail, you can:</p>
-                        <ul>
-                            <li>Click on a dot in the map below to learn more about the monitoring project collecting data at that location</li>
-                            <li>Use the “dive deeper” menu on the left to focus in on specific Ecosystem Features.</li>
-                            <li>Click on project titles to learn more about individual monitoring projects.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div dash-map-ost
-                             lat="mapSettings.lat"
-                             lng="mapSettings.lng"
-                             zoom="mapSettings.zoom"
-                             points="mapSettings.mapPoints"
-                             units="mapSettings.mapPlanningUnits"
-                             boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
-                             slug-to-color="ecosystemSlugToColor(slug)"
-                             slug-to-label="ecosystemSlugToLabel(slug)"
-                             ></div>
-                    </div>
-                </div>
-
-                <div class="row" id="map-legend">
-                    <div class="col-sm-12">
-                        <h4>Ecosystem Feature</h4>
-                        <ul class="list-unstyled">
-                            <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
-                                <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div> 
-                                {{ecosystemSlugToLabel(slug)}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Projects</h3>
-                        <div respondents-table respondents='respondents' resource='resource' meta='meta'></div>
-                    </div>
-                </div>
-            </div><!-- main-content -->
-            <div class="row">
-                <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
+                <p>To explore monitoring in more detail, you can:</p>
+                <ul>
+                    <li>Click on a dot in the map below to learn more about the monitoring project collecting data at that location</li>
+                    <li>Use the “dive deeper” menu on the left to focus in on specific Ecosystem Features.</li>
+                    <li>Click on project titles to learn more about individual monitoring projects.</li>
+                </ul>
             </div>
-
         </div>
-    </div>
-</div> 
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div dash-map-ost
+                     lat="mapSettings.lat"
+                     lng="mapSettings.lng"
+                     zoom="mapSettings.zoom"
+                     points="mapSettings.mapPoints"
+                     units="mapSettings.mapPlanningUnits"
+                     boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
+                     slug-to-color="ecosystemSlugToColor(slug)"
+                     slug-to-label="ecosystemSlugToLabel(slug)"
+                     ></div>
+            </div>
+        </div>
+
+        <div class="row" id="map-legend">
+            <div class="col-sm-12">
+                <h4>Ecosystem Feature</h4>
+                <ul class="list-unstyled">
+                    <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
+                        <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div> 
+                        {{ecosystemSlugToLabel(slug)}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Projects</h3>
+                <div respondents-table respondents='respondents' resource='resource' meta='meta'></div>
+            </div>
+        </div>
+    </div><!-- main-content -->
+</div>
+<div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>

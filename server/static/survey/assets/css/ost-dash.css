@@ -5,6 +5,12 @@ DO NOT EDIT THE .CSS VERSION OF THIS FILE. Instead run
 to build it. 
 
 */
+html {
+  min-width: 840px; }
+
+html, body, .dashboard {
+  height: 100%; }
+
 #topnav {
   background: #005072;
   margin-top: 0; }
@@ -26,6 +32,30 @@ img.welcome-small {
 
 .dashboard {
   margin: 0; }
+
+.main, footer {
+  margin-left: 275px; }
+
+.main {
+  margin-bottom: -117px;
+  min-height: 100%; }
+
+.main:after {
+  height: 117px;
+  display: block;
+  content: ""; }
+
+footer, .main:after {
+  height: 117px; }
+
+.row {
+  margin-left: 0;
+  margin-right: 0; }
+
+#sidenav {
+  width: 275px;
+  position: absolute;
+  min-height: 100%; }
 
 .dash-map-ost {
   height: 500px; }
@@ -97,9 +127,7 @@ These styles are taken from oceanspaces.org and are used on the dash board.
 
 */
 .container-padding {
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 30px; }
+  padding: 30px 0 30px 62.5px; }
 
 header {
   border-bottom: 1px solid #CCCCCC;
@@ -119,12 +147,27 @@ footer {
 h1, h2, h3, h4, h5, h6 {
   color: #004c72; }
 
+h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .panel-default .panel-title, .pane-blog-posts-recent-blog-posts .pane-title, .node-type-ecosystem .panel-region-bottom .pane-title, .page-user-profile .pane-about .pane-title, h3, h4, h5, h1 a, h2 a, .page-blog .field-static-banner-caption a, .page-contact .pane-contact .panel-default .panel-title a, .pane-blog-posts-recent-blog-posts .pane-title a, .node-type-ecosystem .panel-region-bottom .pane-title a, .page-user-profile .pane-about .pane-title a, h3 a {
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
+  font-weight: 400;
+  font-style: normal;
+  color: #004c72;
+  margin-top: 0;
+  line-height: 120%; }
+
+.sidebar_nav {
+  font-size: 20px;
+  font-family: "HelveticaNeue-Light";
+  line-height: 135%;
+  margin-bottom: 30px; }
+
 .main-content {
-  margin-left: 4px;
+  background-color: white;
   color: #666666;
   font-size: 18px; }
-  .main-content .row {
-    background-color: white; }
+  .main-content > .row {
+    padding-top: 40px;
+    padding-left: 47.5px; }
 
 .user-menu ul.dropdown-menu {
   background-color: white;
@@ -180,8 +223,13 @@ form input.ng-invalid.ng-dirty {
     border-top: none;
     border-radius: 0;
     font-size: 14px; }
-  .user-menu .nav-tabs-inverse li {
-    float: left; }
+  .user-menu .nav-tabs-inverse {
+    font-weight: 500; }
+    .user-menu .nav-tabs-inverse li {
+      float: left; }
+
+.nav-tabs-inverse > li:first-child, .nav-tabs-inverse > li.first {
+  border-left: 0; }
 
 .os-btn:hover {
   background-color: #FBF8F2;
@@ -228,8 +276,6 @@ tr.respondent:hover {
 End Respondent Table Styles
 ******************************************************/
 #sidenav {
-  width: 275px;
-  float: left;
   color: white;
   text-align: center;
   border-right: 1px solid #bbb;
@@ -253,23 +299,21 @@ End Respondent Table Styles
   #sidenav .box h1, #sidenav .box p {
     color: #E6E8E9; }
 
-#side_total {
-  background: #004C72; }
-  #side_total h1 {
-    font-size: 4em;
-    margin-top: 10px; }
-
 .stats {
   border-bottom: 1px solid #D6D6D6; }
+  .stats h1 {
+    margin-top: 10px; }
+  .stats #side_total {
+    background: #004C72; }
+    .stats #side_total h1 {
+      font-size: 4em; }
+  .stats #side_completed {
+    background: #C24118; }
+  .stats #side_started {
+    background: #70AFB6; }
 
 .row .box {
   padding-bottom: 10px; }
-
-#side_completed {
-  background: #C24118; }
-
-#side_started {
-  background: #70AFB6; }
 
 .sidebar_nav {
   background-color: #FFF;
@@ -333,17 +377,39 @@ End Respondent Table Styles
     color: #70afb6; }
 
 form.search {
-  padding-top: 10px;
-  padding-bottom: 10px;
   background-color: #f5f5f5;
   border-bottom: 1px solid #D6D6D6;
   margin-bottom: 0; }
+  form.search input, form.search button {
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 150%;
+    font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
+    font-weight: 400;
+    font-style: normal; }
+  form.search button {
+    margin-left: 0 !important;
+    color: #444444; }
   form.search input {
     border: none;
     background: none;
     box-shadow: none;
-    border-right: 2px solid #D6D6D6; }
-  form.search .input-group-addon, form.search .input-group-btn button {
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 1px solid #D6D6D6; }
+    form.search input:focus {
+      box-shadow: none;
+      border-color: #D6D6D6; }
+  form.search .input-group-addon {
+    font-size: 16px;
+    padding: 6px 0px 6px 25px;
+    padding-left: 25px;
+    background-color: #f5f5f5;
+    border: none; }
+  form.search .input-group-btn button {
+    font-size: 16px;
+    padding: 17px 20px 16px;
     background-color: #f5f5f5;
     border: none; }
   form.search .input-group-btn button:hover {
