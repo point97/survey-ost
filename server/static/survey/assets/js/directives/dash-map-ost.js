@@ -1,4 +1,3 @@
-var map;
 angular.module('askApp').directive('dashMapOst', function($http, $compile, $timeout, $routeParams, survey) {
 
     var directive = {
