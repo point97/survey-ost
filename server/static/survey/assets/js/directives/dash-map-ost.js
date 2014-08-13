@@ -32,26 +32,12 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
             MapUtils.addBoundary(scope.boundaryPath, function (layer) {
                 map.addLayer(layer)
-                .on('dblclick', function(e) {
-                    map.setZoom(map.getZoom() + 1);
-                });
-                layer.bringToBack();
-
-                // Adding controls to L.controls
                 map.controls.addOverlay(layer, 'Boundary');
             });
             
             MapUtils.addPlanningUnitGrid("/static/survey/data/CentralCalifornia_PlanningUnits.json", map, function (layer) {
                 scope.puLayer = layer;
                 map.addLayer(scope.puLayer)
-                .on('dblclick', function(e) {
-                    map.setZoom(map.getZoom() + 1);
-                });
-                scope.updatePuLayer();
-                
-                
-                // Adding controls to L.controls
-                scope.puLayer.bringToBack();
                 map.controls.addOverlay(scope.puLayer, 'Planning Units');
 
 
