@@ -37,6 +37,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 map.addLayer(scope.puLayer)
                 map.controls.addOverlay(scope.puLayer, 'Planning Units');
 
+                scope.$watch('units', updatePuLayer);
+
             });
 
             scope.markersLayer = L.featureGroup();
@@ -85,13 +87,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
             scope.$watch('points', setMarkers);
 
-            scope.$watch('units', function(newVal, oldVal) {
-                console.log("[$watch units] planning units changed");
-                if (newVal){
-                    scope.updatePuLayer();
-                }
-            });
-
             updateMapSize();
 
             $(window).resize(function(event) {
@@ -120,19 +115,17 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         function setMarkers(data){
             // Updates a LayerGroup with markers for each data item.
             scope.markersLayer.clearLayers();
-            if (data) {
-                _.each(data, function(markerData){ 
-                    markerData['draggable'] = false;
-                    markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
-                    var marker = MapUtils.createMarker(markerData);
-                        // marker.setStyle({clickable: false});
-                    setPopup(marker, markerData);
-                    scope.markersLayer.addLayer(marker);
-                });
-            }
+            _.each(data, function(markerData){ 
+                markerData['draggable'] = false;
+                markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
+                var marker = MapUtils.createMarker(markerData);
+                    // marker.setStyle({clickable: false});
+                setPopup(marker, markerData);
+                scope.markersLayer.addLayer(marker);
+            });
         };
 
-        scope.updatePuLayer = function(){
+        function updatePuLayer(units){
             // Turns off all cells
             _.each(scope.puLayer._layers, function(sublayer){
                 sublayer.setStyle({
@@ -142,7 +135,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             });
 
             // Add opacity to active cells.
-            _.each(scope.units, function(unit){
+            _.each(units, function(unit){
                 scope.setCellActive(unit);
             });
         };
@@ -180,7 +173,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             layer.bindPopup(html, { closeButton: true });
             
             // Define the on click callback. 
-            layer.on('click', function(e) {    
+            layer.on('click', function(e) {
                 scope.$apply(function () {
                     var unit_id = e.target.feature.properties.ID;
                     getPlanningUnit(unit_id, function(res){
@@ -232,59 +225,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 });
             });
         }
-
-        function isLayerSelected (layer) {
-            return layer.options.fillOpacity !== 0;
-        }
-
-        function selectLayer (layer) {
-            if (!isLayerSelected(layer)) {
-                var id = layer.feature.properties.ID;
-                layer.setStyle( {
-                    fillOpacity: .6
-                });
-                scope.question.answer.push({
-                    id: id,
-                    uuid: $routeParams.uuidSlug, 
-                    qSlug: scope.question.slug
-                });
-                scope.selectionCount++;
-            }
-        }
-        
-        function deselectLayer (layer) {
-            if (isLayerSelected(layer)) {
-                var id = layer.feature.properties.ID;
-                layer.setStyle({
-                    fillOpacity: 0
-                });
-                scope.question.answer = _.reject(scope.question.answer, function(item) {
-                    return item.id == id; 
-                });
-                scope.selectionCount--;
-            }
-        }
-
-        function layerClick (layer) {
-            isLayerSelected(layer) ?
-                deselectLayer(layer) :
-                selectLayer(layer);
-        }
-
-        function deselectAllPolygons () {
-            _.each(scope.allPloygons, function (layer) {
-                deselectLayer(layer);
-            });
-        }
-
-        function selectAllPolygons () {
-            _.each(scope.allPloygons, function (layer) {
-                selectLayer(layer);
-            });
-        }
-
-
-
 
         function getRespondent (uuid, success_callback) {
             var url = app.server 
@@ -402,7 +342,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                             console.log("Click layer "+id);
                             console.log(e)
                         });
-                        // scope.allPloygons.push(layer);
                     }
                 });
                 success_callback(geojsonLayer);
