@@ -23,8 +23,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             markers = [],
             controls;
 
-        scope.makersLayer = L.layerGroup();
-
         function init () {
             map = MapUtils.initMap(element[0].children[0].children[0],
                     scope.lat, scope.lng, scope.zoom);
@@ -39,9 +37,11 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 map.addLayer(scope.puLayer)
                 map.controls.addOverlay(scope.puLayer, 'Planning Units');
 
-
             });
 
+            scope.markersLayer = L.featureGroup();
+            map.addLayer(scope.markersLayer);
+            map.controls.addOverlay(scope.markersLayer, 'Points');
 
             scope.getLayerByID = function(layer, planningUnitId){
                 pu = _.find(layer._layers, function(sublayer){
@@ -64,9 +64,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 setPuPopup(pu);
             };
 
-            scope.showBoundary = true;
-            scope.showPoints = true;
-            scope.showUnits = false;
             scope.planningUnit = {data:
                                     {projects:[],
                                      id:null}
@@ -86,31 +83,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             };
 
 
-            scope.$watch('points', function(newVal, oldVal) {
-                // Clear scope.markersLayer
-                if (scope.markersLayer){
-                    map.removeLayer(scope.makersLayer);
-                    scope.markersLayer.clearLayers();
-                }
-
-                if (newVal) {
-
-                    if (_.find(map.controls._layers, function(l){return l.name === 'Points'}) ){
-                        map.controls.removeLayer(scope.markersLayer);
-                    }
-
-                    // Add new markers to markersLayer
-                    scope.markersLayer = L.featureGroup();
-                    addMarkers(scope.markersLayer, newVal);
-
-                    // Add to map and map controls
-                    map.addLayer(scope.markersLayer);
-                    scope.markersLayer.bringToFront();
-                    map.controls.addOverlay(scope.markersLayer, 'Points');
-                    
-                }
-
-            });
+            scope.$watch('points', setMarkers);
 
             scope.$watch('units', function(newVal, oldVal) {
                 console.log("[$watch units] planning units changed");
@@ -144,37 +117,22 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         }
 
 
-        function addMarkers(parent, data){
+        function setMarkers(data){
             // Updates a LayerGroup with markers for each data item.
-            _.each(data, function(markerData){ 
-                markerData['draggable'] = false;
-                markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
-                var marker = MapUtils.createMarker(markerData);
-                if (!scope.showPopups) {
-                    marker.setStyle({clickable: false});
-                }
-                if (marker && scope.showPopups) {
+            scope.markersLayer.clearLayers();
+            if (data) {
+                _.each(data, function(markerData){ 
+                    markerData['draggable'] = false;
+                    markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
+                    var marker = MapUtils.createMarker(markerData);
+                        // marker.setStyle({clickable: false});
                     setPopup(marker, markerData);
-                }
-                parent.addLayer(marker);
-            });
-            return parent;
+                    scope.markersLayer.addLayer(marker);
+                });
+            }
         };
 
         scope.updatePuLayer = function(){
-            /*
-            This clears and updated the cells based on the unit_id's in 
-            scope.units.
-
-            Call setCellActive to actaully activate the cell and set the popup.
-            */
-            try {
-                scope.puLayer.bringToBack();
-            } catch(e) {
-                console.log(e);
-                return;
-            }
-
             // Turns off all cells
             _.each(scope.puLayer._layers, function(sublayer){
                 sublayer.setStyle({
@@ -191,12 +149,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
 
         function setPuPopup (layer){
-            /*
+            // Sets a pop for this planning unit.
 
-            Sets a pop for this planning unit.
-
-            planningUnit is an object returned from the planning-unit API resource
-            */ 
+            // planningUnit is an object returned from the planning-unit API resource
 
             // Build popup based on the ajax data
             var loading = '<p ng-show="!planningUnit.data.id" class="load-indicator">Loading...</p>';
