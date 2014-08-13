@@ -101,7 +101,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                     }
 
                     // Add new markers to markersLayer
-                    scope.markersLayer = addMarkers(newVal);
+                    scope.markersLayer = L.featureGroup();
+                    addMarkers(scope.markersLayer, newVal);
 
                     // Add to map and map controls
                     map.addLayer(scope.markersLayer);
@@ -144,10 +145,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         }
 
 
-        function addMarkers(data){
-            // Returns a LayerGroup containing all the markers.
-            var out = L.featureGroup();
-            _.each(data, function(markerData){
+        function addMarkers(parent, data){
+            // Updates a LayerGroup with markers for each data item.
+            _.each(data, function(markerData){ 
                 markerData['draggable'] = false;
                 markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
                 var marker = MapUtils.createMarker(markerData);
@@ -157,9 +157,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 if (marker && scope.showPopups) {
                     setPopup(marker, markerData);
                 }
-                out.addLayer(marker);
+                parent.addLayer(marker);
             });
-            return out;
+            return parent;
         };
 
         scope.updatePuLayer = function(){
