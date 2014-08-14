@@ -29,18 +29,17 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                     scope.lat, scope.lng, scope.zoom);
 
             MapUtils.addBoundary(scope.boundaryPath, function (layer) {
-                map.addLayer(layer)
-                map.controls.addOverlay(layer, 'Boundary');
+                scope.boundaryLayer.addLayer(layer)
             });
 
             puPromise = $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json")
             scope.$watch('units', updatePuLayer);
 
-            scope.puLayer = L.geoJson();
-            scope.puLayer.setStyle({
-                "fillOpacity": 0,
-                "stroke": false
-            })
+            scope.boundaryLayer = L.featureGroup();
+            map.addLayer(scope.boundaryLayer);
+            map.controls.addOverlay(scope.boundaryLayer, 'Boundary');
+
+            scope.puLayer = L.featureGroup();
             map.addLayer(scope.puLayer);
             map.controls.addOverlay(scope.puLayer, 'Planning Units');
 
@@ -48,31 +47,12 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             map.addLayer(scope.markersLayer);
             map.controls.addOverlay(scope.markersLayer, 'Points');
 
-            scope.getLayerByID = function(layer, planningUnitId){
-                pu = _.find(layer._layers, function(sublayer){
-                    var id = parseInt(sublayer.feature.properties.ID, 10);
-                    return id === planningUnitId;
-                });
-                return pu;
+            scope.planningUnit = {
+                data: {
+                    projects: [],
+                    id: null
+                }
             };
-
-            scope.setCellActive = function(unit){
-                var id = unit
-                pu = scope.getLayerByID(scope.puLayer, id);
-                pu.setStyle(
-                    {"color": '#FFFF00',
-                     "fillColor": '#FFFF00',
-                     "fillOpacity": 0.5,
-                     "clickable": true}
-                );
-
-                setPuPopup(pu);
-            };
-
-            scope.planningUnit = {data:
-                                    {projects:[],
-                                     id:null}
-                                };
 
 
             scope.ecosystemLabelToSlug =function(label) {
@@ -122,7 +102,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 markerData['draggable'] = false;
                 markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
                 var marker = MapUtils.createMarker(markerData);
-                    // marker.setStyle({clickable: false});
                 setPopup(marker, markerData);
                 scope.markersLayer.addLayer(marker);
             });
@@ -130,15 +109,32 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
 
         function updatePuLayer(units){
-            puPromise.success(function(data) {
-                scope.puLayer.clearLayers();
-                scope.puLayer.addData(data);
+            if (units) {
+                puPromise.success(function(data) {
+                    var u = _.invert(units)
+                    var filtered = _.extend({}, data, {
+                        "features": _.filter(data.features, function(f){
+                            return parseInt(f.properties.ID, 10) in u
+                        })
+                    })
 
-                _.each(units, function(unit){
-                    scope.setCellActive(unit);
+                    scope.puLayer.clearLayers();
+
+                    scope.puLayer.addLayer(L.geoJson(filtered, {
+                        style: {
+                            "color": '#FFFF00',
+                            "fillColor": '#FFFF00',
+                            "fillOpacity": 0.5,
+                            "clickable": true
+                        },
+                        onEachFeature: function(feature, layer) {
+                            setPuPopup(layer);
+                        }
+                    }));
+
+                    scope.puLayer.bringToBack();
                 });
-                scope.puLayer.bringToBack();
-            });
+            }
         };
 
         function setPuPopup (layer){
@@ -156,7 +152,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             list += '<dl ng-cloak>'; 
             list += '<div ng-repeat="project in planningUnit.data.projects">';
             list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
-            list += '<dt>Ecosytem Features</dt>';
+            list += '<dt>Ecosystem Features</dt>';
             
             list += '<dd><ul class="list-unstyled">';
             list += '<li ng-repeat="slug in project.ecosystem_features">';
@@ -206,6 +202,14 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             list += '<dd>{{ responses["proj-data-frequency"].text }}</dd>';
             list += '<dt>Data Availability:</dt>';
             list += '<dd>{{ responses["proj-data-availability"].text }}</dd>';
+
+            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
+            list += '<dt>Ecosystem Features</dt>';
+                        list += '<ul class="list-unstyled">';
+            list += '<li ng-repeat="slug in project.ecosystem_features">';
+            list += '<div class="circle margin-right" ng-style="{\'background-color\': ecosystemSlugToColor(slug)};">&nbsp;</div>{{ecosystemSlugToLabel(slug)}}';
+            list += '</li>';
+            list += '</ul></dd>';
             list = '<dl ng-cloak>' + list + '</dl>';
 
             popup = '<div class="marker-popup-content">' + loading + list + '</div>';
