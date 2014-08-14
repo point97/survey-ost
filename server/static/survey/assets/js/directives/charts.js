@@ -18,13 +18,14 @@ angular.module('askApp')
                     if (newValue && !newValue.message) {
                         if (scope.chart.data && scope.chart.data.length !== 0) {
                             series = _.map(scope.chart.data, function(item, index) {
-                                return {
+                                var out = {
                                     name: scope.chart.labels[index],
                                     data: [parseFloat(item) || 0],
                                     dataLabels: {
                                         enabled: true
                                     }
                                 };
+                                return out;
                             });
                         } else {
                             series = [{
@@ -39,7 +40,7 @@ angular.module('askApp')
                                 // to just 'bar'. This is easier than fixing it all the way down.
                                 type: scope.chart.type == 'bar-chart' ? 'column' : 'bar',
                             },
-                            exporting :{url:"http://export.highcharts.com"},
+                            exporting :{url:HC_EXPORT_SERVER_URL},
                             backgroundColor: 'rgba(255, 255, 255, 0)',
                             title: scope.chart.displayTitle ? { text: scope.chart.title, align: "left" } : false,
                             tooltip: {
@@ -93,6 +94,7 @@ angular.module('askApp')
             link: function postLink(scope, element, attrs) {
                 scope.$watch('chart', function(newValue) {
                     // Draw the graph
+                    debugger;
                     if (newValue && !newValue.message) {
                         var chart;
                         var series = _.map(scope.chart.seriesNames, function(name) {

@@ -151,6 +151,10 @@ class ReportRespondantResource(SurveyModelResource):
         authentication = Authentication()
 
 class CompleteRespondantResource(ReportRespondantResource):
+    """
+    If you only want complete surveys, user filter complete=true
+
+    """
     project_name = fields.CharField(attribute='project_name', readonly=True)
     organization_name = fields.CharField(attribute='organization_name', readonly=True)
     ecosystem_features = fields.CharField(attribute='monitored_ecosystem_features', readonly=True)
@@ -179,13 +183,14 @@ class CompleteRespondantResource(ReportRespondantResource):
 
     class Meta:
 
-        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1, complete__exact=True).order_by("-ts")
+        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1).order_by("-ts")
         #queryset = Respondant.objects.filter(responses_count__gte=1).order_by('-ts')
 
         filtering = {
             'survey': ALL_WITH_RELATIONS,
             'responses': ALL_WITH_RELATIONS,
             'user': ALL_WITH_RELATIONS,
+            'complete':ALL,
             'ts': ['gte','lte']
         }
         ordering = ['-ts']
@@ -459,9 +464,6 @@ class SurveyResource(SurveyModelResource):
         }
 
 
-    # def save_m2m(self, bundle):
-    #     pass
-
 class SurveyReportResource(SurveyResource):
     questions = fields.ToManyField(QuestionResource, 'questions', null=True, blank=True)
     num_registered = fields.IntegerField(attribute='num_registered', readonly=True)
@@ -469,3 +471,6 @@ class SurveyReportResource(SurveyResource):
     incompletes = fields.IntegerField(attribute='incompletes', readonly=True)
     survey_responses = fields.IntegerField(attribute='survey_responses', readonly=True)
     activity_points = fields.IntegerField(attribute='activity_points', readonly=True)
+    total_sites = fields.IntegerField(attribute='total_sites', readonly=True)
+    num_orgs = fields.IntegerField(attribute='num_orgs', readonly=True)
+

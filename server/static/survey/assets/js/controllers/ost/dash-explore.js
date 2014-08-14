@@ -1,15 +1,32 @@
 
 angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils) {
     
+    $scope.page_title = 'Who?';
     $scope.activePage = 'explore';
     $scope.user = app.user || {};
+    
     $scope.resource = '/api/v1/completerespondant/';
+    
+    $scope.respondents_per_page = 10;
+    
     //
     // Charts
     //
     
     $scope.charts = {};
     $scope.filtersJson = '';
+    
+    // Get or load survey
+    $scope.survey = {};
+    $scope.survey.slug = $routeParams.survey_slug;
+
+    $scope.survey.loading = true;
+    surveyFactory.getSurvey(function (data) {
+        data.questions.reverse();
+        $scope.survey = data;
+    });
+
+
     function buildChart(questionSlug, options) {
         var options, onFail, onSuccess;
         

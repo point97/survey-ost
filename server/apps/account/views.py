@@ -18,10 +18,27 @@ import datetime
 
 @csrf_exempt
 def authenticateUser(request):
-    print request
-    if request.POST:
-        param = simplejson.loads(request.POST.keys()[0])
+    """
+    Inputs:
+        username
+        password
+
+    """
+    if request.method == 'POST':
+        try_again = False
+        try:
+            param = simplejson.loads(request.POST.keys()[0])
+        except:
+            try_again=True
+            pass
+        if try_again:
+            try:
+                param = simplejson.loads(request.raw_post_data)
+            except:
+                pass
+
         # user = User.objects.get(username=param.get('username', None))
+        
         user = authenticate(username=param.get(
             'username', None), password=param.get('password'))
         try:

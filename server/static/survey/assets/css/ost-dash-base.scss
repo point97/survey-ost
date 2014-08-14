@@ -6,6 +6,14 @@ to build it.
 
 */
 
+html {
+    min-width: 840px;
+}
+
+html, body, .dashboard {
+    height: 100%;
+}
+
 #topnav {
     background: #005072;
     margin-top:0;
@@ -19,8 +27,49 @@ to build it.
     margin-top: 20px;
 }
 
+img.welcome {
+    width:100%;
+    max-width:700px;
+}
+
+img.welcome-small {
+    width:100%;
+}
+
 .dashboard {
     margin:0;
+}
+
+.main, footer {
+    margin-left: 275px;
+}
+
+// Sticky footer
+$footer-height: 117px;
+.main {
+    margin-bottom: -$footer-height;
+    min-height: 100%;
+}
+
+.main:after {
+    height: $footer-height;   
+    display: block;
+    content: ""; 
+}
+
+footer, .main:after {
+    height: $footer-height;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#sidenav {
+    width:275px;
+    // margin-right:275px;
+    position:absolute;
+    min-height: 100%;
 }
 
 .dash-map-ost { 
@@ -69,9 +118,13 @@ to build it.
     MAP LEGEND
  */
 
-#map-legend li {
-    float:left;
-    margin-right:9px;
+#map-legend {
+    margin-bottom:15px;
+
+    li {
+        float:left;
+        margin-right:9px;
+    }
 }
 
 .circle {
@@ -86,11 +139,27 @@ to build it.
     margin-right: 3px;
 }
 
+.pie-chart {
+    h3 {
+        height:53px;
+    }
+
+    .download_cog {
+        top: 70px;
+    }
+}
+
 .popup-content.planning-unit h5{
     margin-bottom:0;
 }
 
-@import 'surgical';
+.answer {
+    margin-bottom: 10px;
+}
+
+
 @import 'dash-oceanspaces';
+@import 'surgical';
 @import 'respondents-table';
 @import 'side-nav';
+@import 'overrides';

@@ -4,10 +4,13 @@ These styles are taken from oceanspaces.org and are used on the dash board.
 
 */
 
-$os-bg-color:#f5f5f5;;
+$os-bg-color:#f5f5f5;
+$os-font-grey:#6C6C71;
 
-$os-red: #c04504;   // This is used for highlight fonts
 $os-lightred: #FBF8F2; // Used on button hover
+$os-medred:#c24118;  // This is used on the toggle chevrons in the sideNav dropdown menu.
+$os-red: #c04504;   // This is used for highlight fonts
+$os-error-red: #FF9999;
 
 $os-grey: #F7F7F7;  // This is the background color of the button.
 $os-border-grey: #D6D6D6;  // This is the color of the button border.
@@ -18,20 +21,24 @@ $os-footergrey:#373e48;  // Used in the footer.
 $os-darkblue: #004c72;
 $os-lightblue: #70afb6; // Used on sideNav text hover over
 
+
 $horizontal-gutter: 15px;
 $vertical-gutter:15px;
 
 
-
 .container-padding {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-left:30px;
+    padding: 30px 0 30px 62.5px;
+    // margin-right: 47.5px;
 }
 
 
 header {
     border-bottom:1px solid $os-darkgrey;
+    font-family: 'Gotham Rounded SSm A','Gotham Rounded SSm B';
+
+    h3 {
+        color:$os-lightblue;
+    }
 }
 
 footer {
@@ -53,13 +60,65 @@ h1, h2, h3, h4, h5, h6 {
     color:$os-darkblue;
 }
 
-.main-content {
-    
+h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .panel-default .panel-title, .pane-blog-posts-recent-blog-posts .pane-title, .node-type-ecosystem .panel-region-bottom .pane-title, .page-user-profile .pane-about .pane-title, h3, h4, h5, h1 a, h2 a, .page-blog .field-static-banner-caption a, .page-contact .pane-contact .panel-default .panel-title a, .pane-blog-posts-recent-blog-posts .pane-title a, .node-type-ecosystem .panel-region-bottom .pane-title a, .page-user-profile .pane-about .pane-title a, h3 a {
+    font-family: 'Gotham Rounded SSm A','Gotham Rounded SSm B';
+    font-weight: 400;
+    font-style: normal;
+    color: #004c72;
+    margin-top: 0;
+    line-height: 120%;
 }
+
+.sidebar_nav {
+    font-size: 20px;
+    font-family: "HelveticaNeue-Light";
+    line-height: 135%;
+    margin-bottom: 30px;
+}
+
+.main-content {
+    background-color:white;
+    color: #666666;
+    font-size: 18px;
+    > .row{
+        padding-top: 40px;
+        padding-left: 47.5px;
+    }
+}
+
+
+.user-menu ul.dropdown-menu {
+    background-color:white;
+    width:400px;
+    left: auto;
+    right:0;
+    padding:20px;
+}
+
+form {
+    .form-required {
+        color:red;
+    }
+    label {
+        display:block;
+        color:$os-font-grey;
+    }
+    input {
+        width:100%;
+    }
+
+    input.ng-invalid.ng-dirty {
+        background-color: $os-error-red;
+    }
+
+    input.ng-valid.ng-dirty {
+    }
+}
+
 
 .os-btn {
     color: $os-red;
-    font-size: 1.5em;
+    font-size: 1.0em;
     line-height: 1;
     border: 3px solid $os-border-grey;
     border-radius: 25px;
@@ -73,6 +132,46 @@ h1, h2, h3, h4, h5, h6 {
     .default{
       background-color: $os-grey;
     }
+}
+
+.user-menu{
+    position: absolute;
+    top: 0;
+    right: 15px;
+    z-index: 800;
+    margin:0;
+    
+    .greeting {
+        color: $os-red;
+        font-size: 1.5em;
+        line-height: 1;
+        // border:1px solid $os-border-grey;
+        border-top:none;
+        border-radius:0;
+        font-size: 14px;
+        padding: 11px 18px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+
+    }
+    li>.os-btn {
+        border:1px solid $os-border-grey;
+        border-top:none;
+        border-radius:0;
+        font-size: 14px;
+    }
+    .nav-tabs-inverse {
+        font-weight: 500;
+        li {
+            float:left;
+        }
+    }
+
+}
+
+.nav-tabs-inverse > li:first-child,.nav-tabs-inverse > li.first {
+    border-left: 0;
 }
 
 .os-btn:hover {
