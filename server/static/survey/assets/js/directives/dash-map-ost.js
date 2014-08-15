@@ -28,6 +28,14 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             map = MapUtils.initMap(element[0].children[0].children[0],
                     scope.lat, scope.lng, scope.zoom);
 
+            map.scrollWheelZoom.disable();
+            map.on('focus', function(e) {
+                map.scrollWheelZoom.enable();
+            });
+            map.on('blur', function(e) {
+                map.scrollWheelZoom.disable();
+            });
+
             MapUtils.addBoundary(scope.boundaryPath, function (layer) {
                 scope.boundaryLayer.addLayer(layer)
             });
