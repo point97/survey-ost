@@ -36,8 +36,8 @@
                 <a ng-class="{'active': activePage == 'overview'}" 
                    href="#/overview/monitoring-project/"
                    >Monitoring Activities</a>
-                <span help-modal></span>
-                <div class="control center" ng-cloak ng-show="activePage == 'overview'">
+                <div class="control" ng-cloak ng-show="activePage == 'overview'">
+                    <span help-modal class="center" ng-show="activePage == 'overview'"></span>
                      <div dash-filter 
                          class=""
                          placeholder-text="'Filter by Ecosystem'"
