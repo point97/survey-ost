@@ -162,9 +162,12 @@ h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .pa
   background-color: white;
   color: #666666;
   font-size: 18px; }
-  .main-content > .row {
+  .main-content > :first-child {
     padding-top: 40px;
-    padding-left: 47.5px; }
+  }
+  .main-content > * {
+    padding-left: 47.5px;
+  }
 
 .user-menu ul.dropdown-menu {
   background-color: white;
