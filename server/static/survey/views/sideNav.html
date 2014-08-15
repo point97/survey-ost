@@ -32,31 +32,21 @@
             <li>
                 <a ng-class="{'active': activePage == 'explore'}" href="#/explore/{{survey.slug}}">Community Overview</a>
             </li>
-            <li class="dropdown expanded" ng-class="{'open current': activePage == 'overview'}">
+            <li class="leaf" ng-class="{'current': activePage == 'overview'}">
                 <a ng-class="{'active': activePage == 'overview'}" 
                    href="#/overview/monitoring-project/"
                    >Monitoring Activities</a>
-                <span class="dropdown-toggle" data-toggle="dropdown" >
-                    <i class="icon-chevron-down"></i>
-                    <i class="icon-chevron-up"></i>
-                </span>
-
-                <ul class="dropdown-menu">
-                    <li>
-                        <div help-modal></div>
-                    </li>
-                    <li class="control center" ng-show="activePage == 'overview'">
-                         <span class="help-link">Filter by Ecosystem</span>
-                         <div dash-filter 
-                             class=""
-                             placeholder-text="'all ecosystem features'"
-                             allow-multi-select="true"
-                             survey-slug="'monitoring-project'"
-                             question-slug="'ecosystem-features'"
-                             selected-values="filters.ecosystemFeatures"
-                             ></div>
-                    </li>
-                </ul>
+                <span help-modal></span>
+                <div class="control center" ng-cloak ng-show="activePage == 'overview'">
+                     <div dash-filter 
+                         class=""
+                         placeholder-text="'Filter by Ecosystem'"
+                         allow-multi-select="true"
+                         survey-slug="'monitoring-project'"
+                         question-slug="'ecosystem-features'"
+                         selected-values="filters.ecosystemFeatures"
+                         ></div>
+                </div>
 
                 
             </li>
