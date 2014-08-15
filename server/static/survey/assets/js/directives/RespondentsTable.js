@@ -64,8 +64,13 @@ angular.module('askApp')
                     scope.currentPage = page;
                 });
             };
+
+            scope.showPager = function(){
+                return !!scope.resource;
+            }
+
             // Only load first page if not results from a text search
-            if (scope.resource === '/api/v1/completerespondant/'){
+            if (scope.showPager()){
                 scope.goToPage(1);
             }
 
