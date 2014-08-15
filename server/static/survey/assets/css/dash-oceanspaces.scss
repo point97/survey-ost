@@ -99,9 +99,6 @@ form {
         display:block;
         color:$os-font-grey;
     }
-    input {
-        width:100%;
-    }
 
     input.ng-invalid.ng-dirty {
         background-color: $os-error-red;

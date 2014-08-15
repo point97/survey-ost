@@ -178,8 +178,6 @@ form .form-required {
 form label {
   display: block;
   color: #6C6C71; }
-form input {
-  width: 100%; }
 form input.ng-invalid.ng-dirty {
   background-color: #FF9999; }
 
