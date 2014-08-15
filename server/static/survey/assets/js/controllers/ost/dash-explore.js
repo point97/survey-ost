@@ -51,7 +51,13 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
                 $scope.filtersJson, options, onSuccess, onFail);
         }
     }
-
+    Highcharts.setOptions({
+        chart: {
+            style: {
+                fontFamily: "'Gotham Rounded SSm A', 'Gotham Rounded SSm B'"
+            }
+        }
+    });
     buildChart('org-type', {type: 'pie', title: "Organizations", yLabel: "Org Type"});
     buildChart('proj-num-people', {type: 'pie', title: "How many people are collecting the data?", yLabel: "Number of Projects"});
     buildChart('proj-data-years', {type: 'bar', title: "Project Duration", yLabel: "Number of Projects"});

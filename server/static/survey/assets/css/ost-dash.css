@@ -155,19 +155,19 @@ h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .pa
   margin-top: 0;
   line-height: 120%; }
 
-.sidebar_nav {
-  font-size: 20px;
-  font-family: "HelveticaNeue-Light";
-  line-height: 135%;
-  margin-bottom: 30px; }
+.main {
+  background-color: #f3f4f6; }
 
 .main-content {
   background-color: white;
   color: #666666;
   font-size: 18px; }
-  .main-content > .row {
+  .main-content > :first-child {
     padding-top: 40px;
-    padding-left: 47.5px; }
+  }
+  .main-content > * {
+    padding-left: 47.5px;
+  }
 
 .user-menu ul.dropdown-menu {
   background-color: white;
@@ -181,8 +181,6 @@ form .form-required {
 form label {
   display: block;
   color: #6C6C71; }
-form input {
-  width: 100%; }
 form input.ng-invalid.ng-dirty {
   background-color: #FF9999; }
 
@@ -295,7 +293,7 @@ End Respondent Table Styles
     font-weight: bold;
     font-size: 0.85em; }
   #sidenav .select2-container {
-    width: 90%; }
+    width: 100%; }
   #sidenav .box h1, #sidenav .box p {
     color: #E6E8E9; }
 
@@ -316,16 +314,25 @@ End Respondent Table Styles
   padding-bottom: 10px; }
 
 .sidebar_nav {
+  font-family: "HelveticaNeue-Light";
+  line-height: 1.42857;
+  margin-bottom: 30px;
   background-color: #FFF;
   color: #195D68; }
   .sidebar_nav ul {
     padding-left: 0;
     margin-bottom: 0; }
-  .sidebar_nav li {
+  .sidebar_nav ul.nav > li {
     list-style: none outside none !important;
     min-height: 50px;
     border-bottom: 1px solid #D6D6D6; }
-    .sidebar_nav li .dropdown-toggle {
+    .sidebar_nav ul.nav > li > a {
+      font-size: 19px;
+      color: #555;
+      padding: 12px 25px; }
+      .sidebar_nav ul.nav > li > a.active {
+        color: #70afb6; }
+    .sidebar_nav ul.nav > li .dropdown-toggle {
       position: absolute;
       top: 0;
       right: 0;
@@ -336,15 +343,15 @@ End Respondent Table Styles
       text-align: center;
       line-height: 55px;
       color: #004F73; }
-      .sidebar_nav li .dropdown-toggle .icon-chevron-up {
+      .sidebar_nav ul.nav > li .dropdown-toggle .icon-chevron-up {
         display: none; }
-    .sidebar_nav li .dropdown-menu {
+    .sidebar_nav ul.nav > li .dropdown-menu {
       position: static;
       width: 100%;
       z-index: 1000;
       border: none;
       box-shadow: none; }
-      .sidebar_nav li .dropdown-menu li {
+      .sidebar_nav ul.nav > li .dropdown-menu li {
         border: none; }
   .sidebar_nav .nav > li {
     text-align: left; }
@@ -363,21 +370,22 @@ End Respondent Table Styles
   .sidebar_nav li a:hover {
     text-decoration: none;
     background-color: inherit; }
-  .sidebar_nav a, .sidebar_nav .help-link {
+  .sidebar_nav .control {
+    padding: 0 12px 25px 12px; }
+    .sidebar_nav .control button {
+      margin-left: auto;
+      margin-right: auto; }
+  .sidebar_nav .help-link {
     display: block;
-    padding: 12px 25px;
-    min-height: 50px;
     font-size: 19px;
     color: inherit; }
   .sidebar_nav a:hover, .sidebar_nav .help-link:hover {
     color: #70afb6 !important;
     text-decoration: none;
     cursor: pointer; }
-  .sidebar_nav a.active {
-    color: #70afb6; }
 
 form.search {
-  background-color: #f5f5f5;
+  background-color: #f3f4f6;
   border-bottom: 1px solid #D6D6D6;
   margin-bottom: 0; }
   form.search input, form.search button {
@@ -405,12 +413,12 @@ form.search {
     font-size: 16px;
     padding: 6px 0px 6px 25px;
     padding-left: 25px;
-    background-color: #f5f5f5;
+    background-color: #f3f4f6;
     border: none; }
   form.search .input-group-btn button {
     font-size: 16px;
     padding: 17px 20px 16px;
-    background-color: #f5f5f5;
+    background-color: #f3f4f6;
     border: none; }
   form.search .input-group-btn button:hover {
     color: #70afb6 !important; }

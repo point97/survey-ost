@@ -12,7 +12,7 @@ angular.module('askApp')
         var onDataSuccess = function (data) {
             var chartConfig = {
                 labels: _.pluck(data.answer_domain, "answer"),
-                displayTitle: false,
+                displayTitle: true,
                 yLabel: options.yLabel,
                 title: options.title,
                 categories: [""],
@@ -61,7 +61,7 @@ angular.module('askApp')
                 data: formattedData,
                 download_url: app && app.user && app.user.is_staff ? data.csvUrl : '',
                 title: options.title,
-                displayTitle: false,
+                displayTitle: true,
                 yLabel: options.yLabel,
                 unit: options.unit || "projects"
             };

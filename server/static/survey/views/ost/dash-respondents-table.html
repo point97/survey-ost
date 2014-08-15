@@ -55,9 +55,9 @@
 
 
 <div class="pull-left">
-    Showing {{ meta.offset + 1 }}-{{ meta.offset + meta.limit }} of {{ meta.total_count+1 }}
+    Showing {{ meta.offset + 1 }}-{{ meta.offset + respondents.length }} of {{ meta.total_count }}
 </div>
-<div class="pull-right">
+<div  ng-if="showPager()" class="pull-right">
     <div pagination 
         total-items="meta.total_count" 
         items-per-page="8" 
