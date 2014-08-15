@@ -184,7 +184,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
     //
     $scope.goToPage = function (page, ecosystemFeatureLabels) {
         var meta = $scope.meta || {}
-            , limit = 8
+            , limit = 500
             , offset = limit * (page - 1)
             , url = [
                 '/api/v1/completerespondant/?format=json&limit='+limit
