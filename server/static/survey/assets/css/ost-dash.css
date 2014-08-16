@@ -6,7 +6,7 @@ to build it.
 
 */
 html {
-  min-width: 840px; }
+  min-width: 900px; }
 
 html, body, .dashboard {
   height: 100%; }
@@ -165,12 +165,10 @@ h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .pa
   background-color: white;
   color: #666666;
   font-size: 18px; }
-  .main-content > :first-child {
+  .main-content > .row {
     padding-top: 40px;
-  }
-  .main-content > * {
     padding-left: 47.5px;
-  }
+    padding-right: 47.5px; }
 
 .user-menu ul.dropdown-menu {
   background-color: white;
