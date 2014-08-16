@@ -177,7 +177,6 @@ angular.module('askApp')
             templateUrl : app.viewPath + 'views/ost/dash-header.html',
             link: function (scope, elem, attrs) {
                 scope.AuthService = AuthService;
-                console.log("Using ost-header");
                 scope.authenticate_user = function(){
                     
                     console.log(scope.credentials);
@@ -207,12 +206,6 @@ angular.module('askApp')
                       controller: HelpModalInstanceCtrl,
                       size: 'lg',
                       resolve: {}
-                    });
-
-                    modalInstance.result.then(function () {
-                      
-                    }, function () {
-                      $log.info('Modal dismissed at: ' + new Date());
                     });
                   };
             }
