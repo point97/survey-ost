@@ -94,11 +94,12 @@ footer, .main:after {
 /*
     MAP LEGEND
  */
-#map-legend {
-  margin-bottom: 15px; }
-  #map-legend li {
-    float: left;
-    margin-right: 9px; }
+#map-legend li {
+  float: left;
+  margin-right: 9px; }
+#map-legend .point {
+  font-size: 1.6em;
+  line-height: 0.5; }
 
 .circle {
   display: inline-block;
@@ -127,11 +128,25 @@ These styles are taken from oceanspaces.org and are used on the dash board.
 
 */
 .container-padding {
-  padding: 30px 0 30px 62.5px; }
+  padding: 30px 62.5px; }
+
+h1 {
+  margin-bottom: 18px; }
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 15px; }
+
+h3, h4, h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase; }
 
 header {
   border-bottom: 1px solid #CCCCCC;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B'; }
+  header h1 {
+    margin-bottom: 0; }
   header h3 {
     color: #70afb6; }
 
@@ -147,7 +162,7 @@ footer {
 h1, h2, h3, h4, h5, h6 {
   color: #004c72; }
 
-h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .panel-default .panel-title, .pane-blog-posts-recent-blog-posts .pane-title, .node-type-ecosystem .panel-region-bottom .pane-title, .page-user-profile .pane-about .pane-title, h3, h4, h5, h1 a, h2 a, .page-blog .field-static-banner-caption a, .page-contact .pane-contact .panel-default .panel-title a, .pane-blog-posts-recent-blog-posts .pane-title a, .node-type-ecosystem .panel-region-bottom .pane-title a, .page-user-profile .pane-about .pane-title a, h3 a {
+h1, h2 {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
   font-weight: 400;
   font-style: normal;
@@ -161,11 +176,11 @@ h1, h2, .page-blog .field-static-banner-caption, .page-contact .pane-contact .pa
 .main-content {
   background-color: white;
   color: #666666;
-  font-size: 18px; }
+  font-size: 15px; }
   .main-content > .row {
-    padding-top: 40px;
-    padding-left: 47.5px;
-    padding-right: 47.5px; }
+    padding: 15px 62.5px 0 62.5px; }
+  .main-content > .row:first-child {
+    padding-top: 30px; }
 
 .user-menu ul.dropdown-menu {
   background-color: white;
