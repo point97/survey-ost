@@ -10,7 +10,7 @@ angular.module('askApp')
     $scope.page_title = "Search Results"
     $scope.user = app.user || {};
     $scope.searchTerm = $location.search().q;
-    $scope.resource = '/api/v1/dashrespondant/';
+    
     
     $scope.survey = {};
     $scope.survey.slug = $routeParams.survey_slug;    

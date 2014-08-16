@@ -20,7 +20,6 @@ angular.module('askApp')
         restrict: 'EA',
         templateUrl : app.viewPath +'views/ost/dash-respondents-table.html',
         scope: {respondents: '=',
-                resource:'=',
                 meta:'=',
                 limit:'='
             },
@@ -30,6 +29,8 @@ angular.module('askApp')
             scope.meta = null;
             scope.http = http;
             scope.surveySlug = surveyFactory.survey.slug;
+
+            scope.resource = '/api/v1/dashrespondant/';
 
             scope.location = location;
 
@@ -65,7 +66,7 @@ angular.module('askApp')
                 });
             };
             // Only load first page if not results from a text search
-            if (scope.resource === '/api/v1/completerespondant/'){
+            if (scope.searchTerm.length>0){
                 scope.goToPage(1);
             }
 

@@ -152,8 +152,9 @@ class ReportRespondantResource(SurveyModelResource):
 
 class CompleteRespondantResource(ReportRespondantResource):
     """
-    If you only want complete surveys, user filter complete=true
+    This name is not good. It serves surveys,  if you only want complete surveys, user filter complete=true
 
+    This is used in the dashbaord to load surveys
     """
     project_name = fields.CharField(attribute='project_name', readonly=True)
     organization_name = fields.CharField(attribute='organization_name', readonly=True)
@@ -219,8 +220,9 @@ class OLDDashRespondantResource(ReportRespondantResource):
 class DashRespondantResource(ReportRespondantResource):
     """
     /api/v1/dashrespondant/
-    This endpoint is used by the searcxh box feature on the dashboard as an
-    autocomplete search field on text in the responses
+    This endpoint is used by the searcxh box feature on the dashboard  
+
+
     
 
     """
@@ -251,6 +253,28 @@ class DashRespondantResource(ReportRespondantResource):
     duration = fields.CharField(attribute='duration', readonly=True)
     frequency = fields.CharField(attribute='frequency', readonly=True)
 
+    def apply_filters(self, request, applicable_filters):
+        # This enables filtering on items not included in the model.
+        # Overriding to filter on responses__answer__contains a string defined
+        # in the 'ef' list set in the request.
+
+        semi_filtered = super(DashRespondantResource, self).apply_filters(request, applicable_filters)
+
+        if 'ef' in request.GET:
+            # Include respondants that had any of the queried ecosystem features (OR them together)
+            efs = request.GET['ef'].split(',')
+            ef_filter = Q()
+            for ef in efs:
+                 ef_filter = ef_filter | Q(responses__answer__contains=ef)
+            
+            # Only for the ecosystem-features question
+            ef_filter = ef_filter & Q(responses__question__slug='ecosystem-features')
+            
+            return semi_filtered.filter(ef_filter)
+
+        else:
+            return semi_filtered
+
 
     def prepend_urls(self):
             return [
@@ -258,14 +282,8 @@ class DashRespondantResource(ReportRespondantResource):
                     self.wrap_view('get_search'), name="api_get_search"),
             ]
 
-    def OLDget_object_list(self, request):
-
-        user_tags = [tag.name for tag in request.user.profile.tags.all()]
-        surveys = Survey.objects.filter(tags__name__in=user_tags)
-
-        return super(DashRespondantResource, self).get_object_list(request).filter(survey__in=surveys)
-
     def get_search(self, request, **kwargs):
+        import pdb; pdb.set_trace()
         self.method_check(request, allowed=['get'])
         self.is_authenticated(request)
         self.throttle_check(request)
@@ -473,4 +491,3 @@ class SurveyReportResource(SurveyResource):
     activity_points = fields.IntegerField(attribute='activity_points', readonly=True)
     total_sites = fields.IntegerField(attribute='total_sites', readonly=True)
     num_orgs = fields.IntegerField(attribute='num_orgs', readonly=True)
-

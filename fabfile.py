@@ -229,7 +229,7 @@ def restart():
 @task
 def restore(file=None):
     if file is not None:
-        run(" pg_restore --verbose --clean --no-acl --no-owner -d %s /vagrant/%s" % (project, file))
+        run(" pg_restore --verbose --clean --create --no-acl --no-owner -d %s /vagrant/%s" % (project, file))
 
 @task
 def vagrant(username='vagrant'):
