@@ -122,6 +122,6 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     //     controller: 'DashDownloadCtrl',
     // })
     .otherwise({
-        redirectTo: '/welcome/monitoring-project'
+        redirectTo: '/overview/monitoring-project'
     });
 });
