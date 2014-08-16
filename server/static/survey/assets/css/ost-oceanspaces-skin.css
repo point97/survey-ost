@@ -357,32 +357,6 @@ body.map-question .container {
     margin-top: 50px;
 }
 
-
-/*
-    MAP LEGEND
- */
-#map-legend {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-#map-legend li {
-    float:left;
-    margin-right:9px;
-}
-
-.circle {
-    display:inline-block;
-    border-radius: 50%;
-    width: 13px;
-    height: 12px;
-}
-
-#map-legend ul .circle {
-    margin-top: 3px;
-    margin-right: 3px;
-}
-
 .popup-content.planning-unit h5{
     margin-bottom:0;
 }

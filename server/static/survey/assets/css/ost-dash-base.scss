@@ -122,8 +122,12 @@ footer, .main:after {
     margin-bottom:15px;
 
     li {
-        float:left;
+        display:inline-block;
         margin-right:9px;
+    }
+    .point {
+        font-size: 1.6em;
+        line-height: 0;
     }
 }
 
@@ -134,7 +138,7 @@ footer, .main:after {
     height: 12px;
 }
 
-#map-legend ul .circle {
+#map-legend .circle {
     margin-top: 3px;
     margin-right: 3px;
 }
