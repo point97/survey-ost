@@ -6,10 +6,10 @@
             <h2>{{page_title}}</h2>
             <p>Use this interactive dashboard to explore results of the Central Coast Monitoring Survey.</p>
             <ul>
+                <li><strong>Explore Monitoring Activities</strong> below to learn about the different kinds of monitoring in habitats such as kelp forests and deep water ecosystems, and human activities.</li>
                 <li>Visit the <a ng-class="{'active': activePage == 'explore'}" href="#/explore/{{survey.slug}}">Community Overview</a> to learn about the different kinds of organizations that are gathering data about the Central California coast and ocean.</li>
-                <li>Explore Monitoring Activities: learn about the different kinds of monitoring in habitats such as kelp forests and deep water ecosystems, and human activities.</li>
             </ul> 
-            <p>The Ocean Science Trust and its partners at the California Department of Fish and Wildlife and California Ocean Protection Council are using these results to help design and implement the next phase of MPA monitoring in the Central Coast. Click here to learn more about the survey and monitoring planning efforts in the Central Coast.</p>
+            <p>The Ocean Science Trust and its partners at the California Department of Fish and Wildlife and California Ocean Protection Council are using these results to help design and implement the next phase of MPA monitoring in the Central Coast. <a>Click here</a> to learn more about the survey and monitoring planning efforts in the Central Coast.</p>
         </div>
         <div dash-map-ost
          lat="mapSettings.lat"
@@ -29,29 +29,16 @@
         </ul>
 
         <div class="row">
-
-
-            <p>Use this interactive dashboard to explore results of the Central Coast Monitoring Survey. </p>
-            <p>Showing reported monitoring sites with ecosystem features and human use categories:</p>
-
-            <p>To explore monitoring in more detail, you can:</p>
+            <h3>To explore monitoring in more detail, you can:</h3>
             <ul>
-                <li>Click on a dot in the map below to learn more about the monitoring project collecting data at that location</li>
+                <li>Click on a dot in the map above to learn more about the monitoring project collecting data at that location</li>
                 <li>Use the “dive deeper” menu on the left to focus in on specific Ecosystem Features.</li>
                 <li>Click on project titles to learn more about individual monitoring projects.</li>
             </ul>
         </div>
 
-        <div class="row" id="map-legend">
-            <div class="col-sm-12">
-            </div>
-        </div>
-
-
         <div class="row">
-            <div class="col-sm-12">
-                <h3>Projects</h3>
-            </div>
+            <h2>Projects</h2>
         </div>
         <div respondents-table respondents='respondents' meta='meta'></div>
     </div><!-- main-content -->
