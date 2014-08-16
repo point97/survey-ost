@@ -26,21 +26,17 @@ This is used by the dashboard only.
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-12">
-        <div dash-map-ost
-             lat="mapSettings.lat"
-             lng="mapSettings.lng"
-             zoom="mapSettings.zoom"
-             points="mapSettings.mapPoints"
-             units="mapSettings.mapPlanningUnits"
-             boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
-             show-popups="mapSettings.showPopups"
-             slug-to-color="ecosystemSlugToColor(slug)"
-             slug-to-label="ecosystemSlugToLabel(slug)"
-             ></div>
-    </div>
-</div>
+<div dash-map-ost
+     lat="mapSettings.lat"
+     lng="mapSettings.lng"
+     zoom="mapSettings.zoom"
+     points="mapSettings.mapPoints"
+     units="mapSettings.mapPlanningUnits"
+     boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
+     show-popups="mapSettings.showPopups"
+     slug-to-color="ecosystemSlugToColor(slug)"
+     slug-to-label="ecosystemSlugToLabel(slug)"
+     ></div>
 
 <div class="row margin-bottom " id="map-legend">
     <div class="col-sm-12 col-md-12">
