@@ -11,6 +11,7 @@ angular.module('askApp')
     $scope.user = app.user || {};
     $scope.searchTerm = $location.search().q;
     
+    $scope.resource
     
     $scope.survey = {};
     $scope.survey.slug = $routeParams.survey_slug;    
@@ -26,17 +27,21 @@ angular.module('askApp')
     });
 
     if ($scope.searchTerm){
-        var url = '/api/v1/dashrespondant/search/?format=json&limit='+$scope.respondents_per_page+'&q=' + $scope.searchTerm;
+        $scope.resource = '/api/v1/dashrespondant/search';
     } else {
-        var url = '/api/v1/dashrespondant/?format=json&limit='+$scope.respondents_per_page;
+        $scope.resource = '/api/v1/dashrespondant';
     }
 
-    $http.get(url).success(function(data) {
-        $scope.respondents = data.objects;
-        $scope.meta = data.meta;
-        $scope.responsesShown = $scope.respondents.length;
-        $scope.busy = false;
-    });
+    if (!$scope.user.is_staff){
+        url = url+'&complete=true';
+    }
+
+    // $http.get(url).success(function(data) {
+    //     $scope.respondents = data.objects;
+    //     $scope.meta = data.meta;
+    //     $scope.responsesShown = $scope.respondents.length;
+    //     $scope.busy = false;
+    // });
 
 
 

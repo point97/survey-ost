@@ -152,9 +152,7 @@ class ReportRespondantResource(SurveyModelResource):
 
 class CompleteRespondantResource(ReportRespondantResource):
     """
-    This name is not good. It serves surveys,  if you only want complete surveys, user filter complete=true
 
-    This is used in the dashbaord to load surveys
     """
     project_name = fields.CharField(attribute='project_name', readonly=True)
     organization_name = fields.CharField(attribute='organization_name', readonly=True)
@@ -184,7 +182,7 @@ class CompleteRespondantResource(ReportRespondantResource):
 
     class Meta:
 
-        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1).order_by("-ts")
+        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1, complete__exact=True).order_by("-ts")
         #queryset = Respondant.objects.filter(responses_count__gte=1).order_by('-ts')
 
         filtering = {
@@ -220,10 +218,18 @@ class OLDDashRespondantResource(ReportRespondantResource):
 class DashRespondantResource(ReportRespondantResource):
     """
     /api/v1/dashrespondant/
-    This endpoint is used by the searcxh box feature on the dashboard  
+    This endpoint is used by the search box feature on the dashboard,
+    and by the respondent tables.
 
-
+    To search by ecosystem features use 'ef':
     
+
+    To search:
+    /api/v1/dashrespondant/search?q=rocky
+
+    To seach complete surveys only
+    /api/v1/dashrespondant/search?q=rocky&complete=true
+
 
     """
     
@@ -283,7 +289,6 @@ class DashRespondantResource(ReportRespondantResource):
             ]
 
     def get_search(self, request, **kwargs):
-        import pdb; pdb.set_trace()
         self.method_check(request, allowed=['get'])
         self.is_authenticated(request)
         self.throttle_check(request)

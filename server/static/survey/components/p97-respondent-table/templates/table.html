@@ -55,12 +55,12 @@
 
 
 <div class="pull-left">
-    Showing {{ meta.offset + 1 }}-{{ meta.offset + meta.limit }} of {{ meta.total_count+1 }}
+    Showing {{ results_from }} - {{ results_to }} of {{ meta.total_count }}
 </div>
 <div class="pull-right">
     <div pagination 
         total-items="meta.total_count" 
-        items-per-page="8" 
+        items-per-page="scope.options.limit" 
         max-size="8" 
         page="currentPage"
         previous-text="&lsaquo;" 

@@ -7,9 +7,19 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.activePage = 'overview';
         $scope.user = app.user || {};
 
+
         $scope.filtersJson = '';
         $scope.filters = { ecosystemFeatures: [] };
         
+        // Setup respondent table params and options
+        var complete = ($scope.user.is_staff !== true)
+        $scope.respondentTable={
+            resource:'/api/v1/dashrespondant/',
+            params:{complete:complete },
+            options:{limit:3}
+        };
+
+
         // Get or load survey
         $scope.survey = {};
         $scope.survey.slug = $routeParams.survey_slug;
@@ -38,7 +48,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
             });
 
             // Update respondent table
-            $scope.goToPage(1, $scope.filters.ecosystemFeatures);
+            //$scope.goToPage(1, $scope.filters.ecosystemFeatures);
 
         });
     }
