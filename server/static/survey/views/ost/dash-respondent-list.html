@@ -2,10 +2,16 @@
 <div class="main dash-responses" ng-cloak>
     <div class="row" ost-header></div>
     <div class="main-content">
-        <div class="row" ng-hide="busy">
+        <div class="row">
             <div class="col-md-12 col-sm-12">
             <h3 ng-show="searchTerm">Matching Reports for '{{searchTerm}}'</h3>
-            <div respondents-table respondents='respondents' resource='resource' meta='meta' limit='respondents_per_page'></div>
+            
+            <div respondents-table 
+                 resource='respondentTable.resource'
+                 params='respondentTable.params' 
+                 options='respondentTable.options'
+            ></div>
+
             </div>
         </div>
     </div>

@@ -211,15 +211,20 @@ class IncompleteRespondantResource(ReportRespondantResource):
         authentication = Authentication()
 
 
-class OLDDashRespondantResource(ReportRespondantResource):
-    user = fields.ToOneField('apps.account.api.UserResource', 'user', null=True, blank=True, full=True, readonly=True)
-
 
 class DashRespondantResource(ReportRespondantResource):
     """
     /api/v1/dashrespondant/
+
+    /api/v1/dashrespondant/search   <-- Search Mode
+
+
     This endpoint is used by the search box feature on the dashboard,
     and by the respondent tables.
+
+    If using search mode endpoint, pagiantion is handled with the page parameter not
+    the offset parameter.  
+
 
     To search by ecosystem features use 'ef':
     
@@ -297,12 +302,17 @@ class DashRespondantResource(ReportRespondantResource):
         limit = int(request.GET.get('limit', 20))
         query = request.GET.get('q', '')
         page = int(request.GET.get('page', 1))
+        complete = request.GET.get('complete',True)
         start_date = request.GET.get('start_date', None)
         end_date = request.GET.get('end_date', None)
         review_status = request.GET.get('review_status', None)
         entered_by = request.GET.get('entered_by', None)
         island = request.GET.get('island', None)
+        
+        
         sqs = SearchQuerySet().models(Respondant).load_all()
+        if complete == u'true':
+            sqs = sqs.filter(complete=True)
 
         if query != '':
             sqs = sqs.auto_query(query)

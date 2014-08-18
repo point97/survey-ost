@@ -11,13 +11,18 @@ angular.module('askApp')
     $scope.user = app.user || {};
     $scope.searchTerm = $location.search().q;
     
-    $scope.resource
+    // Setup respondent table params and options
+    var complete = ($scope.user.is_staff !== true);
+    $scope.respondentTable={
+        resource:'/api/v1/dashrespondant/search',
+        params:{complete:complete},
+        options:{limit:10}
+    };
+
     
     $scope.survey = {};
-    $scope.survey.slug = $routeParams.survey_slug;    
+    $scope.survey.slug = $routeParams.survey_slug;
 
-    $scope.respondents_per_page = 10;
-    $scope.busy = true;
     $scope.viewPath = app.server + '/static/survey/';
     $scope.activePage = 'responses';
 
@@ -25,30 +30,6 @@ angular.module('askApp')
         data.questions.reverse();
         $scope.survey = data;
     });
-
-    if ($scope.searchTerm){
-        $scope.resource = '/api/v1/dashrespondant/search';
-    } else {
-        $scope.resource = '/api/v1/dashrespondant';
-    }
-
-    if (!$scope.user.is_staff){
-        url = url+'&complete=true';
-    }
-
-    // $http.get(url).success(function(data) {
-    //     $scope.respondents = data.objects;
-    //     $scope.meta = data.meta;
-    //     $scope.responsesShown = $scope.respondents.length;
-    //     $scope.busy = false;
-    // });
-
-
-
-    $scope.OLDshowRespondent = function (respondent) {
-        var path = ['/RespondantDetail', $routeParams.surveySlug, respondent.uuid].join('/');
-        $location.path(path);
-    };
 
 
     $scope.getAnswer = function(questionSlug, respondent) {

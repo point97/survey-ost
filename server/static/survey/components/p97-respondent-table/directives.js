@@ -54,7 +54,7 @@ angular.module('askApp')
                 var meta = scope.meta || {}
                     , offset = scope.options.limit * (page - 1);
 
-                var url = scope.build_url(offset);
+                var url = scope.build_url(offset, page);
                 console.log(url)
 
                 scope.http.get(url).success(function (data) {
@@ -89,12 +89,15 @@ angular.module('askApp')
                 scope.location.path('/RespondantDetail/'+respondent.survey_slug+'/'+respondent.uuid );
             };
 
-            scope.build_url = function(offset){
+            scope.build_url = function(offset, page){
                 /*
                 Builds a URL based on pagination, user permissions, and search terms.
                 
                 Inputs:
                     offset: [INTEGER] the 0-based page offset
+                    page: [INTEGER] 1-based page index. This is only used on the search mode endpoint 
+                                    and should not be generalize.
+
 
                 /resource/?format='json'&limit=XX&offset=YY&q=SSSSS&complete=BOOL
 
@@ -116,9 +119,15 @@ angular.module('askApp')
                     url.push('&complete=true')
                 }
 
+
+                // If search mode add the page number. This is becuase of
+                // an artifact of the dashrespodant/search endpoint. 
+                if (scope.resource.search('/search') >= 0){
+                    url.push('&page='+page);    
+                }
+                
                 url = url.join('');
                 return url;
-
             };
 
 
