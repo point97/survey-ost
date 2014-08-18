@@ -7,11 +7,10 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
     
     
     // Setup respondent table params and options
-    debugger
     var complete = ($scope.user.is_staff !== true)
     $scope.respondentTable={
         resource:'/api/v1/dashrespondant/',
-        params:{complete:complete },
+        params:{complete:complete},
         options:{limit:10}
     };
 

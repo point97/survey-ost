@@ -14,7 +14,7 @@
         resource - the API endpoint, e.g. '/api/v1/dashrespondant', '/api/v1/dashrespondant/search'
         params - An object whose keyword/values are added as query parmameters on the request. 
                - complete : [BOOLEAN]
-               - ef : [STRING] A ',' list of ecofsystem features
+               - ef : [ARRAY] A list of ecofsystem features labels as strings
                - q: [STRING] A query term to search on, only used when using 
                              the '/api/v1/dashrespondant/search' endpoint
         options: Object containing the following options:
@@ -32,6 +32,7 @@ angular.module('askApp')
         scope: {
                 resource:'=',
                 options:'=',
+                params:'='
             },
 
         link: function (scope, element, attrs) {
@@ -55,7 +56,7 @@ angular.module('askApp')
                     , offset = scope.options.limit * (page - 1);
 
                 var url = scope.build_url(offset, page);
-                console.log(url)
+                console.log("Fetching results from " + url);
 
                 scope.http.get(url).success(function (data) {
                     
@@ -91,16 +92,15 @@ angular.module('askApp')
 
             scope.build_url = function(offset, page){
                 /*
-                Builds a URL based on pagination, user permissions, and search terms.
-                
-                Inputs:
-                    offset: [INTEGER] the 0-based page offset
-                    page: [INTEGER] 1-based page index. This is only used on the search mode endpoint 
-                                    and should not be generalize.
+                    Builds a URL based on pagination, user permissions, and search terms.
+                    
+                    Inputs:
+                        offset: [INTEGER] the 0-based page offset
+                        page: [INTEGER] 1-based page index. This is only used on the search mode endpoint 
+                                        and should not be generalize.
 
 
-                /resource/?format='json'&limit=XX&offset=YY&q=SSSSS&complete=BOOL
-
+                    /resource/?format='json'&limit=XX&offset=YY&q=SSSSS&complete=BOOL
                 */
 
                 // Attach pagination
@@ -112,18 +112,27 @@ angular.module('askApp')
                             offset,
                           ];
 
+
+                // Deal with search term
                 if (scope.searchTerm) {
                     url.push('&q='+scope.searchTerm);
                 };
+
+                // Deal with staff users
                 if (!scope.$parent.user.is_staff){
                     url.push('&complete=true')
                 }
-
 
                 // If search mode add the page number. This is becuase of
                 // an artifact of the dashrespodant/search endpoint. 
                 if (scope.resource.search('/search') >= 0){
                     url.push('&page='+page);    
+                }
+
+                // Add any ecosystem filters if necessary
+                if (scope.params.ef && scope.params.ef.length > 0){
+                    var txt = '&ef='+scope.params.ef.join(',');
+                    url.push(txt);
                 }
                 
                 url = url.join('');
@@ -138,6 +147,11 @@ angular.module('askApp')
                 }
             });
 
+            // Watch the params to see if ef changed
+            scope.$watch('params.ef', function(newVal){
+                scope.goToPage(1);
+
+            });
 
 
         }
