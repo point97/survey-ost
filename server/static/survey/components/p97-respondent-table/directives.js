@@ -61,8 +61,8 @@ angular.module('askApp')
                     
                     // make sure the to parts is not grater than the total count.
                     var results_to = data.meta.offset + data.meta.limit;
-                    results_to = ( results_to > data.meta.total_count ) ? data.meta.total_count : results_to;
 
+                    results_to = ( results_to > data.meta.total_count ) ? data.meta.total_count : results_to;
 
                     scope.respondents = data.objects;
                     scope.meta = data.meta;
