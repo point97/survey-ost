@@ -20,8 +20,8 @@ angular.module('askApp')
         restrict: 'EA',
         templateUrl : app.viewPath +'views/ost/dash-respondents-table.html',
         scope: {respondents: '=',
-                resource:'=',
                 meta:'=',
+                resource:'=',
                 limit:'='
             },
 
@@ -30,19 +30,17 @@ angular.module('askApp')
             scope.meta = null;
             scope.http = http;
             scope.surveySlug = surveyFactory.survey.slug;
-
             scope.location = location;
 
-            scope.showRespondent = function(respondent){
-                scope.location.path('/RespondantDetail/'+respondent.survey_slug+'/'+respondent.uuid );
-            };
+            scope.resource = '/api/v1/dashrespondant/';
+
+            // Get the search term from the URL
+            scope.searchTerm = scope.location.search().q;
 
             // Paginated respondent table
             scope.goToPage = function (page) {
-
-
-                scope.searchTerm = scope.location.search().q;
-
+                // Need to find a way to include ecosuystem features here
+                
                 var meta = scope.meta || {}
                     , offset = scope.limit * (page - 1);
 
@@ -65,7 +63,8 @@ angular.module('askApp')
                 });
             };
             // Only load first page if not results from a text search
-            if (scope.resource === '/api/v1/completerespondant/'){
+            
+            if (typeof(scope.searchTerm) !== 'undefined'){
                 scope.goToPage(1);
             }
 
@@ -77,6 +76,10 @@ angular.module('askApp')
                 } else {
                     scope.orderBy = field;
                 }
+            };
+
+            scope.showRespondent = function(respondent){
+                scope.location.path('/RespondantDetail/'+respondent.survey_slug+'/'+respondent.uuid );
             };
 
         }

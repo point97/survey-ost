@@ -152,7 +152,6 @@ class ReportRespondantResource(SurveyModelResource):
 
 class CompleteRespondantResource(ReportRespondantResource):
     """
-    If you only want complete surveys, user filter complete=true
 
     """
     project_name = fields.CharField(attribute='project_name', readonly=True)
@@ -183,7 +182,7 @@ class CompleteRespondantResource(ReportRespondantResource):
 
     class Meta:
 
-        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1).order_by("-ts")
+        queryset = Respondant.objects.all().annotate(responses_count=Count("responses")).filter(responses_count__gte=1, complete__exact=True).order_by("-ts")
         #queryset = Respondant.objects.filter(responses_count__gte=1).order_by('-ts')
 
         filtering = {
@@ -212,16 +211,30 @@ class IncompleteRespondantResource(ReportRespondantResource):
         authentication = Authentication()
 
 
-class OLDDashRespondantResource(ReportRespondantResource):
-    user = fields.ToOneField('apps.account.api.UserResource', 'user', null=True, blank=True, full=True, readonly=True)
-
 
 class DashRespondantResource(ReportRespondantResource):
     """
     /api/v1/dashrespondant/
-    This endpoint is used by the searcxh box feature on the dashboard as an
-    autocomplete search field on text in the responses
+
+    /api/v1/dashrespondant/search   <-- Search Mode
+
+
+    This endpoint is used by the search box feature on the dashboard,
+    and by the respondent tables.
+
+    If using search mode endpoint, pagiantion is handled with the page parameter not
+    the offset parameter.  
+
+
+    To search by ecosystem features use 'ef':
     
+
+    To search:
+    /api/v1/dashrespondant/search?q=rocky
+
+    To seach complete surveys only
+    /api/v1/dashrespondant/search?q=rocky&complete=true
+
 
     """
     
@@ -251,19 +264,34 @@ class DashRespondantResource(ReportRespondantResource):
     duration = fields.CharField(attribute='duration', readonly=True)
     frequency = fields.CharField(attribute='frequency', readonly=True)
 
+    def apply_filters(self, request, applicable_filters):
+        # This enables filtering on items not included in the model.
+        # Overriding to filter on responses__answer__contains a string defined
+        # in the 'ef' list set in the request.
+
+        semi_filtered = super(DashRespondantResource, self).apply_filters(request, applicable_filters)
+
+        if 'ef' in request.GET:
+            # Include respondants that had any of the queried ecosystem features (OR them together)
+            efs = request.GET['ef'].split(',')
+            ef_filter = Q()
+            for ef in efs:
+                 ef_filter = ef_filter | Q(responses__answer__contains=ef)
+            
+            # Only for the ecosystem-features question
+            ef_filter = ef_filter & Q(responses__question__slug='ecosystem-features')
+            
+            return semi_filtered.filter(ef_filter)
+
+        else:
+            return semi_filtered
+
 
     def prepend_urls(self):
             return [
                 url(r"^(?P<resource_name>%s)/search%s$" % (self._meta.resource_name, trailing_slash()),
                     self.wrap_view('get_search'), name="api_get_search"),
             ]
-
-    def OLDget_object_list(self, request):
-
-        user_tags = [tag.name for tag in request.user.profile.tags.all()]
-        surveys = Survey.objects.filter(tags__name__in=user_tags)
-
-        return super(DashRespondantResource, self).get_object_list(request).filter(survey__in=surveys)
 
     def get_search(self, request, **kwargs):
         self.method_check(request, allowed=['get'])
@@ -274,12 +302,17 @@ class DashRespondantResource(ReportRespondantResource):
         limit = int(request.GET.get('limit', 20))
         query = request.GET.get('q', '')
         page = int(request.GET.get('page', 1))
+        complete = request.GET.get('complete',True)
         start_date = request.GET.get('start_date', None)
         end_date = request.GET.get('end_date', None)
         review_status = request.GET.get('review_status', None)
         entered_by = request.GET.get('entered_by', None)
         island = request.GET.get('island', None)
+        
+        
         sqs = SearchQuerySet().models(Respondant).load_all()
+        if complete == u'true':
+            sqs = sqs.filter(complete=True)
 
         if query != '':
             sqs = sqs.auto_query(query)
@@ -473,4 +506,3 @@ class SurveyReportResource(SurveyResource):
     activity_points = fields.IntegerField(attribute='activity_points', readonly=True)
     total_sites = fields.IntegerField(attribute='total_sites', readonly=True)
     num_orgs = fields.IntegerField(attribute='num_orgs', readonly=True)
-

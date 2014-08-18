@@ -5,9 +5,15 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
     $scope.activePage = 'explore';
     $scope.user = app.user || {};
     
-    $scope.resource = '/api/v1/completerespondant/';
     
-    $scope.respondents_per_page = 10;
+    // Setup respondent table params and options
+    var complete = ($scope.user.is_staff !== true)
+    $scope.respondentTable={
+        resource:'/api/v1/dashrespondant/',
+        params:{complete:complete},
+        options:{limit:10}
+    };
+
     
     //
     // Charts

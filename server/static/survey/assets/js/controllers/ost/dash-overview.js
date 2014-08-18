@@ -7,9 +7,18 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.activePage = 'overview';
         $scope.user = app.user || {};
 
+
         $scope.filtersJson = '';
         $scope.filters = { ecosystemFeatures: [] };
         
+        // Setup respondent table params and options
+        var complete = ($scope.user.is_staff !== true)
+        $scope.respondentTable={
+            resource:'/api/v1/dashrespondant/',
+            params:{complete:complete },
+            options:{limit:10}
+        };
+
         // Get or load survey
         $scope.survey = {};
         $scope.survey.slug = $routeParams.survey_slug;
@@ -30,15 +39,17 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.updateMap();
 
         $scope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
-            $scope.filtersJson = [];
             
+            // Update $scope.respondentTable so it reloads with new filters in place
+            $scope.respondentTable.params.ef = $scope.filters.ecosystemFeatures;
+
+
+            // Not sure where this is used
+            $scope.filtersJson = [];
             _.each($scope.filters.ecosystemFeatures, function (label) {
                 var slug = ecosystemLabelToSlug(label);
                 //$scope.filtersJson.push({'ecosystem-features': slug});
             });
-
-            // Update respondent table
-            $scope.goToPage(1, $scope.filters.ecosystemFeatures);
 
         });
     }
