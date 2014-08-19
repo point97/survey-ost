@@ -47,6 +47,7 @@ angular.module('askApp')
                     // Provide a displayLabel verstion that doesn't have
                     // any html formatting.
                     angular.forEach(vals, function(val) {
+                        if (_.startsWith(val, "Contextual") ) return;
                         options.push({
                             displayLabel: removeHtml(val),
                             value: val
