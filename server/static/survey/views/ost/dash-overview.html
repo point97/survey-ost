@@ -22,16 +22,7 @@
          slug-to-color="ecosystemSlugToColor(slug)"
          slug-to-label="ecosystemSlugToLabel(slug)"
          ></div>
-        <ul class="list-unstyled" id="map-legend">
-            <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
-                <span class="point" ng-style="{'color': ecosystemSlugToColor(slug)};">&#9679;</span> 
-                {{ecosystemSlugToLabel(slug)}}
-            </li>
-        </ul>
-
         <div class="row">
-
-
             <p>Use this interactive dashboard to explore results of the Central Coast Monitoring Survey. </p>
             <p>Showing reported monitoring sites with ecosystem features and human use categories:</p>
 
@@ -45,10 +36,10 @@
 
         <div class="row" id="map-legend">
             <div class="col-sm-12">
-                <h4>Ecosystem Feature</h4>
-                <ul class="list-unstyled">
+                <h4>Ecosystem Features</h4>
+                <ul class="list-unstyled" id="map-legend">
                     <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
-                        <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div> 
+                        <span class="point" ng-style="{'color': ecosystemSlugToColor(slug)};">&#9679;</span> 
                         {{ecosystemSlugToLabel(slug)}}
                     </li>
                 </ul>

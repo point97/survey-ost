@@ -120,7 +120,7 @@ footer, .main:after {
 
 #map-legend {
     li {
-        float:left;
+        display: inline-block;
         margin-right:9px;
     }
     .point {
