@@ -12,12 +12,13 @@
 
         <div class="answer">
             <strong>Data availability: </strong> 
-            <span>{{ getAnswe ('proj-data-availability') }}
+            <span>{{ getAnswer ('proj-data-availability') }}
                 <span ng-show='getAnswer("proj-data-availability") === "By request" || getAnswer("proj-data-availability") === "By request" '> at {{ getAnswer('proj-public-data') }}</span> 
             </span>
         </div>
 
-        <div ng-show="user">
+        
+        <div ng-show="user" class="padding-top">
             <h3>Financial Support and Capacity</h3>
             <div class="answer">
                 <strong>How is the data analyzed and shared? </strong>

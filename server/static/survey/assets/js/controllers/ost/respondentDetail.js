@@ -237,12 +237,9 @@ angular.module('askApp')
             respondent: '=',
             speciesAnswer: '=',
             htmlContent: '=',
+            user: '=',
         },
         link: function (scope, element, attrs) {
-            console.log("in link for " + scope.title)
-            console.log(scope.respondent)
-            console.log('speciesAnswer')
-            console.log(scope.speciesAnswer)
             scope.open = false;
             scope.angular_version = parseFloat(angular.version.major+'.'+angular.version.minor);
             scope.getAnswer = function(questionSlug) {

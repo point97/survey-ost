@@ -24,7 +24,6 @@ angular.module('askApp')
 
 
         if (typeof(respondent) === 'undefined') {
-            console.log("no respondents")
             return "";
         }
         try {
@@ -136,8 +135,7 @@ angular.module('askApp')
             //if (answer === '') answer = 'Not Available';
             
         } catch(e) {
-            console.log(questionSlug)
-            console.log(e)
+            console.log("No answer found for " + questionSlug);
             answer = '';
         }
 
