@@ -47,8 +47,6 @@
                          selected-values="filters.ecosystemFeatures"
                          ></div>
                 </div>
-
-                
             </li>
             <li ng-show="user.is_superuser">
                 <a ng-class="{'active': activePage == 'responses'}" href="#/RespondantList/{{survey.slug}}">Projects</a>
@@ -58,8 +56,8 @@
                 <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/{{survey.slug}}">Download</a>
             </li>
 
-            <li>
-                <a href="http://oceanspaces.org/program/central-coast-ongoing-mpa-monitoring-program">About</a>
+            <li class="leaf">
+                <a ng-class="{'active': activePage == 'about'}" href="#/about/{{survey.slug}}">About</a>
             </li>
 
         </ul>

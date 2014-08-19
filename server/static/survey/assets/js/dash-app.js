@@ -67,6 +67,11 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         controller: 'DashWelcomeCtrl',
         reloadOnSearch: false
     })
+    .when('/about/:surveySlug', {
+        templateUrl: '/static/survey/views/ost/dash-about.html',
+        controller: 'DashAboutCtrl',
+        reloadOnSearch: false
+    })
     .when('/explore/:surveySlug', {
         templateUrl: '/static/survey/views/ost/dash-explore.html',
         controller: 'DashExploreCtrl',
