@@ -95,7 +95,7 @@ footer, .main:after {
     MAP LEGEND
  */
 #map-legend li {
-  float: left;
+  display: inline-block;
   margin-right: 9px; }
 #map-legend .point {
   font-size: 1.6em;
