@@ -477,7 +477,6 @@ class Question(caching.base.CachingMixin, models.Model):
             locations = LocationAnswer.objects.filter(location__response__in=answers)
 
         # Apply filters.        
-        import pdb; pdb.set_trace()
         if filters is not None:
             for filter in filters:
                 slug = filter.keys()[0]
