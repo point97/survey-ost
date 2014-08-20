@@ -201,13 +201,24 @@ angular.module('askApp')
             template:"<div class='help-link' ng-click='open()'>Dive Deeper <span class='glyphicon glyphicon-info-sign'></span></div>",
             link : function(scope){
                 scope.open = function () {
-                    var modalInstance = $modal.open({
-                      templateUrl: app.viewPath + 'views/ost/helpModalContent.html',
-                      controller: HelpModalInstanceCtrl,
-                      size: 'lg',
-                      resolve: {}
+                    scope.modalInstance = $modal.open({
+                        templateUrl: app.viewPath + 'views/ost/ecosystem-desriptions-modal.html',
+                        windowClass: 'help-modal ef-descriptions-modal',
+                        controller: function ($scope, $modalInstance) {
+                            $scope.ok = function () {
+                                $modalInstance.close();
+                            };
+
+                            $scope.scrollToDef = function (elemId) {
+                                var container = $('.def-container'),
+                                    scrollTo = $(elemId);
+                                container.animate({
+                                    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 5
+                                }, 200);
+                            };                        
+                        }
                     });
-                  };
+                };
             }
         }
     }]);
