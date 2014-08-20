@@ -162,9 +162,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
             list += '<dt>Ecosystem Features</dt>';
             
-            list += '<dd><ul class="list-unstyled">';
+            list += '<dd><ul class="list-unstyled" id="map-legend">';
             list += '<li ng-repeat="slug in project.ecosystem_features">';
-            list += '<div class="circle margin-right" ng-style="{\'background-color\': ecosystemSlugToColor(slug)};">&nbsp;</div>{{ecosystemSlugToLabel(slug)}}';
+            list += '<span class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>{{ecosystemSlugToLabel(slug)}}';
             list += '</li>';
             list += '</ul></dd>';
 
