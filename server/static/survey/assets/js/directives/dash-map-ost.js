@@ -38,6 +38,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
             MapUtils.addBoundary(scope.boundaryPath, function (layer) {
                 scope.boundaryLayer.addLayer(layer)
+                scope.boundaryLayer.bringToBack()
             });
 
             puPromise = $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json")
@@ -130,9 +131,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
                     scope.puLayer.addLayer(L.geoJson(filtered, {
                         style: {
-                            "color": '#FFFF00',
-                            "fillColor": '#FFFF00',
-                            "fillOpacity": 0.5,
+                            "color": "#E6D845",
+                            "fillColor": "#E6D845",
+                            "weight": 1,
                             "clickable": true
                         },
                         onEachFeature: function(feature, layer) {
@@ -318,7 +319,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 // Add study area boundary
                 $http.get(geojsonPath).success(function(data) {
                     var boundaryStyle = {
-                        "color": "#E6D845",
+                        "color": '#FF8C00',
                         "weight": 2,
                         "opacity": 0.6,
                         "fillOpacity": 0.0,
