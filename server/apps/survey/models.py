@@ -118,6 +118,11 @@ class Respondant(caching.base.CachingMixin, models.Model):
             return 'unavailable'
 
     @property
+    def ecosystem_feature_answer_slugs(self):
+        answers = self.response_set.filter(question__slug__contains="ef-")
+        return [a.question.slug for a in answers]
+
+    @property
     def duration(self):
         try:
             return self.responses.filter(question__slug='proj-data-years')[0].answer
@@ -631,6 +636,12 @@ class Response(caching.base.CachingMixin, models.Model):
         if not self.ts:
             self.ts = datetime.datetime.utcnow().replace(tzinfo=utc)
         super(Response, self).save(*args, **kwargs)
+
+
+
+    def question_slug(self):
+        return self.question.slug
+    question_slug.admin_order_field = 'question__slug'
 
     def generate_flat_dict(self):
         flat = {}

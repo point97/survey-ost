@@ -27,6 +27,7 @@ angular.module('askApp')
             return "";
         }
         try {
+            
             var question = _.findWhere(respondent.responses, {question: questionSlug});
             var answer = '';
             
@@ -135,8 +136,16 @@ angular.module('askApp')
             //if (answer === '') answer = 'Not Available';
             
         } catch(e) {
-            console.log("No answer found for " + questionSlug);
-            answer = '';
+            
+            
+            if (question) {
+                console.log('using "other" answer for '+questionSlug);
+                answer = question.answer;
+            } else {
+                console.log("No answer found for " + questionSlug);
+                answer = '';
+            }
+            
         }
 
         if (answer === 'NA' || answer === 'NO_ANSWER') {

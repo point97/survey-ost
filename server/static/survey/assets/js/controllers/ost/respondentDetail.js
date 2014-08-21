@@ -55,7 +55,6 @@ angular.module('askApp')
     $scope.getAnswer = function(questionSlug) {
         return history.getAnswer(questionSlug, $scope.respondent);
 
-        
     };
 
 
@@ -65,7 +64,8 @@ angular.module('askApp')
 
 
     $scope.answerContains = function (questionSlug, val) {
-        return $scope.getAnswer(questionSlug).indexOf(val) > -1;
+        var answers = $scope.getAnswer(questionSlug);        
+        return answers.indexOf(val) > -1;
     };
 
 
@@ -242,6 +242,7 @@ angular.module('askApp')
         link: function (scope, element, attrs) {
             scope.open = false;
             scope.angular_version = parseFloat(angular.version.major+'.'+angular.version.minor);
+            console.log(scope.speciesAnswer)
             scope.getAnswer = function(questionSlug) {
                 return history.getAnswer(questionSlug, scope.respondent);
             };
