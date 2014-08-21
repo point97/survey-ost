@@ -17,7 +17,7 @@ angular.module('askApp')
         link: function postLink(scope, element, attrs) {
             _.mixin(_.str.exports()); // Attach underscore.string to underscore so you can use _.startsWtih()
             scope.model = {};
-
+            scope.element = element;
             function setFilterOptions () {
                 var removeHtml = function (html) {
                     var regex = /(<([^>]+)>)/ig,
@@ -47,6 +47,7 @@ angular.module('askApp')
                     // Provide a displayLabel verstion that doesn't have
                     // any html formatting.
                     angular.forEach(vals, function(val) {
+                        if (_.startsWith(val, "Contextual") ) return;
                         options.push({
                             displayLabel: removeHtml(val),
                             value: val
@@ -61,7 +62,13 @@ angular.module('askApp')
             }
             scope.selectionChanged = function (value) {
                 scope.selectedValues = scope.model.selectedValuesInternal;
+                if (scope.$parent.filters && scope.$parent.updateMap){
+                    scope.$parent.filters.ecosystemFeatures = scope.selectedValues;    
+                    scope.$parent.updateMap();
+                }
+                
             };
+
 
             setFilterOptions();
         }

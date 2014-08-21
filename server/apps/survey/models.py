@@ -118,6 +118,11 @@ class Respondant(caching.base.CachingMixin, models.Model):
             return 'unavailable'
 
     @property
+    def ecosystem_feature_answer_slugs(self):
+        answers = self.response_set.filter(question__slug__contains="ef-")
+        return [a.question.slug for a in answers]
+
+    @property
     def duration(self):
         try:
             return self.responses.filter(question__slug='proj-data-years')[0].answer
@@ -257,6 +262,34 @@ class Survey(caching.base.CachingMixin, models.Model):
     def activity_points(self):
         return Location.objects.filter(response__respondant__in=self.respondant_set.filter(complete=True)).count()
 
+    @property
+    def total_sites(self):
+        """
+        The sum of all points and unique planning unit ids. 
+
+        Returns and integer
+        """
+        num_pus = PlanningUnitAnswer.objects.filter(respondant__in=self.respondant_set.filter(complete=True)).values('unit').distinct().count()
+        num_points = Location.objects.filter(response__respondant__in=self.respondant_set.filter(complete=True)).count()
+
+        return num_points + num_pus
+    
+
+    @property
+    def num_orgs(self):
+        """
+        Trys to get the total number of distinct organizations that responded based on Org name.
+
+        Returns an Integer
+        """
+        
+        return Response.objects.filter(respondant__survey=self, respondant__complete = True, question__slug='org-name').values('answer').distinct().count()
+
+         
+
+
+
+
     def generate_field_names(self):
         fields = OrderedDict()
         for q in Question.objects.filter(question_page__survey=self).order_by('question_page__order', 'order'):
@@ -352,7 +385,10 @@ class Question(caching.base.CachingMixin, models.Model):
     type = models.CharField(max_length=20,choices=QUESTION_TYPE_CHOICES,default='text')
     options = models.ManyToManyField(Option, null=True, blank=True)
     options_json = models.TextField(null=True, blank=True)
-    rows = models.TextField(null=True, blank=True)
+    rows = models.TextField(null=True, blank=True,
+        help_text="""A newline seperated list of options. These can be placed 
+            an categories by starting a category with a '*'. DO NOT USE THE '&' 
+            character anywhere in here. """)
     cols = models.TextField(null=True, blank=True)
     info = models.CharField(max_length=254, null=True, blank=True)
     grid_cols = models.ManyToManyField(Option, null=True, blank=True, related_name="grid_cols")
@@ -428,6 +464,17 @@ class Question(caching.base.CachingMixin, models.Model):
     def report_types(self):
         return REPORT_TYPE_CHOICES
 
+
+    @property
+    def rows2list(self):
+        out = [row.strip() for row in self.rows.split("\n")]
+        return out
+
+    def sort_by_rows(self, x):
+        choices = self.rows2list
+        _map = dict((val, i) for i, val in enumerate(choices))
+        return _map[x['answer']]
+
     def get_answer_domain(self, survey, filters=None):
         # Get the full response set.
         answers = self.response_set.filter(respondant__complete=True)
@@ -473,7 +520,16 @@ class Question(caching.base.CachingMixin, models.Model):
             return (MultiAnswer.objects.filter(response__in=answers)
                                        .values('answer_text')
                                        .annotate(surveys=Count('answer_text')))
+        elif self.rows:
+
+            res = (answers.values('answer')
+                           .annotate(locations=Sum('respondant__locations'), surveys=Count('answer')))
+            out = sorted(res, key=self.sort_by_rows)
+
+            return out
         else:
+            
+
             return (answers.values('answer')
                            .annotate(locations=Sum('respondant__locations'), surveys=Count('answer')))
     @property
@@ -580,6 +636,12 @@ class Response(caching.base.CachingMixin, models.Model):
         if not self.ts:
             self.ts = datetime.datetime.utcnow().replace(tzinfo=utc)
         super(Response, self).save(*args, **kwargs)
+
+
+
+    def question_slug(self):
+        return self.question.slug
+    question_slug.admin_order_field = 'question__slug'
 
     def generate_flat_dict(self):
         flat = {}

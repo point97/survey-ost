@@ -205,11 +205,6 @@ LOGGING = {
     }
 }
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-)
-
 STATICFILES_FINDERS = global_settings.STATICFILES_FINDERS + (
     'compressor.finders.CompressorFinder',
 )
@@ -232,6 +227,7 @@ ANALYTICS_ID = ""
 #TEST_RUNNER = 'discover_runner.DiscoverRunner'
 
 LOGIN_URL = '/admin/login'
+LOGIN_REDIRECT = '/dash/'
 
 HAYSTACK_CONNECTIONS = {
     'default': {

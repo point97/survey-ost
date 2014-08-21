@@ -1,8 +1,12 @@
+/*
+The pieChart directive is used to create the charts on OST Explore page.
+The OST bar charts are created using 'stackedColumn' in charts.js 
+*/
 angular.module('askApp')
     .directive('stackedBar', function() {
 
         return {
-            template: '<div class="stacked-bar" style="min-width: 100%; height: 400px; margin: 0 auto"></div>',
+            template: '<div class="stacked-bar" style="min-width: 100%; margin: 0 auto"></div>',
             restrict: 'EA',
             replace: true,
             transclude: true,
@@ -15,7 +19,7 @@ angular.module('askApp')
                     chart: {
                         type: 'bar'
                     },
-                    exporting :{url:"http://export.highcharts.com"},
+                    exporting :{url:HC_EXPORT_SERVER_URL},
                     title: {
                         text: scope.chart.title
                     },
@@ -42,7 +46,6 @@ angular.module('askApp')
                             point: {
                                 events: {
                                     click: function(e) {
-                                        debugger;
                                         scope.$apply(function(s) {
                                             s.filter.category = e.point.category;
                                             s.filter.name = e.point.series.name;
@@ -107,7 +110,7 @@ angular.module('askApp')
                             pie: {
                                 startAngle: 180,
                                 dataLabels: {
-                                    enabled: true,
+                                    enabled: false,
                                     distance: 4,
                                     style: {
                                         fontWeight: 'bold',
@@ -117,14 +120,18 @@ angular.module('askApp')
                                     format: '{point.name}',
                                     connectorWidth: 0
                                 },
-                                size: '75%'
+                                size: '75%',
+                                showInLegend: true
                             }
                         },
                         series: [{
                             type: 'pie',
-                            innerSize: '50%',
+                            innerSize: '40%',
                             data: scope.chart.data
-                        }]
+                        }],
+                        legend : {
+                            layout: 'vertical'
+                        }
                     });    
                 }
                 

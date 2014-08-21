@@ -1,45 +1,34 @@
-<div class="container dash-welcome" ng-cloak>
-   
-    <div class="row">
-        <div ng-include="'/static/survey/views/sideNav.html'"></div>
-        <div class="col-md-9 col-sm-9">
-            <div class="row">
-                <div ng-include="'/static/survey/views/ost/dash-header.html'"></div>
-            </div>
+<div ng-include="'/static/survey/views/sideNav.html'"></div>
+<div class="main dash-welcome" ng-cloak>
+    <div class="row" ost-header></div>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4>Welcome!</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-7">
-                    <p>Content that helps descrive, introduce and orient site visitors to the background of the survey and it's purpose so that they are encouraged to explore the dashbaord.</p>
-                    <p>And even more text.....etc.</p>
-                </div>
-                <div class="col-sm-5">
-                    <img width="100%" src="http://placehold.it/300x200" alt="placeholder">
-                    <div class="centered margin-top">
-                        <a href="#" class="os-btn default">
-                            Learn More - CC Community
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <div class="main-content">
+        <div class="row">
+            <h2>{{page_title}}</h2>
+            <div class="col-sm-7">
+                <p>This interactive dashboard provides a platform for you to explore results of the Central Coast Monitoring Survey. The California Ocean Science Trust, together with its partners at the California Department of Fish and Wildlife and the California Ocean Protection Council, will use these results to help design and implement the next phase of MPA monitoring in the Central Coast. <p>
+                <ul>
+                    <li>Monitoring Activities - Explore the types and locations of data collected in the Central Coast.</li>
+                    <li>Community Overview - Learn about the organizations that are collecting data in the Central Coast</li>
+                </ul> 
+                <p>About - Learn more about this dashboard, the Central Coast Monitoring Survey, and the monitoring planning effort that is currently underway”</p>
 
-            <div class="row centered">
-                <div class="col-sm-12">
-                    <img src="/static/survey/assets/img/oceanspaces_ca_cc_region.jpg" alt="">
-                </div>
-            </div>
-            <div class="row">
-                <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
-            </div>
+                <p class="centered">
+                    <a href="#/explore/{{survey.slug}}" class="os-btn default">
+                        Learn More - Community Overview
+                    </a>
+                </p>
 
+            </div>
+            <div class="col-sm-5 center">
+                <img class="welcome" src="/static/survey/assets/img/oceanspaces_ca_cc_region.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="row centered">
+            <div class="col-sm-12">
+            </div>
+        </div>
         </div> <!-- End main content -->
-
-
-
-    </div>
-
-</div> 
+</div>
+<div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>

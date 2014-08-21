@@ -109,20 +109,25 @@ def get_planning_unit_answers(request, survey_slug, question_slug):
             if question_slug.find('*') == -1:
                 pu_answers = PlanningUnitAnswer.objects.filter(response__respondant__uuid=uuid,
                                                           response__question__slug=question_slug,
-                                                          respondant__complete=True)
+                                                          )
             else:
                 pu_answers = PlanningUnitAnswer.objects.filter(response__respondant__uuid=uuid,
                                                           response__question__slug__contains=question_slug.replace('*', ''),
-                                                          respondant__complete=True)
+                                                          )
         else:
             if question_slug.find('*') == -1:
                 pu_answers = PlanningUnitAnswer.objects.filter(response__respondant__survey=survey,
                                                           response__question__slug=question_slug,
-                                                          respondant__complete=True)
+                                                          )
             else:
                 pu_answers = PlanningUnitAnswer.objects.filter(response__respondant__survey=survey,
                                                           response__question__slug__contains=question_slug.replace('*', ''),
-                                                          respondant__complete=True)
+                                                          )
+            
+            if not request.user.is_authenticated():
+                pu_answers = pu_answers.filter(respondant__complete=True)
+
+
         filter_list = []
         filters = None
 
@@ -194,6 +199,8 @@ def _get_answer_domain(request, survey_slug, question_slug):
     answer_domain = []
     for question in questions:
         answer_domain = answer_domain + list(question.get_answer_domain(survey, filter_list))
+
+
 
     return answer_domain
 

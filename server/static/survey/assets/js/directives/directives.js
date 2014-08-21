@@ -36,7 +36,7 @@ angular.module('askApp')
         },
         link: function (scope, element, attrs) {
             scope.percent = (scope.value/scope.max) * 100;
-            console.log(scope.percent);
+            
         }
     }
 });
@@ -147,17 +147,92 @@ angular.module('askApp')
                 element.css("position","relative");
                 
                 scope.$watch('survey', function(newVal){
-                    console.log("in watch");
-                    console.log(newVal);
 
                     if (newVal && newVal.id) {
-                        console.log('Surveys loaded');
                         scope.survey.loading = false;
-                        console.log(scope.survey.loading);
                         element.find(".loader").hide();
                     }
                 });
             }
         };
     });
+
+angular.module('askApp')
+    .directive('back', ['$window', function($window) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                elem.bind('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
+
+angular.module('askApp')
+    .directive('ostHeader', ['$window', 'AuthService', function($window, AuthService) {
+        AuthService = AuthService;
+        return {
+            restrict: 'A',
+            templateUrl : app.viewPath + 'views/ost/dash-header.html',
+            link: function (scope, elem, attrs) {
+                scope.AuthService = AuthService;
+                scope.authenticate_user = function(){
+                    
+                    console.log(scope.credentials);
+
+                    scope.credentials.failed = false;
+                    scope.AuthService.login({'username':scope.credentials.username, 'password':scope.credentials.password}, function(){
+                        console.log('in login callback on ost-Header');
+                        $window.location.reload();
+                    }, function(data, status){
+                        console.log('failed to login')
+                        scope.credentials.failed = true;
+                    });
+                };
+
+            }
+        };
+    }]);
+
+angular.module('askApp')
+    .directive('helpModal', ['$modal', function($modal){
+        return {
+            template:"<div class='help-link' ng-click='open()'>Dive Deeper <span class='glyphicon glyphicon-info-sign'></span></div>",
+            link : function(scope){
+                scope.open = function () {
+                    scope.modalInstance = $modal.open({
+                        templateUrl: app.viewPath + 'views/ost/ecosystem-desriptions-modal.html',
+                        windowClass: 'help-modal ef-descriptions-modal',
+                        controller: function ($scope, $modalInstance) {
+                            $scope.ok = function () {
+                                $modalInstance.close();
+                            };
+
+                            $scope.scrollToDef = function (elemId) {
+                                var container = $('.def-container'),
+                                    scrollTo = $(elemId);
+                                container.animate({
+                                    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 5
+                                }, 200);
+                            };                        
+                        }
+                    });
+                };
+            }
+        }
+    }]);
+
+
+var HelpModalInstanceCtrl = function ($scope, $modalInstance) {
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
+
 

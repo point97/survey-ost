@@ -1,13 +1,35 @@
 
 angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils, survey) {
 
+    $scope.page_title = "What and Where?";
     $scope.loadingSurveys = true;
     function initPage () {
         $scope.activePage = 'overview';
         $scope.user = app.user || {};
 
+
         $scope.filtersJson = '';
         $scope.filters = { ecosystemFeatures: [] };
+        
+        // Setup respondent table params and options
+        var complete = ($scope.user.is_staff !== true)
+        $scope.respondentTable={
+            resource:'/api/v1/dashrespondant/',
+            params:{complete:complete },
+            options:{limit:10}
+        };
+
+        // Get or load survey
+        $scope.survey = {};
+        $scope.survey.slug = $routeParams.survey_slug;
+
+        $scope.survey.loading = true;
+        surveyFactory.getSurvey(function (data) {
+            data.questions.reverse();
+            $scope.survey = data;
+        });
+    
+
         $scope.mapSettings = {
             questionSlugPattern: '*-collection-points',
             lat: 35.8336630,
@@ -17,16 +39,17 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.updateMap();
 
         $scope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
-            $scope.filtersJson = [];
             
+            // Update $scope.respondentTable so it reloads with new filters in place
+            $scope.respondentTable.params.ef = $scope.filters.ecosystemFeatures;
+
+
+            // Not sure where this is used
+            $scope.filtersJson = [];
             _.each($scope.filters.ecosystemFeatures, function (label) {
                 var slug = ecosystemLabelToSlug(label);
-                console.log('eco label to slug: ' + slug);
                 //$scope.filtersJson.push({'ecosystem-features': slug});
             });
-
-            // Update respondent table
-            $scope.goToPage(1, $scope.filters.ecosystemFeatures);
 
         });
     }
@@ -45,7 +68,6 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
 
     $scope.$watch('survey', function(newVal){
         if (newVal) {
-            console.log("Surveys loaded");
             $scope.loadingSurveys = false;
         }
     });
@@ -68,7 +90,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         if (action === 'clear') {
             $(".sidebar_nav .multi-select2").select2('data', null);
             $scope.filters.ecosystemFeatures = [];
-            $scope.$apply();
+            //$scope.$apply();
         }
 
         var filtersJson = _.map($scope.filters.ecosystemFeatures, function (label) {

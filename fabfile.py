@@ -191,7 +191,7 @@ def push():
 
 
 @task
-def deploy(branch="master"):
+def deploy(branch="staging"):
     set_env_for_user(env.user)
     env.branch = branch
     push()
@@ -229,7 +229,7 @@ def restart():
 @task
 def restore(file=None):
     if file is not None:
-        run(" pg_restore --verbose --clean --no-acl --no-owner -d %s /vagrant/%s" % (project, file))
+        run(" pg_restore --verbose --clean --create --no-acl --no-owner -d %s /vagrant/%s" % (project, file))
 
 @task
 def vagrant(username='vagrant'):

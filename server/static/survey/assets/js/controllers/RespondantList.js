@@ -7,13 +7,22 @@ angular.module('askApp')
     }])
     .controller('RespondantListCtrl', function($scope, $http, $routeParams, $location, history, surveyFactory) {
 
+    $scope.page_title = "Search Results"
+    $scope.user = app.user || {};
     $scope.searchTerm = $location.search().q;
-    $scope.resource = '/api/v1/dashrespondant/';
+    
+    // Setup respondent table params and options
+    var complete = ($scope.user.is_staff !== true);
+    $scope.respondentTable={
+        resource:'/api/v1/dashrespondant/search',
+        params:{complete:complete},
+        options:{limit:10}
+    };
+
     
     $scope.survey = {};
-    $scope.survey.slug = $routeParams.survey_slug;    
+    $scope.survey.slug = $routeParams.survey_slug;
 
-    $scope.busy = true;
     $scope.viewPath = app.server + '/static/survey/';
     $scope.activePage = 'responses';
 
@@ -21,26 +30,6 @@ angular.module('askApp')
         data.questions.reverse();
         $scope.survey = data;
     });
-
-    if ($scope.searchTerm){
-        var url = '/api/v1/dashrespondant/search/?format=json&q=' + $scope.searchTerm;
-    } else {
-        var url = '/api/v1/dashrespondant/?format=json';
-    }
-
-    $http.get(url).success(function(data) {
-        $scope.respondents = data.objects;
-        $scope.meta = data.meta;
-        $scope.responsesShown = $scope.respondents.length;
-        $scope.busy = false;
-    });
-
-
-
-    $scope.OLDshowRespondent = function (respondent) {
-        var path = ['/RespondantDetail', $routeParams.surveySlug, respondent.uuid].join('/');
-        $location.path(path);
-    };
 
 
     $scope.getAnswer = function(questionSlug, respondent) {

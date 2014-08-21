@@ -1,9 +1,9 @@
 
-angular.module('askApp').controller('DashWelcomeCtrl', function($scope, $routeParams, $window, surveyFactory) {
+angular.module('askApp').controller('DashAboutCtrl', function($scope, $routeParams, $window, surveyFactory) {
     
     //$scope.screen_height = angular.element($window).height();
-    $scope.page_title = "Welcome to the Central Coast Monitoring Dashboard!";
-    $scope.activePage = 'welcome';
+    $scope.page_title = "About the Central Coast Monitoring Dashboard";
+    $scope.activePage = 'about';
     $scope.user = app.user || {};
     $scope.filters = {};
     $scope.filtersJson = '';
