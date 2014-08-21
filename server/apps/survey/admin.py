@@ -6,13 +6,15 @@ from survey.models import (Survey, Question, Option, Response, Respondant,
 
 class RespondantAdmin(admin.ModelAdmin):
     readonly_fields=('uuid', 'responses')
-    list_display = ('uuid', 'ts', 'complete','last_question')
+    list_display = ('uuid', 'ts', 'complete','last_question','project_name', 'monitored_ecosystem_features', 'ecosystem_feature_answer_slugs')
     search_fields = ['uuid']
 
 
-class ResponseAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'ts',)
 
+
+class ResponseAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'ts', 'answer', 'answer_raw', 'question_slug')
+    list_filter = ['question__slug', 'respondant']
 
 
 class PageInline(admin.TabularInline):
