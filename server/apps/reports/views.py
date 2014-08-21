@@ -123,6 +123,11 @@ def get_planning_unit_answers(request, survey_slug, question_slug):
                 pu_answers = PlanningUnitAnswer.objects.filter(response__respondant__survey=survey,
                                                           response__question__slug__contains=question_slug.replace('*', ''),
                                                           )
+            
+            if not request.user.is_authenticated():
+                pu_answers = pu_answers.filter(respondant__complete=True)
+
+
         filter_list = []
         filters = None
 
