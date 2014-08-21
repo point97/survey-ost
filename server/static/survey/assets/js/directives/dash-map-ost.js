@@ -38,6 +38,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
             MapUtils.addBoundary(scope.boundaryPath, function (layer) {
                 scope.boundaryLayer.addLayer(layer)
+                scope.boundaryLayer.bringToBack()
             });
 
             puPromise = $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json")
@@ -130,9 +131,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
                     scope.puLayer.addLayer(L.geoJson(filtered, {
                         style: {
-                            "color": '#FFFF00',
-                            "fillColor": '#FFFF00',
-                            "fillOpacity": 0.5,
+                            "color": "#E6D845",
+                            "fillColor": "#E6D845",
+                            "weight": 1,
                             "clickable": true
                         },
                         onEachFeature: function(feature, layer) {
@@ -156,17 +157,12 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             var list = '';
         
             list += '<h4>Projects</h4>';            
-            
             list += '<dl ng-cloak>'; 
             list += '<div ng-repeat="project in planningUnit.data.projects">';
-            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
-            list += '<dt>Ecosystem Features</dt>';
-            
-            list += '<dd><ul class="list-unstyled">';
-            list += '<li ng-repeat="slug in project.ecosystem_features">';
-            list += '<div class="circle margin-right" ng-style="{\'background-color\': ecosystemSlugToColor(slug)};">&nbsp;</div>{{ecosystemSlugToLabel(slug)}}';
-            list += '</li>';
-            list += '</ul></dd>';
+            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
+            list += '<div id="map-legend">';
+            list += '<span ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
+            list += '</div>';
 
             list += '</div>'; // End ng-repeat: planningUnit.data.projects
             list += '</dl>';
@@ -323,7 +319,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 // Add study area boundary
                 $http.get(geojsonPath).success(function(data) {
                     var boundaryStyle = {
-                        "color": "#E6D845",
+                        "color": '#FF8C00',
                         "weight": 2,
                         "opacity": 0.6,
                         "fillOpacity": 0.0,
