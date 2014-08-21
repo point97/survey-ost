@@ -36,6 +36,7 @@
              zoom="mapSettings.zoom"
              points="mapSettings.mapPoints"
              units="mapSettings.mapPlanningUnits"
+             active-project="uuid"
              boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
              show-popups="mapSettings.showPopups"
              slug-to-color="ecosystemSlugToColor(slug)"
@@ -56,16 +57,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <div class="answer-panels">
-                    <div answers-panel 
-                        ng-hide="user.username"
-                        title="'Project Information / Data Sharing'" 
-                        html-content="viewPath + 'views/ost/answers/project.html'"
-                        species-answer="''"
-                        respondent="respondent"></div>
-
                      <div answers-panel 
-                        ng-show="user.username"
-                        title="'Project Information / Data Sharing / Financial Info'" 
+                        title="'Project Information / Data Sharing' + (user.username ? ' / Financial Info' : '')" 
                         html-content="viewPath + 'views/ost/answers/project.html'"
                         species-answer="''"
                         respondent="respondent"></div>

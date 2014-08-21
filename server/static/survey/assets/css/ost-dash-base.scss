@@ -129,6 +129,11 @@ footer, .main:after {
     }
 }
 
+.leaflet-popup #map-legend .point {
+    cursor: pointer;
+}
+
+
 .circle {
     display:inline-block;
     border-radius: 50%;
@@ -151,7 +156,7 @@ footer, .main:after {
     }
 }
 
-.popup-content.planning-unit h5{
+.leaflet-popup-content h5{
     text-transform: none;
     font-size: 16px;
 }
