@@ -26,6 +26,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
 
+        # Monitoring Commercial Landing Data in California
         respondent = Respondant.objects.get(pk="cbdb7c1a-900b-4634-ad0b-e429441e122f")
         response = respondent.responses.filter(question__slug="ecosystem-features")
         print "Fixing %s" %(respondent.project_name)
@@ -45,8 +46,8 @@ class Command(BaseCommand):
             response.answer_raw = json.dumps(answer)
             response.save()
 
-
-
+            
+        # CA Commercial Grounfish Port Sampling 
         respondent = Respondant.objects.get(pk="84a1243b-3c64-4fd9-b4d6-7039e6dfa2f4")
         response = respondent.responses.filter(question__slug="ecosystem-features")
         print "Fixing %s" %(respondent.project_name)
@@ -59,4 +60,6 @@ class Command(BaseCommand):
 
             response.answer_raw = json.dumps(answer)
             response.save()
+
+        
 
