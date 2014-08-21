@@ -156,17 +156,12 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             var list = '';
         
             list += '<h4>Projects</h4>';            
-            
             list += '<dl ng-cloak>'; 
             list += '<div ng-repeat="project in planningUnit.data.projects">';
-            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
-            list += '<dt>Ecosystem Features</dt>';
-            
-            list += '<dd><ul class="list-unstyled" id="map-legend">';
-            list += '<li ng-repeat="slug in project.ecosystem_features">';
-            list += '<span class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>{{ecosystemSlugToLabel(slug)}}';
-            list += '</li>';
-            list += '</ul></dd>';
+            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
+            list += '<div id="map-legend">';
+            list += '<span ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
+            list += '</div>';
 
             list += '</div>'; // End ng-repeat: planningUnit.data.projects
             list += '</dl>';
