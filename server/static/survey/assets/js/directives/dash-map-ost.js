@@ -156,7 +156,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             var popup = '';
             var list = '';
         
-            list += '<h4>Projects</h4>';            
+            list += '<h4>Projects</h4>';
             list += '<dl ng-cloak>'; 
             list += '<div ng-repeat="project in planningUnit.data.projects">';
             list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
@@ -196,10 +196,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 popup = '',
                 list = '';
             
+            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
             list += '<dt>Ecosystem Feature:</dt>';
             list += '<dd>{{ ecosystemLabel }}</dd>';
-            list += '<dt>Title:</dt>';
-            list += '<dd>{{ responses["proj-title"] }}</dd>';
             list += '<dt>Duration:</dt>';
             list += '<dd>{{ responses["proj-data-years"].text }}</dd>';
             list += '<dt>Frequency:</dt>';
@@ -207,7 +206,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             list += '<dt>Data Availability:</dt>';
             list += '<dd>{{ responses["proj-data-availability"].text }}</dd>';
 
-            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
             list += '<dt>Ecosystem Features</dt>';
                         list += '<ul class="list-unstyled">';
             list += '<li ng-repeat="slug in project.ecosystem_features">';
@@ -224,6 +222,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 scope.responses = false;
                 getRespondent(markerData.uuid, function (responses) {
                     scope.responses = responses;
+                    scope.uuid = markerData.uuid
                     scope.ecosystemLabel =  scope.slugToLabel({slug: markerData.qSlug});
                     // The popup is added to the DOM outside of the angular framework so
                     // its content must be compiled for any interaction with this scope.
