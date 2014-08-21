@@ -101,6 +101,9 @@ footer, .main:after {
   font-size: 1.6em;
   line-height: 0.5; }
 
+.leaflet-popup #map-legend .point {
+  cursor: pointer; }
+
 .circle {
   display: inline-block;
   border-radius: 50%;

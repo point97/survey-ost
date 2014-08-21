@@ -129,6 +129,11 @@ footer, .main:after {
     }
 }
 
+.leaflet-popup #map-legend .point {
+    cursor: pointer;
+}
+
+
 .circle {
     display:inline-block;
     border-radius: 50%;
