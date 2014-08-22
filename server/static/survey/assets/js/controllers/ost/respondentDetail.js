@@ -233,7 +233,7 @@ angular.module('askApp')
         replace: true,
         transclude: true,
         scope: {
-            title: '=',
+            panelTitle: '=',
             respondent: '=',
             speciesAnswer: '=',
             htmlContent: '=',

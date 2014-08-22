@@ -58,14 +58,14 @@
             <div class="col-sm-12 col-md-12">
                 <div class="answer-panels">
                      <div answers-panel 
-                        title="'Project Information / Data Sharing' + (user.username ? ' / Financial Info' : '')" 
+                        panel-title="'Project Information / Data Sharing' + (user.username ? ' / Financial Info' : '')"
                         html-content="viewPath + 'views/ost/answers/project.html'"
                         species-answer="''"
                         respondent="respondent"></div>
 
 
                     <div answers-panel 
-                        title="'Data Collection'"
+                        panel-title="'Data Collection'"
                         html-content="viewPath + 'views/ost/answers/data.html'"
                         species-answer="''"
                         respondent="respondent"></div>
@@ -73,7 +73,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Rocky Intertidal Ecosystems')">
                         <div answers-panel 
-                            title="'Rocky Intertidal Ecosystems'"
+                            panel-title="'Rocky Intertidal Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-rockyintertidal-species')"
                             respondent="respondent"></div>
@@ -82,7 +82,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Kelp and Shallow (0-30m) Rock')">
                         <div answers-panel 
-                            title="'Kelp and Shallow (0-30m) Rock'"
+                            panel-title="'Kelp and Shallow (0-30m) Rock'"
                             html-content="''"
                             species-answer="getAnswer('ef-kelp-and-shallow-rock-species')"
                             respondent="respondent"></div>
@@ -91,7 +91,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Mid depth (30-100m) Rock Ecosystems')">
                         <div answers-panel 
-                            title="'Mid depth (30-100m) Rock Ecosystems'"
+                            panel-title="'Mid depth (30-100m) Rock Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-middepthrock-species')"
                             respondent="respondent"></div>
@@ -100,7 +100,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Estuarine and Wetland Ecosystems')">
                         <div answers-panel 
-                            title="'Estuarine and Wetland Ecosystems'"
+                            panel-title="'Estuarine and Wetland Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-estuarine-species')"
                             respondent="respondent"></div>
@@ -109,7 +109,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Soft-bottom Intertidal and Beach Ecosystems')">
                         <div answers-panel 
-                            title="'Soft-bottom Intertidal and Beach Ecosystems'"
+                            panel-title="'Soft-bottom Intertidal and Beach Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-softbottomintertidal-species')"
                             respondent="respondent"></div>
@@ -118,7 +118,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Soft bottom Subtidal (0-100m) Ecosystems')">
                         <div answers-panel 
-                            title="'Soft bottom Subtidal (0-100m) Ecosystems'"
+                            panel-title="'Soft bottom Subtidal (0-100m) Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-softbottomsubtidal-species')"
                             respondent="respondent"></div>
@@ -127,7 +127,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Deep Ecosystems and Canyons (>100m)')">
                         <div answers-panel 
-                            title="'Deep Ecosystems and Canyons (>100m)'"
+                            panel-title="'Deep Ecosystems and Canyons (>100m)'"
                             html-content="''"
                             species-answer="getAnswer('ef-deep-species')"
                             respondent="respondent"></div>
@@ -136,7 +136,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Nearshore Pelagic Ecosystems')">
                         <div answers-panel 
-                            title="'Nearshore Pelagic Ecosystems'"
+                            panel-title="'Nearshore Pelagic Ecosystems'"
                             html-content="''"
                             species-answer="getAnswer('ef-nearshore-species')"
                             respondent="respondent"></div>
@@ -145,7 +145,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Consumptive Uses')">
                         <div answers-panel 
-                            title="'Consumptive Uses'"
+                            panel-title="'Consumptive Uses'"
                             html-content="''"
                             species-answer="getAnswer('ef-consumptive-species')"
                             respondent="respondent"></div>
@@ -154,7 +154,7 @@
 
                     <div ng-show="answerContains('ecosystem-features', 'Non-consumptive Uses')">
                         <div answers-panel 
-                            title="'Non-consumptive Uses'"
+                            panel-title="'Non-consumptive Uses'"
                             html-content="''"
                             species-answer="getAnswer('ef-nonconsumptive-species')"
                             respondent="respondent"></div>
@@ -162,7 +162,7 @@
 
                     <div ng-show="getAnswer('cde-types') || getAnswer('cd-types')">
                         <div answers-panel 
-                            title="'Contextual Data'"
+                            panel-title="'Contextual Data'"
                             html-content="viewPath + 'views/ost/answers/contextual-data.html'"
                             species-answer="''"
                             respondent="respondent"></div>
