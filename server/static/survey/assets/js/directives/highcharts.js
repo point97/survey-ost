@@ -99,7 +99,7 @@ angular.module('askApp')
                         chart: {
                             backgroundColor:'rgba(255, 255, 255, 0.1)',
                             plotBorderWidth: 0,
-                            plotShadow: false
+                            plotShadow: false,
                         },
                         exporting :{url:HC_EXPORT_SERVER_URL},
                         title: scope.chart.displayTitle ? { text: scope.chart.title, align: "left" } : false,
@@ -130,7 +130,8 @@ angular.module('askApp')
                             data: scope.chart.data
                         }],
                         legend : {
-                            layout: 'vertical'
+                            layout: 'vertical',
+                            
                         }
                     });    
                 }

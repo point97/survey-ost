@@ -106,12 +106,14 @@ angular.module('askApp')
                 // Attach pagination
                 var url = [ 
                             scope.resource ,
-                            '?format=json&limit=',
-                            scope.options.limit,
-                            '&offset=',
-                            offset,
+                            '?format=json',
                           ];
 
+                // Added pagination is limit is positive
+                if (scope.options.limit > 0){
+                    url.push('&limit='+scope.options.limit);
+                    url.push('&offset='+offset);
+                }
 
                 // Deal with search term
                 if (scope.searchTerm) {

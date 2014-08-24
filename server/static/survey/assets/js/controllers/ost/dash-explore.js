@@ -1,7 +1,7 @@
 
 angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils) {
     
-    $scope.page_title = 'Who?';
+    $scope.page_title = 'Community Overview';
     $scope.activePage = 'explore';
     $scope.user = app.user || {};
     
@@ -35,7 +35,6 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
 
     function buildChart(questionSlug, options) {
         var options, onFail, onSuccess;
-        
         onFail = function (data) {
             if (data.message && data.message.length > 0) {
                 $scope.charts[questionSlug] = { message: data.message };
@@ -64,10 +63,10 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
             }
         }
     });
-    buildChart('org-type', {type: 'pie', title: "Organizations", yLabel: "Org Type"});
-    buildChart('proj-num-people', {type: 'pie', title: "How many people are collecting the data?", yLabel: "Number of Projects"});
-    buildChart('proj-data-years', {type: 'bar', title: "Project Duration", yLabel: "Number of Projects"});
-    buildChart('proj-data-frequency', {type: 'bar', title: "Project Frequency", yLabel: "Number of Projects"});
+    buildChart('org-type', {type: 'pie', title: "Primary organization type", yLabel: "Org Type"});
+    buildChart('proj-num-people', {type: 'pie', title: "Number of project participants over the last year (2013-2014)", yLabel: "Number of Projects"});
+    buildChart('proj-data-years', {type: 'pie', title: "Project Duration", yLabel: "Number of Projects"});
+    buildChart('proj-data-frequency', {type: 'pie', title: "Sampling frequency at a typical site", yLabel: "Number of Projects"});
 
 
     //
