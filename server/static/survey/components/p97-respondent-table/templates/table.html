@@ -35,6 +35,26 @@
                              }">
             </span>
         </th>
+
+        <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('complete');" >Complete
+            <span class="glyphicon" 
+                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'complete',
+                             'glyphicon-sort-by-alphabet-alt':orderBy === '-complete',
+                             'glyphicon-sort':orderBy !== 'complete'
+                             }">
+            </span>
+        </th>
+
+        <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('last_question');" >Last Question
+            <span class="glyphicon" 
+                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'last_question',
+                             'glyphicon-sort-by-alphabet-alt':orderBy === '-last_question',
+                             'glyphicon-sort':orderBy !== 'last_question '
+                             }">
+            </span>
+        </th>
+
+
     </tr>
     </thead>
     <tbody>
@@ -49,6 +69,9 @@
         </td>
         <td>{{ respondent.duration }}</td>
         <td>{{ respondent.frequency }}</td>
+        <td ng-if='options.user.username'>{{ respondent.complete }}</td>
+        <td ng-if='options.user.username'>{{ respondent.last_question }}</td>
+
     </tr>
     </tbody>
 </table>
