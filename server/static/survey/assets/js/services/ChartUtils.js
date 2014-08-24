@@ -10,6 +10,7 @@ angular.module('askApp')
         };
 
         var onDataSuccess = function (data) {
+            
             var chartConfig = {
                 labels: _.pluck(data.answer_domain, "answer"),
                 displayTitle: true,
@@ -19,7 +20,7 @@ angular.module('askApp')
                 type: "stacked-column",
                 data: _.pluck(data.answer_domain, "surveys"),
                 download_url: app && app.user && app.user.is_staff ? data.csvUrl : '',
-                unit: options.unit || "projects"
+                unit: options.unit || "projects",
             };
             setChart_callback(chartConfig);
         };
@@ -37,25 +38,29 @@ angular.module('askApp')
 
         var onDataSuccess = function (data) {
             // Format data for highcharts.
+
             var formattedData = [];
+            var N = 0;
             _.each(data.answer_domain, function (item) {
-                formattedData.push([item.answer, item.surveys]);
+                formattedData.push({name:item.answer, y:item.surveys});
+                N += item.surveys;
             });
+            formattedData.push({name:'Total Projects: ' + N, y:null, color:'transparent'})
 
             // Put all [Other] answers into a single group.
             var othersGroup = ['Other', 0];
             _.each(formattedData, function (grouping, i) {
-                if (grouping[0].substr(0,7) == '[Other]') {
+                if (grouping.name.substr(0,7) == '[Other]') {
                     othersGroup[1]++;
-                    formattedData[i][1] = 0;
+                    formattedData[i].y = 0;
                 }
             });
             formattedData = _.reject(formattedData, function (item) {
-                return item[1] === 0;
+                return item.y === 0;
             });
-            if (othersGroup[1] > 0) {
-                formattedData.push(othersGroup);
-            }
+            // if (othersGroup[1] > 0) {
+            //     formattedData.push(othersGroup);
+            // }
 
             var chartConfig = {
                 data: formattedData,
@@ -63,7 +68,8 @@ angular.module('askApp')
                 title: options.title,
                 displayTitle: true,
                 yLabel: options.yLabel,
-                unit: options.unit || "projects"
+                unit: options.unit || "projects",
+                N : N
             };
             setChart_callback(chartConfig);
         };
