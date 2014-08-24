@@ -1,7 +1,7 @@
 
 angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils, survey) {
 
-    $scope.page_title = "What and Where?";
+    $scope.page_title = "Monitoring Activities";
     $scope.loadingSurveys = true;
     function initPage () {
         $scope.activePage = 'overview';
@@ -16,7 +16,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.respondentTable={
             resource:'/api/v1/dashrespondant/',
             params:{complete:complete },
-            options:{limit:10}
+            options:{limit:0}
         };
 
         // Get or load survey

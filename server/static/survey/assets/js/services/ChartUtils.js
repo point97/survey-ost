@@ -45,7 +45,7 @@ angular.module('askApp')
                 formattedData.push({name:item.answer, y:item.surveys});
                 N += item.surveys;
             });
-            formattedData.push({name:'Total Projects: ' + N, y:null, color:'transparent'})
+            formattedData.push({name:N + ' Total Projects', y:null, color:'transparent'})
 
             // Put all [Other] answers into a single group.
             var othersGroup = ['Other', 0];

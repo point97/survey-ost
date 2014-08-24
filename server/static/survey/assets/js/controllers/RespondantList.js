@@ -16,7 +16,7 @@ angular.module('askApp')
     $scope.respondentTable={
         resource:'/api/v1/dashrespondant/search',
         params:{complete:complete},
-        options:{limit:10}
+        options:{limit:0}
     };
 
     
