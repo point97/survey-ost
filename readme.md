@@ -99,9 +99,16 @@ Log into `tools-dev.oceanspaces.org` and run
 ./manage.py COMMAND_NAME --settings=config.environments.staging
 ```
 
-# Deploying to tools-dev.oceanspaces.org deploy
+
+# Deploying
 This will take whatever is in you local directory, i.e. it does not pull from github. So make sure to do a `git pull ...` if necessary.
 
+Staging site
+```
+fab staging:wilblack@192.241.228.91 deploy
+```
+
+Live site
 ```
 fab staging:wilblack@tools-dev.oceanspaces.org deploy
 ```
