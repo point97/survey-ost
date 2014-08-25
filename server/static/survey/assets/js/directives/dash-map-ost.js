@@ -209,7 +209,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 popup = '',
                 list = '';
             
-            list += '<h5><a href="#/RespondantDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
+            if (!scope.activeProject) { 
+                list += '<h5><a href="#/RespondantDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
+            }
             list += '<dt>Ecosystem Feature:</dt>';
             list += '<dd>{{ ecosystemLabel }}</dd>';
             list += '<dt>Duration:</dt>';
