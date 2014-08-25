@@ -262,6 +262,13 @@ form input.ng-invalid.ng-dirty {
   text-decoration: none;
   color: #c04504; }
 
+.modal-header {
+  color: white;
+  font-size: 16px;
+  background-color: #373e48;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
 /**********************************
 General Surgical Classes Go Here 
 ***********************************/
