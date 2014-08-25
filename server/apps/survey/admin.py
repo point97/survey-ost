@@ -6,9 +6,9 @@ from survey.models import (Survey, Question, Option, Response, Respondant,
 
 class RespondantAdmin(admin.ModelAdmin):
     readonly_fields=('uuid', 'responses')
-    list_display = ('uuid', 'ts', 'complete','last_question','project_name', 'monitored_ecosystem_features', 'ecosystem_feature_answer_slugs')
+    list_display = ('uuid', 'ts', 'complete','last_question','project_name','user', 'monitored_ecosystem_features', 'ecosystem_feature_answer_slugs')
     search_fields = ['uuid']
-
+    list_filter = ['user', 'complete', ]
 
 
 
