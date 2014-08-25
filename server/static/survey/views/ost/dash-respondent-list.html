@@ -6,14 +6,14 @@
             <div class="col-md-12 col-sm-12">
             <h3 ng-show="searchTerm">Matching Reports for '{{searchTerm}}'</h3>
             <p>Click on a project name to learn more about that project.</p>
-            <div respondents-table 
-                 resource='respondentTable.resource'
-                 params='respondentTable.params' 
-                 options='respondentTable.options'
-            ></div>
-
             </div>
         </div>
     </div>
+    <div respondents-table 
+         resource='respondentTable.resource'
+         params='respondentTable.params' 
+         options='respondentTable.options'
+    ></div>
 </div>
+
 <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
