@@ -66,7 +66,15 @@
 
                     <div answers-panel 
                         panel-title="'Data Collection'"
+                        ng-if="user.username"
                         html-content="viewPath + 'views/ost/answers/data.html'"
+                        species-answer="''"
+                        respondent="respondent"></div>
+
+                    <div answers-panel 
+                        panel-title="'Data Collection'"
+                        ng-if="!user.username"
+                        html-content="viewPath + 'views/ost/answers/data-pub.html'"
                         species-answer="''"
                         respondent="respondent"></div>
 
