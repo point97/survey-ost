@@ -242,7 +242,6 @@ angular.module('askApp')
         link: function (scope, element, attrs) {
             scope.open = false;
             scope.angular_version = parseFloat(angular.version.major+'.'+angular.version.minor);
-            console.log(scope.speciesAnswer)
             scope.getAnswer = function(questionSlug) {
                 return history.getAnswer(questionSlug, scope.respondent);
             };
