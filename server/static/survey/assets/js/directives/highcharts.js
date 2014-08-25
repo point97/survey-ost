@@ -104,7 +104,15 @@ angular.module('askApp')
                         exporting :{url:HC_EXPORT_SERVER_URL},
                         title: scope.chart.displayTitle ? { text: scope.chart.title, align: "left" } : false,
                         tooltip: {
-                            pointFormat: '<b>{point.percentage:.1f}%</b> of ' + scope.chart.unit
+                            formatter: function() {
+                                var sum = this.series.yData.reduce(function(sum,el){ return sum+el })
+                                return '<b>'+this.point.y+'</b> of <b>'+
+                                            sum+
+                                        '</b> ' + scope.chart.unit +
+                                        ' ('+ 
+                                            Highcharts.numberFormat(this.percentage, 1)+
+                                        '%)'
+                            }
                         },
                         plotOptions: {
                             pie: {
