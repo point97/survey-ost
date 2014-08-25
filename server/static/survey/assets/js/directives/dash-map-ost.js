@@ -221,15 +221,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             list += '<dt>Data Availability:</dt>';
             list += '<dd>{{ responses["proj-data-availability"].text }}</dd>';
 
-            list += '<dt>Ecosystem Features</dt>';
-                        list += '<ul class="list-unstyled">';
-            list += '<li ng-repeat="slug in project.ecosystem_features">';
-            list += '<div class="circle margin-right" ng-style="{\'background-color\': ecosystemSlugToColor(slug)};">&nbsp;</div>{{ecosystemSlugToLabel(slug)}}';
-            list += '</li>';
-            list += '</ul></dd>';
-            list = '<dl ng-cloak>' + list + '</dl>';
-
-            popup = '<div class="marker-popup-content">' + loading + list + '</div>';
+            popup = '<div class="marker-popup-content" ng-cloak>' + loading + list + '</div>';
 
             marker.bindPopup(popup, { closeButton: true });
             
