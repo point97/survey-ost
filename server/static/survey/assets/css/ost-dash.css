@@ -297,13 +297,14 @@ th.orderable:hover {
 
 tr.respondent:nth-child(odd) {
   background: #fff; }
-
 tr.respondent:nth-child(even) {
   background: #FBF8F2; }
-
+tr.respondent td:first-child {
+  color: #c04504; }
 tr.respondent:hover {
-  background: #70afb6;
   cursor: pointer; }
+  tr.respondent:hover td:first-child {
+    color: #70afb6; }
 
 /******************************************************
 End Respondent Table Styles

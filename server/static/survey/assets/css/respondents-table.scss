@@ -15,21 +15,27 @@ th {
 
 th.orderable:hover {
   cursor:pointer;
-  color: $os-lightblue;
-
-}
-tr.respondent:nth-child(odd){
-  background:#fff;
+  // background: #eee;
+  color: $os-lightblue;  
 }
 
-tr.respondent:nth-child(even){
-  background:$os-lightred;
-}
-
-
-tr.respondent:hover {
-  background:  $os-lightblue;
-  cursor: pointer;
+tr.respondent {
+  &:nth-child(odd){
+    background:#fff;
+  }
+  &:nth-child(even){
+    background:$os-lightred;
+  }
+  td:first-child {
+    color:$os-red;
+  }
+  &:hover {
+    // background:  #eee;
+    cursor: pointer;
+    td:first-child {
+      color: $os-lightblue;
+    }
+  }
 }
 
 /******************************************************
