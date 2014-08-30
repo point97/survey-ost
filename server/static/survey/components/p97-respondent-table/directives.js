@@ -142,16 +142,11 @@ angular.module('askApp')
             };
 
 
-            // Load data when the resource is defined.
-            scope.$watch('resource', function(newVal){
-                if (newVal && scope.respondents === null){
-                    scope.goToPage(1);
-                }
-            });
-
             // Watch the params to see if ef changed
             scope.$watch('params.ef', function(newVal){
-                scope.goToPage(1);
+                if (newVal) {
+                    scope.goToPage(1);
+                }
 
             });
 

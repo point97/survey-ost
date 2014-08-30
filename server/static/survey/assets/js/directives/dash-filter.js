@@ -60,14 +60,13 @@ angular.module('askApp')
                 dashData.getDistribution(scope.surveySlug, scope.questionSlug,
                     '' /*no filter*/, onSuccess, onFail);
             }
-            scope.selectionChanged = function (value) {
-                scope.selectedValues = scope.model.selectedValuesInternal;
+            scope.$watch('model.selectedValuesInternal', function(newVal, oldVal) {
+                scope.selectedValues = newVal;
                 if (scope.$parent.filters && scope.$parent.updateMap){
                     scope.$parent.filters.ecosystemFeatures = scope.selectedValues;    
-                    scope.$parent.updateMap();
                 }
                 
-            };
+            });
 
 
             setFilterOptions();

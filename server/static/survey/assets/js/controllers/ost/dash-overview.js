@@ -9,7 +9,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
 
 
         $scope.filtersJson = '';
-        $scope.filters = { ecosystemFeatures: [] };
+        $scope.filters = {};
         
         // Setup respondent table params and options
         var complete = ($scope.user.is_staff !== true)
@@ -36,20 +36,15 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
             lng: -122.0000000,
             zoom: 7
         };
-        $scope.updateMap();
 
         $scope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
             
             // Update $scope.respondentTable so it reloads with new filters in place
-            $scope.respondentTable.params.ef = $scope.filters.ecosystemFeatures;
+            if (newVal) {
+                $scope.respondentTable.params.ef = newVal;
+                $scope.updateMap();
+            }
 
-
-            // Not sure where this is used
-            $scope.filtersJson = [];
-            _.each($scope.filters.ecosystemFeatures, function (label) {
-                var slug = ecosystemLabelToSlug(label);
-                //$scope.filtersJson.push({'ecosystem-features': slug});
-            });
 
         });
     }
