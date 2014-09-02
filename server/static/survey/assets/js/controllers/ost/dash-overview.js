@@ -16,7 +16,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         $scope.respondentTable={
             resource:'/api/v1/dashrespondant/',
             params:{complete:complete },
-            options:{limit:0, user:$scope.user}
+            options:{limit:500, user:$scope.user}
         };
 
         // Get or load survey
