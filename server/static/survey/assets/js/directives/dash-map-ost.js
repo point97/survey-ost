@@ -13,6 +13,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             units: '=',
             boundaryPath: '=',
             activeProject: '=',
+            activeEcosystemFeatures: '=',
             showPopups: '=',
             slugToColor: '&',
             slugToLabel: '&'
@@ -170,7 +171,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             } else {
                 list += '<h4>Projects</h4>';            
                 list += '<dl>'; 
-                list += '<div ng-repeat="project in planningUnit.data.projects"';
+                list += '<div ng-repeat="project in filterProjects()"';
                 list += '<h5 ng-hide="activeProject"><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
                 list += '<div id="map-legend">';
                 list += '<span tooltip="{{ecosystemSlugToLabel(slug)}}" ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
@@ -184,7 +185,15 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
 
 
             layer.bindPopup(html, { closeButton: true });
-            
+            scope.filterProjects = function() {
+                if (scope.activeEcosystemFeatures && scope.activeEcosystemFeatures.length!==0) {
+                    var startsWith = function(a,b){return a.lastIndexOf(b,0) === 0}
+                    return _.filter(scope.planningUnit.data.projects, function(p){return (_.some(p.ecosystem_features, function(ef){return _.some(scope.activeEcosystemFeatures, function(af){return startsWith(ef,af)})}))})
+                } else {
+                    return scope.planningUnit.data.projects
+                }
+            }
+
             // Define the on click callback. 
             layer.on('click', function(e) {
                 scope.$apply(function () {

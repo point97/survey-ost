@@ -101,6 +101,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         var pointsUrl = pointsApiUrl($routeParams.surveySlug, '*-collection-points', filtersJson),
             polysUrl = polysApiUrl($routeParams.surveySlug, '*-collection-areas', filtersJson);
         
+        $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ecosystem-features')
         getPoints(pointsUrl, function (points) {
             $scope.mapSettings.mapPoints = points;
             var uniq = [];
