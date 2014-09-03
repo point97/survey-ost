@@ -24,7 +24,7 @@
 */
 
 angular.module('askApp')
-    .directive('respondentsTable', ['$http', '$location', 'surveyFactory', function(http, location, surveyFactory) {
+    .directive('respondentsTable', ['$http', '$location', 'surveyFactory', 'survey', function(http, location, surveyFactory, survey) {
 
     return {
         restrict: 'EA',
@@ -42,7 +42,8 @@ angular.module('askApp')
             scope.http = http;
             scope.surveySlug = surveyFactory.survey.slug;
             scope.location = location;
-
+            scope.ecosystemLabelToSlug = survey.ecosystemLabelToSlug
+            scope.ecosystemSlugToColor = survey.ecosystemSlugToColor
             // Get the search term from the URL
             scope.searchTerm = scope.location.search().q;
 
@@ -66,6 +67,9 @@ angular.module('askApp')
                     results_to = ( results_to > data.meta.total_count ) ? data.meta.total_count : results_to;
 
                     scope.respondents = data.objects;
+                    _.each(scope.respondents, function(r) {
+                        r.parsed_ecosystem_features = _.object(_.map(r.ecosystem_features.split(';'),function(s){return [scope.ecosystemLabelToSlug(s.trim())+'points', s.trim()]}))                        
+                    })
                     scope.meta = data.meta;
                     scope.currentPage = page;
                     scope.results_from = scope.meta.offset + 1;

@@ -123,10 +123,10 @@ footer, .main:after {
         display: inline-block;
         margin-right:9px;
     }
-    .point {
-        font-size: 1.6em;
-        line-height: 0.5;
-    }
+}
+.point {
+    font-size: 1.6em;
+    line-height: 0.5;
 }
 
 .leaflet-popup #map-legend .point {
@@ -139,6 +139,20 @@ footer, .main:after {
     border-radius: 50%;
     width: 13px;
     height: 12px;
+}
+
+.table-ef-list {
+    padding-left: 10px;
+    li {
+        margin-left: 1.6em;
+        position: relative;
+        list-style: none;
+        .point {
+            position: absolute;
+            left: -0.8em;
+            top: 0.15em;
+        }
+    }
 }
 
 #map-legend ul .circle {

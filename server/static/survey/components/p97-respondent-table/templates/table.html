@@ -63,8 +63,8 @@
         <td>{{ respondent.organization_name }}</td> <!-- link if availble? -->
         <!-- <td>{{ respondent.ecosystem_features }}</td> -->
         <td>
-            <ul>
-                <li ng-repeat="ef in respondent.ecosystem_features.split(';')">{{ef}}</li>
+            <ul class="table-ef-list">
+                <li ng-repeat="(slug, label) in respondent.parsed_ecosystem_features"><span class="point" ng-style="{'color': ecosystemSlugToColor(slug)}">●</span> {{label}}</li>
             </ul>
         </td>
         <td>{{ respondent.duration }}</td>
