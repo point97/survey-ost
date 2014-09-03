@@ -117,6 +117,13 @@ angular.module('askApp')
                         plotOptions: {
                             pie: {
                                 startAngle: 180,
+                                point: {
+                                    events: {
+                                        legendItemClick: function () {
+                                            return false; // <== returning false will cancel the default action
+                                        }
+                                    }
+                                },
                                 dataLabels: {
                                     enabled: false,
                                     distance: 4,
