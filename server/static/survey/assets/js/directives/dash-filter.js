@@ -1,6 +1,6 @@
 
 angular.module('askApp')
-    .directive('dashFilter', function($http, dashData) {
+    .directive('dashFilter', function($http, dashData, $rootScope) {
     return {
         templateUrl: '/static/survey/views/dash-filter.html',
         restrict: 'EA',
@@ -18,6 +18,8 @@ angular.module('askApp')
             _.mixin(_.str.exports()); // Attach underscore.string to underscore so you can use _.startsWtih()
             scope.model = {};
             scope.element = element;
+            $rootScope.filters = {};
+            $rootScope.filtersJson = '';
             function setFilterOptions () {
                 var removeHtml = function (html) {
                     var regex = /(<([^>]+)>)/ig,
@@ -62,10 +64,7 @@ angular.module('askApp')
             }
             scope.$watch('model.selectedValuesInternal', function(newVal, oldVal) {
                 scope.selectedValues = newVal;
-                if (scope.$parent.filters && scope.$parent.updateMap){
-                    scope.$parent.filters.ecosystemFeatures = scope.selectedValues;    
-                }
-                
+                $rootScope.filters.ecosystemFeatures = scope.selectedValues;
             });
 
 

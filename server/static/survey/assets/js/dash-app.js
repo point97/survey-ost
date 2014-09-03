@@ -11,7 +11,7 @@ app.viewPath = app.server + '/static/survey/';
 angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStrap.tooltip',
     'mgcrea.ngStrap.button', "ui.bootstrap.tpls", "ui.bootstrap.modal", "ui.bootstrap.tooltip", "ui.directives",
     , 'ui.bootstrap.pagination']) //'ui', 'ui.bootstrap',
-    .config(function($routeProvider, $httpProvider) {
+.config(function($routeProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
     $httpProvider.defaults.headers.patch = {
@@ -129,4 +129,15 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     .otherwise({
         redirectTo: '/welcome/monitoring-project'
     });
-});
+})
+.run(function($rootScope){
+    $rootScope.survey = {
+        slug: "monitoring-project"
+    }
+})
+.controller('DashStatsCtrl', function($scope, surveyFactory) {
+    surveyFactory.getSurvey(function (data) {
+        data.questions.reverse();
+        $scope.survey = data;
+    });
+})

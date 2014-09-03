@@ -3,7 +3,7 @@
     <a href="http://oceanspaces.org">
         <img src="/static/survey/assets/img/ost/oceanspaces_logo.png">
     </a>
-    <div class="stats" loading-survey survey="survey">
+    <div class="stats" ng-controller="DashStatsCtrl">
         <div class="row">
             <div id="side_total" class="col-xs-12 box">
                 <h1>{{survey.completes || 0}}</h1>
@@ -23,7 +23,7 @@
     </div>
 
     <div respondentsearch ></div>
-    <div class="sidebar_nav" survey="survey" >
+    <div class="sidebar_nav">
         <ul class="menu nav">
             
             <li class="leaf">

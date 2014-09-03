@@ -1,16 +1,12 @@
 
-angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils, survey) {
+angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootScope, $http, $routeParams, $location, dashData, chartUtils, survey) {
 
     $scope.page_title = "Monitoring Activities";
     $scope.loadingSurveys = true;
     function initPage () {
-        $scope.activePage = 'overview';
+        $rootScope.activePage = 'overview';
         $scope.user = app.user || {};
 
-
-        $scope.filtersJson = '';
-        $scope.filters = {};
-        
         // Setup respondent table params and options
         var complete = ($scope.user.is_staff !== true)
         $scope.respondentTable={
@@ -19,17 +15,6 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
             options:{limit:500, user:$scope.user}
         };
 
-        // Get or load survey
-        $scope.survey = {};
-        $scope.survey.slug = $routeParams.survey_slug;
-
-        $scope.survey.loading = true;
-        surveyFactory.getSurvey(function (data) {
-            data.questions.reverse();
-            $scope.survey = data;
-        });
-    
-
         $scope.mapSettings = {
             questionSlugPattern: '*-collection-points',
             lat: 35.8336630,
@@ -37,7 +22,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
             zoom: 7
         };
 
-        $scope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
+        $rootScope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
             
             // Update $scope.respondentTable so it reloads with new filters in place
             if (newVal) {
@@ -50,24 +35,6 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
     }
 
     //
-    // Fill survey stats blocks
-    //
-
-    $scope.survey = {};
-    $scope.survey.slug = $routeParams.survey_slug;
-    
-    surveyFactory.getSurvey(function (data) {
-        data.questions.reverse();
-        $scope.survey = data;
-    });
-
-    $scope.$watch('survey', function(newVal){
-        if (newVal) {
-            $scope.loadingSurveys = false;
-        }
-    });
-
-    //
     // Map
     // 
     $scope.updateMap = function (action) {
@@ -75,7 +42,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         Params:
         - action - The only action this supports is 'clear'. This clears the map and the filters.
 
-        - builds the filtersJson based on the $scope.filters.ecosystemFeatures
+        - builds the filtersJson based on the $rootScope.filters.ecosystemFeatures
         - Builds URL's for points and polys (note: polys does not contain the geometry, only the ID of a grid cell).
         - Calls getPoints and getPolys and defines their callbacks.
         - Puts points on $scope.mapSettings.mapPoints
@@ -84,11 +51,11 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $http, 
         */
         if (action === 'clear') {
             $(".sidebar_nav .multi-select2").select2('data', null);
-            $scope.filters.ecosystemFeatures = [];
+            $rootScope.filters.ecosystemFeatures = [];
             //$scope.$apply();
         }
 
-        var filtersJson = _.map($scope.filters.ecosystemFeatures, function (label) {
+        var filtersJson = _.map($rootScope.filters.ecosystemFeatures, function (label) {
             var slug = ecosystemLabelToSlug(label);
             if (slug.length>0) {
                 return {'ecosystem-features': slug};

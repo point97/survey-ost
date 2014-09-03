@@ -1,18 +1,12 @@
 //'use strict';
 
 angular.module('askApp')
-    .controller('RespondentDetailCtrl', function($scope, $http, $routeParams, $location, survey, history, surveyFactory) {
+    .controller('RespondentDetailCtrl', function($scope, $rootScope, $http, $routeParams, $location, survey, history) {
     
-    
-
     $scope.viewPath = app.viewPath;
     $scope.uuid = $routeParams.uuidSlug;
 
     $scope.user = app.user || {};
-
-    $scope.survey = {};
-    $scope.survey.slug = $routeParams.survey_slug;
-    $scope.backButton
 
     $scope.getRespondent = function (respondent_uuid, survey_slug, onSuccess) {
         var url = app.server 
@@ -29,15 +23,6 @@ angular.module('askApp')
                 $scope.showErrorMessage = true;
             });
     };
-
-    //
-    // Fill survey stats blocks
-    //
-
-    surveyFactory.getSurvey(function (data) {
-        data.questions.reverse();
-        $scope.survey = data;
-    });
 
     $scope.parseResponses = function (respondent) {
         _.each(respondent.responses, function(response, index) {
@@ -208,6 +193,7 @@ angular.module('askApp')
         return survey.ecosystemSlugToColor(slug);
     };
 
+    $rootScope.activePage = 'RespondantDetail';
     $scope.updateMap();
 /*************************** END MAP STUFF ********************************/
 

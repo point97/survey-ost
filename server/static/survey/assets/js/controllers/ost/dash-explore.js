@@ -1,8 +1,8 @@
 
-angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $routeParams, $location, surveyFactory, dashData, chartUtils) {
+angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootScope, $http, $routeParams, $location, dashData, chartUtils) {
     
     $scope.page_title = 'Community Overview';
-    $scope.activePage = 'explore';
+    $rootScope.activePage = 'explore';
     $scope.user = app.user || {};
     
     
@@ -20,18 +20,6 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
     //
     
     $scope.charts = {};
-    $scope.filtersJson = '';
-    
-    // Get or load survey
-    $scope.survey = {};
-    $scope.survey.slug = $routeParams.survey_slug;
-
-    $scope.survey.loading = true;
-    surveyFactory.getSurvey(function (data) {
-        data.questions.reverse();
-        $scope.survey = data;
-    });
-
 
     function buildChart(questionSlug, options) {
         var options, onFail, onSuccess;
@@ -50,10 +38,10 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
         
         if (options.type === 'pie') {
             chartUtils.buildPieChart($routeParams.surveySlug, questionSlug,
-                $scope.filtersJson, options, onSuccess, onFail);
+                [], options, onSuccess, onFail);
         } else if (options.type === 'bar') {
             chartUtils.buildStackedBarChart($routeParams.surveySlug, questionSlug,
-                $scope.filtersJson, options, onSuccess, onFail);
+                [], options, onSuccess, onFail);
         }
     }
     Highcharts.setOptions({
@@ -68,13 +56,5 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $http, $
     buildChart('proj-data-years', {type: 'pie', title: "Project Duration", yLabel: "Number of Projects"});
     buildChart('proj-data-frequency', {type: 'pie', title: "Sampling frequency at a typical project site (times/year)", yLabel: "Number of Projects"});
 
-
-    //
-    // Fill survey stats blocks
-    //
-    surveyFactory.getSurvey(function (data) {
-        data.questions.reverse();
-        $scope.survey = data;
-    });
 
 });
