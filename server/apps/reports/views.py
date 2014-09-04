@@ -2,7 +2,7 @@ import calendar
 import csv
 import datetime
 import json
-from collections import defaultdict
+from collections import defaultdict,Counter
 from decimal import Decimal
 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -98,7 +98,7 @@ def get_planning_unit_answers(request, survey_slug, question_slug):
     """
 
     def flatten_answers(pu_answers):
-       return [ ans['unit'] for ans in pu_answers.values("unit").distinct()]
+       return Counter([ ans['unit'] for ans in pu_answers.values("unit")])
 
 
     survey = get_object_or_404(Survey, slug=survey_slug)
@@ -127,7 +127,6 @@ def get_planning_unit_answers(request, survey_slug, question_slug):
             if not request.user.is_authenticated():
                 pu_answers = pu_answers.filter(respondant__complete=True)
 
-
         filter_list = []
         filters = None
 
@@ -150,6 +149,7 @@ def get_planning_unit_answers(request, survey_slug, question_slug):
             if merged_filtered_set is not None:
                 pu_answers = merged_filtered_set
 
+        pu_answers = pu_answers.distinct('response__respondant', 'unit')
         answers = flatten_answers(pu_answers)
         out = {'success': "true", 
                'answers': answers

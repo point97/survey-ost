@@ -7,21 +7,21 @@ from apps.survey.models import PlanningUnitAnswer
 
 
 class PlanningUnit(object):
-    def set_id(self, id):
+    def set_id(self, id, incomplete=False):
         self.id = id
-        self.projects = self.get_projects()
+        self.projects = self.get_projects(incomplete)
 
-    def get_projects(self):
+    def get_projects(self, incomplete=False):
         out = []
         puas = PlanningUnitAnswer.objects.filter(unit=self.id)
+        if not incomplete:
+            puas = puas.filter(response__respondant__complete=True)
         
-        uuids = puas.values('respondant__uuid').distinct()
-
+        uuids = puas.values('response__respondant').distinct()
         for obj in uuids:
-            uuid = obj['respondant__uuid']
-            ans = puas.filter(respondant__uuid=uuid )
-            ecosystem_features = []
-            
+            uuid = obj['response__respondant']
+            ans = puas.filter(response__respondant=uuid )
+
             # Build the ecosystem feaures list from mutiply answers on the same unit.
             ecosystem_features = []
             for a in ans:
@@ -74,7 +74,7 @@ class PlanningUnitResource(Resource):
     def obj_get(self, bundle, **kwargs):
         
         pu = PlanningUnit()
-        pu.set_id(kwargs['pk'])
+        pu.set_id(kwargs['pk'], bundle.request.user.is_staff)
         return pu
 
 
