@@ -122,21 +122,31 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         function updatePuLayer(units){
             if (units) {
                 puPromise.success(function(data) {
-                    var u = _.invert(units)
+                    // clone data and filter features
                     var filtered = _.extend({}, data, {
                         "features": _.filter(data.features, function(f){
-                            return parseInt(f.properties.ID, 10) in u
+                            return parseInt(f.properties.ID, 10) in units
                         })
                     })
+                    var maxCount = _.max(units);
+
+                    _.each(filtered.features, function(f) {
+                        f.properties.count = units[parseInt(f.properties.ID, 10)];
+                    });
 
                     scope.puLayer.clearLayers();
 
                     scope.puLayer.addLayer(L.geoJson(filtered, {
-                        style: {
-                            "color": "#E6D845",
-                            "fillColor": "#E6D845",
-                            "weight": 1,
-                            "clickable": true
+                        style: function(f) {
+                            return {
+                                "color": "#E6D845",
+                                "fillColor": "#E6D845",
+                                "weight": 1,
+                                "clickable": true,
+                                "fillOpacity": 0.6 * f.properties.count/maxCount,
+                                "opacity": 1 * f.properties.count/maxCount,
+
+                            }
                         },
                         onEachFeature: function(feature, layer) {
                             setPuPopup(layer);
@@ -198,6 +208,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             layer.on('click', function(e) {
                 scope.$apply(function () {
                     var unit_id = e.target.feature.properties.ID;
+                    scope.count = e.target.feature.properties.count;
                     getPlanningUnit(unit_id, function(res){
                         scope.planningUnit.data = res;
                     });
