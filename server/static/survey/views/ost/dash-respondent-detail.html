@@ -42,17 +42,6 @@
              slug-to-label="ecosystemSlugToLabel(slug)"
              ></div>
 
-        <div class="row margin-bottom " id="map-legend">
-            <div class="col-sm-12 col-md-12">
-                <ul class="list-unstyled">
-                    <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
-                        <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div> 
-                        {{ecosystemSlugToLabel(slug)}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <div class="answer-panels">
