@@ -13,12 +13,12 @@
         <div class="answer">
             <strong>Data availability: </strong> 
             <span>{{ getAnswer ('proj-data-availability') }}
-                <span ng-show='getAnswer("proj-data-availability") === "By request" || getAnswer("proj-data-availability") === "By request" '> at {{ getAnswer('proj-public-data') }}</span> 
+                <span ng-show='(getAnswer("proj-data-availability") === "By request" || getAnswer("proj-data-availability") === "Public")'> at {{ getAnswer('proj-public-data') }}</span> 
             </span>
         </div>
 
         
-        <div ng-show="user" class="padding-top">
+        <div ng-show="user.username" class="padding-top">
             <h3>Financial Support and Capacity</h3>
             <div class="answer">
                 <strong>How is the data analyzed and shared? </strong>
@@ -30,7 +30,7 @@
                 <span>{{ getAnswer('proj-financial-support-timeline') }}</span>
             </div>
             <div class="answer">
-                <strong>How would additional funding used?: </strong>
+                <strong>How would additional funding be used?: </strong>
                 <span>{{ getAnswer('proj-operational-capacity-if-funded') }}</span>
             </div>
         </div>
