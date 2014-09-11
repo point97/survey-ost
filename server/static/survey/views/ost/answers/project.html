@@ -13,7 +13,7 @@
         <div class="answer">
             <strong>Data availability: </strong> 
             <span>{{ getAnswer ('proj-data-availability') }}
-                <span ng-show='(getAnswer("proj-data-availability") === "By request" || getAnswer("proj-data-availability") === "Public")'> at {{ getAnswer('proj-public-data') }}</span> 
+                <span ng-show='(getAnswer("proj-data-availability") === "By request" || getAnswer("proj-data-availability") === "Public") && getAnswer("proj-public-data") != ""'> at {{ getAnswer('proj-public-data') }}</span> 
             </span>
         </div>
 
