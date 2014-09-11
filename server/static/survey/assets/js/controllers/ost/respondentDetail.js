@@ -172,11 +172,7 @@ angular.module('askApp')
 
     function getPolys (url, success_callback) {
         $http.get(url).success(function(data) {
-            var polys = [];
-            _.each(data.answers, function (unit_id) {
-                polys.push(unit_id);
-            });
-            success_callback(polys);
+            success_callback(data.answers);
         });
     }
 
