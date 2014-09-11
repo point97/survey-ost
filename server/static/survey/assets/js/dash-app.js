@@ -100,7 +100,7 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         reloadOnSearch: false
     })
 
-    .when('/RespondantDetail/:surveySlug/:uuidSlug', {
+    .when('/RespondentDetail/:surveySlug/:uuidSlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-detail.html',
         controller: 'RespondentDetailCtrl'  // <-- This is in controllers/ost/respondentDetail.js
     })

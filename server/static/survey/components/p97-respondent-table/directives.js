@@ -91,7 +91,7 @@ angular.module('askApp')
                 /*
                 This is the row click callback that takes the user to the respondaent detail page.
                 */
-                scope.location.path('/RespondantDetail/'+respondent.survey_slug+'/'+respondent.uuid );
+                scope.location.path('/RespondentDetail/'+respondent.survey_slug+'/'+respondent.uuid );
             };
 
             scope.build_url = function(offset, page){

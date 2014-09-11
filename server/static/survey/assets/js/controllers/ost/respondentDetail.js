@@ -189,7 +189,7 @@ angular.module('askApp')
         return survey.ecosystemSlugToColor(slug);
     };
 
-    $rootScope.activePage = 'RespondantDetail';
+    $rootScope.activePage = 'RespondentDetail';
     $scope.updateMap();
 /*************************** END MAP STUFF ********************************/
 
