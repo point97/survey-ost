@@ -142,7 +142,7 @@ if (window.browserNotSupported) {
             templateUrl: app.viewPath + 'views/completedSurveys.html',
             controller: 'offlineRespondantListCtrl'
         })
-            .when('/RespondantList/:surveySlug', {
+            .when('/RespondentList/:surveySlug', {
             templateUrl: app.viewPath + 'views/RespondantList.html',
             controller: 'RespondantListCtrl'
         })

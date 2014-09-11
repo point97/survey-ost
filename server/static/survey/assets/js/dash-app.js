@@ -82,13 +82,13 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         controller: 'DashOverviewCtrl',
         reloadOnSearch: false
     })
-    .when('/RespondantList/:surveySlug', {
+    .when('/RespondentList/:surveySlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-list.html',
         controller: 'RespondantListCtrl',
         reloadOnSearch: false
     })
 
-    .when('/RespondantList', {
+    .when('/RespondentList', {
         templateUrl: '/static/survey/views/ost/dash-respondent-list.html',
         controller: 'RespondantListCtrl',
         reloadOnSearch: true
