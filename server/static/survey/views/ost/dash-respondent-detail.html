@@ -46,7 +46,7 @@
             <div class="col-sm-12 col-md-12">
                 <div class="answer-panels">
                      <div answers-panel 
-                        panel-title="'Project Information / Data Sharing' + (user.username ? ' / Financial Info' : '')"
+                        panel-title="'Project Information / Data Sharing' + (user.is_staff ? ' / Financial Info' : '')"
                         html-content="viewPath + 'views/ost/answers/project.html'"
                         species-answer="''"
                         user="user"
