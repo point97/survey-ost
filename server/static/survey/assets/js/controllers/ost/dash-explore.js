@@ -1,10 +1,6 @@
-
 angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootScope, $http, $routeParams, $location, dashData, chartUtils) {
-    
     $scope.page_title = 'Community Overview';
     $rootScope.activePage = 'explore';
-    $scope.user = app.user || {};
-    
     
     // Setup respondent table params and options
     var complete = ($scope.user.is_staff !== true)

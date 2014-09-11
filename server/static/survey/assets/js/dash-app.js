@@ -134,6 +134,7 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     $rootScope.survey = {
         slug: "monitoring-project"
     }
+    $rootScope.user = app.user || {}
 })
 .controller('DashStatsCtrl', function($scope, surveyFactory) {
     surveyFactory.getSurvey(function (data) {
