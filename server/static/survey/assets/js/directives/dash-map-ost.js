@@ -182,7 +182,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list += '<h4>Projects</h4>';            
                 list += '<dl>'; 
                 list += '<div ng-repeat="project in filterProjects()"';
-                list += '<h5 ng-hide="activeProject"><a href="#/RespondantDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
+                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
                 list += '<div id="map-legend">';
                 list += '<span tooltip="{{ecosystemSlugToLabel(slug)}}" ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
                 list += '</div>';
@@ -230,7 +230,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list = '';
             
             if (!scope.activeProject) { 
-                list += '<h5><a href="#/RespondantDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
+                list += '<h5><a href="#/RespondentDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
             }
             list += '<dt>Ecosystem Feature:</dt>';
             list += '<dd><span class="point" ng-style="{\'color\': ecosystemColor}">●</span> {{ ecosystemLabel }}</dd>';

@@ -6,8 +6,6 @@ angular.module('askApp')
     $scope.viewPath = app.viewPath;
     $scope.uuid = $routeParams.uuidSlug;
 
-    $scope.user = app.user || {};
-
     $scope.getRespondent = function (respondent_uuid, survey_slug, onSuccess) {
         var url = app.server 
               + '/api/v1/reportrespondantdetails/'
@@ -172,11 +170,7 @@ angular.module('askApp')
 
     function getPolys (url, success_callback) {
         $http.get(url).success(function(data) {
-            var polys = [];
-            _.each(data.answers, function (unit_id) {
-                polys.push(unit_id);
-            });
-            success_callback(polys);
+            success_callback(data.answers);
         });
     }
 
@@ -193,7 +187,7 @@ angular.module('askApp')
         return survey.ecosystemSlugToColor(slug);
     };
 
-    $rootScope.activePage = 'RespondantDetail';
+    $rootScope.activePage = 'RespondentDetail';
     $scope.updateMap();
 /*************************** END MAP STUFF ********************************/
 
