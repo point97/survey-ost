@@ -68,7 +68,21 @@ cd /usr/local/apps/geosurvey/server
 ./manage.py rebuild_index --settings=config.environments.staging
 ```
 
+
+
 # Backing up and restoring databases
+
+If you are restoring a live database to your vagrant you should drop and recreate the local datbase before restoring
+
+To drop and recreate
+```
+vagrant ssh
+
+# Once on the vagrant machine
+dropdb geosurvey 
+createdb -U postgres -T template0 -O postgres geosurvey -E UTF8 --locale=en_US.UTF-8
+```
+
 
 ```bash
 fab staging:username@162.243.146.75 backup_db

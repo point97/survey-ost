@@ -7,15 +7,15 @@ from survey.models import (Survey, Question, Option, Response, Respondant,
 class RespondantAdmin(admin.ModelAdmin):
     readonly_fields=('uuid', 'responses')
     list_display = ('uuid', 'ts', 'complete','last_question','project_name','user', 'monitored_ecosystem_features', 'ecosystem_feature_answer_slugs')
-    search_fields = ['uuid']
+    search_fields = ['uuid', 'user__username']
     list_filter = ['user', 'complete', ]
 
 
 
 class ResponseAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'ts', 'answer', 'answer_raw', 'question_slug')
-    list_filter = ['question__slug', 'respondant']
-
+    list_filter = ['question__slug', 'id', 'respondant']
+    search_fields = ['id', 'question__slug']
 
 class PageInline(admin.TabularInline):
     model = Page
@@ -49,9 +49,10 @@ class SurveyAdmin(admin.ModelAdmin):
     list_display = ('name','slug',)
     prepopulated_fields = {'slug':('name',),}
 
+
 class QuestionAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('label',),'info':('label',),}
-    list_display = ('survey_slug','slug','type', 'title', '__unicode__', 'contained_in' )
+    list_display = ('survey_slug','slug', 'type', 'title', '__unicode__', 'contained_in' )
     search_fields = ['slug']
 
 
