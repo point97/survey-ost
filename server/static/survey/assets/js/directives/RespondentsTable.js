@@ -79,7 +79,7 @@ angular.module('askApp')
             };
 
             scope.showRespondent = function(respondent){
-                scope.location.path('/RespondantDetail/'+respondent.survey_slug+'/'+respondent.uuid );
+                scope.location.path('/RespondentDetail/'+respondent.survey_slug+'/'+respondent.uuid );
             };
 
         }

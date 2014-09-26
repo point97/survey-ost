@@ -649,8 +649,7 @@ class Response(caching.base.CachingMixin, models.Model):
             if self.question.type in ('text', 'textarea', 'yes-no',
                                       'single-select', 'auto-single-select',
                                       'timepicker', 'multi-select', 'url',
-                                      'phone', 'zipcode', 'map-multipolygon',
-                                      'map-multipoint'):
+                                      'phone', 'zipcode'):
                 flat[self.question.slug] = self.answer
             elif self.question.type in ('currency', 'integer', 'number'):
                 flat[self.question.slug] = self.answer
@@ -659,12 +658,10 @@ class Response(caching.base.CachingMixin, models.Model):
             elif self.question.type == 'grid':
                 for answer in self.gridanswer_set.all():
                     flat[self.question.slug + '-' + answer.row_label + '-' + answer.col_label] = answer.answer_text
+            elif self.question.type == 'map-multipolygon':
+                flat[self.question.slug] = ','.join([str(a.unit) for a in self.planningunitanswer_set.all()])
             elif self.question.type == 'map-multipoint':
-                a = 0
-                # for location in self.location_set.all():
-                #     locationAnswers = LocationAnswer.objects.filter(location__exact=location)
-                #     for locationAnswer in locationAnswers: 
-                #         flat[self.question.slug + '-(' + str(location.lat) + ',' + str(location.lng) +')'] = locationAnswer.answer
+                flat[self.question.slug] = ', '.join(["({},{})".format(a['lat'],a['lng']) for a in self.location_set.values('lat','lng')])
             elif self.question.type == 'info':
                 pass
             else:

@@ -5,7 +5,6 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
     $scope.loadingSurveys = true;
     function initPage () {
         $rootScope.activePage = 'overview';
-        $scope.user = app.user || {};
 
         // Setup respondent table params and options
         var complete = ($scope.user.is_staff !== true)

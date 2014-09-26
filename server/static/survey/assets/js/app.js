@@ -142,11 +142,11 @@ if (window.browserNotSupported) {
             templateUrl: app.viewPath + 'views/completedSurveys.html',
             controller: 'offlineRespondantListCtrl'
         })
-            .when('/RespondantList/:surveySlug', {
+            .when('/RespondentList/:surveySlug', {
             templateUrl: app.viewPath + 'views/RespondantList.html',
             controller: 'RespondantListCtrl'
         })
-            .when('/RespondantDetail/:surveySlug/:uuidSlug', {
+            .when('/RespondentDetail/:surveySlug/:uuidSlug', {
             templateUrl: app.viewPath + 'views/RespondantDetail.html',
             controller: 'RespondantDetailCtrl'  //<-- Thiis is the old controller (note the 'a') in controllers/RespondantDetail.js, not used by OST.
         })
