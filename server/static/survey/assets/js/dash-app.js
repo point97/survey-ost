@@ -82,13 +82,13 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         controller: 'DashOverviewCtrl',
         reloadOnSearch: false
     })
-    .when('/RespondantList/:surveySlug', {
+    .when('/RespondentList/:surveySlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-list.html',
         controller: 'RespondantListCtrl',
         reloadOnSearch: false
     })
 
-    .when('/RespondantList', {
+    .when('/RespondentList', {
         templateUrl: '/static/survey/views/ost/dash-respondent-list.html',
         controller: 'RespondantListCtrl',
         reloadOnSearch: true
@@ -100,7 +100,7 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         reloadOnSearch: false
     })
 
-    .when('/RespondantDetail/:surveySlug/:uuidSlug', {
+    .when('/RespondentDetail/:surveySlug/:uuidSlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-detail.html',
         controller: 'RespondentDetailCtrl'  // <-- This is in controllers/ost/respondentDetail.js
     })
@@ -134,6 +134,7 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     $rootScope.survey = {
         slug: "monitoring-project"
     }
+    $rootScope.user = app.user || {}
 })
 .controller('DashStatsCtrl', function($scope, surveyFactory) {
     surveyFactory.getSurvey(function (data) {
