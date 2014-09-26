@@ -406,6 +406,8 @@ def migrate_db(app_name):
         with _virtualenv():
             _manage_py('migrate %s --settings=config.environments.staging' % app_name)
 
+
+
 @task
 def backup_db():
     date = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
