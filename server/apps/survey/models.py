@@ -669,7 +669,7 @@ class Response(caching.base.CachingMixin, models.Model):
                     ('Found unknown question type of {0} while processing '
                      'response id {1}').format(self.question.type, self.id)
                 )
-            return flat
+        return flat
 
     def save_related(self):
         if self.answer_raw:
