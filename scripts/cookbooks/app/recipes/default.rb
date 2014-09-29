@@ -76,7 +76,7 @@ else
         source "sudoers"
         mode 0440
     end
-    
+
     package "dos2unix"
     execute "authorized keys" do
         command "dos2unix /etc/sudoers"
@@ -175,24 +175,26 @@ package "oracle-java7-set-default"
 remote_file "/tmp/elasticsearch-1.3.0.deb" do
 
     source "https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.0.deb"
-    
+
     mode 0644
     checksum "a3ec3c05ffabf8048642aa431b675f3c132b4fae755e1b7aee0cb9fe3f2a37ba" # PUT THE SHA256 CHECKSUM HERE
 end
 
-# To undo this you can run a dpkg purge.  
+# To undo this you can run a dpkg purge.
 dpkg_package "elastic search" do
     #source "/tmp/elasticsearch-0.90.7.deb"
     source "/tmp/elasticsearch-1.3.0.deb"
     action :install
 end
 
+execute "enable elasticsearch server" do
+    command 'sudo update-rc.d elasticsearch defaults'
+end
+
 # And finally start the elastic search server
 execute "start elasticsearch server" do
     command 'sudo /etc/init.d/elasticsearch start'
 end
-
-
 
 package "libmapnik"
 package "mapnik-utils"
