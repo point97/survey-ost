@@ -20,7 +20,7 @@ class SlugCSVWriter(object):
 
     def _dict_to_list(self, rowdict):
         if self.extrasaction == "raise":
-            wrong_fields = [unicode(rowdict.get(k, self.restval)).encode('ascii', errors='replace') for k in rowdict
+            wrong_fields = [k for k in rowdict
                             if k not in self.fieldnames.keys()]
             if wrong_fields:
                 raise ValueError("dict contains fields not in fieldnames: " +
