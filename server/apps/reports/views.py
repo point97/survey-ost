@@ -553,11 +553,7 @@ def full_data_dump_csv(request, survey_slug):
     writer = SlugCSVWriter(response, fields)
     writer.writeheader()
     for resp in survey.respondant_set.all():
-        # very basic removal of some characters that were causing issue in writing rows
-        # row_string = resp.csv_row.json_data.replace('\u2019', '\"')
-        # row_string = row_string.replace('\u2026', '\"')
-        row_ascii = resp.csv_row.json_data.encode('ascii', errors='ignore')
-        writer.writerow(json.loads(row_ascii))
+        writer.writerow(json.loads(resp.csv_row.json_data))
     return response
 
 

@@ -20,12 +20,12 @@ class SlugCSVWriter(object):
 
     def _dict_to_list(self, rowdict):
         if self.extrasaction == "raise":
-            wrong_fields = [k for k in rowdict
+            wrong_fields = [unicode(rowdict.get(k, self.restval)).encode('ascii', errors='replace') for k in rowdict
                             if k not in self.fieldnames.keys()]
             if wrong_fields:
                 raise ValueError("dict contains fields not in fieldnames: " +
                                  ", ".join(wrong_fields))
-        return [rowdict.get(key, self.restval)
+        return [unicode(rowdict.get(key, self.restval)).encode('ascii', errors='replace')
                 for key in self.fieldnames.keys()]
 
     def writeheader(self):
