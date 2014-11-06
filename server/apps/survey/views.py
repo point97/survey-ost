@@ -41,6 +41,8 @@ def delete_incomplete_respondent(request, uuid):
 
 
 def survey(request, survey_slug=None, template='survey/survey.html'):
+    if not request.user.is_staff:
+        return redirect('/dash')
     if survey_slug is not None:
         survey = get_object_or_404(Survey, slug=survey_slug, anon=True)
         respondant = Respondant(survey=survey, user=request.user)
