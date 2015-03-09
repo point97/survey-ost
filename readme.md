@@ -1,7 +1,9 @@
-[![Build Status](https://travis-ci.org/Ecotrust/geosurvey.png?branch=master)](https://travis-ci.org/Ecotrust/geosurvey)
-
 
 # Setup Local Vagrant Server
+You will need to have the following installed:
+1. [vagrant](https://www.vagrantup.com/)
+2. [fabric](http://www.fabfile.org/)
+
 ```bash
 vagrant up
 fab vagrant bootstrap
