@@ -166,7 +166,7 @@ angular.module('askApp')
                   //geocsv parser
                   var geoLayer = L.geoCsv(input,{
                     titles: ['lat', 'lng'],
-                    fieldSeparator: '	',
+                    fieldSeparator: /\s+/g,
                     lineSeparator: '\n',
                     deleteDobleQuotes: true,
                     firstLineTitles: false,
@@ -254,7 +254,6 @@ angular.module('askApp')
                     var markers = _.without(scope.question.markers, marker);
                     scope.question.markers = markers;
                     // Remove from UI.
-                    // map.removeLayer(marker);
                     csvmarkers.removeLayer(marker);
                 };
 
