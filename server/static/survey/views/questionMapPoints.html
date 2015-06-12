@@ -1,14 +1,14 @@
 <div class="map map-points ost-map" ng-class="{'adding-marker': addByClick}"  ng-style="{height: windowHeight}">
 
     <p>Please map all of your monitoring sites in the Central Coast for this Ecosystem Feature. When you have added all of your monitoring sites, please click <img src="/static/survey/assets/img/ost/btn-next.jpg" height="27" alt="the next button"/> to proceed to the rest of the survey.</p>
-	
+
     <div style="position:relative; height: 100%; margin-bottom: 20px;">
     	<div id="map-container" >
-    		
+
     	</div>
 
         <div class="map-controls map-controls-top-right">
-            <div ng-hide="askingAddStyle || addByClick || addByLatLng" class="map-controls-container">
+            <div ng-hide="askingAddStyle || addByClick || addByLatLng || addByBulk" class="map-controls-container">
                 <a  class="btn btn-large btn-primary btn-add-marker"
                     ng-click="askingAddStyle = true"
                     href="javascript:void(0)">
@@ -33,8 +33,15 @@
                         <i class="glyphicon glyphicon-pencil"></i><span class="map-control-label"></span>&nbsp;Enter Latitude & Longitude
                     </a>
                 </div>
+                <div class="btn-group">
+                    <a  class="btn btn-large btn-primary btn-add-marker"
+                        ng-click="addByBulk = true; askingAddStyle = false; manualLatLng = null;"
+                        href="javascript:void(0)">
+                        <i class="glyphicon glyphicon-list-alt"></i><span class="map-control-label"></span>&nbsp;Enter Bulk Coordinates
+                    </a>
+                </div>
             </div>
-            
+
             <!-- Clicking Controls -->
             <div ng-show="addByClick" class="map-controls-container">
                 <!-- <p class="coordinate"><span class="coordinate-label">Lat:</span>{{hoverLatLng.lat}}</p>
@@ -73,7 +80,32 @@
                     Invalid values. Decimal format is required. <span class="example">Example: 37.61324237</span>
                 </div>
             </div>
-            
+
+            <!-- Bulk Data Input -->
+            <div ng-show="addByBulk" class="map-controls-container clearfix">
+              <p style=margin:0;>Please enter your decimal coordinates below.</p>
+              <p style=margin:0;>Coordinates can be copied and pasted/entered from a .csv or .txt file</p>
+              <p style=margin:0;font-size:14px;><strong>Ex:&nbsp;</strong><i>33.78695&nbsp;&nbsp;&nbsp;-118.298222</i></p>
+
+              <span>Data:</span><input type="text-area" ng-model="bulkCoords"/>
+
+              <div class="btn-group">
+                  <a  class="btn btn-large btn-primary btn-add-marker"
+                      ng-click="addMarkersByBulk(bulkCoords);"
+                      href="javascript:void(0)">
+                      Enter
+                  </a>
+              </div>
+
+              <div class="btn-group">
+                  <a  class="btn btn-large btn-danger btn-primary btn-cancel"
+                      ng-click="addByBulk = false; latLngError = null;"
+                      href="javascript:void(0)">
+                      Cancel
+                  </a>
+              </div>
+            </div>
+
         </div>
     </div>
 

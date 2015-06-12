@@ -5,7 +5,7 @@ angular.module('askApp')
 
             initMap: function (mapHtmlElement, questionSettings, geojsonPath) {
                 // Setup layers
-                var nautical, bing, initPoint, initialZoom, map, baseMaps, options; 
+                var nautical, bing, initPoint, initialZoom, map, baseMaps, options;
 
                 nautical = L.tileLayer.wms("http://egisws02.nos.noaa.gov/ArcGIS/services/RNC/NOAA_RNC/ImageServer/WMSServer", {
                     format: 'img/png',
@@ -128,8 +128,8 @@ angular.module('askApp')
                  * Used to validate the manually entered lat lng values.
                  */
                 scope.isValidLatLng = function (latlng /* {lat: <string>, lng: <string>} */) {
-                    var isValidLat = false, 
-                        isValidLng = false, 
+                    var isValidLat = false,
+                        isValidLng = false,
                         val,
                         errors = [];
 
@@ -156,6 +156,17 @@ angular.module('askApp')
                     } else {
                         scope.latLngError = true;
                     }
+                };
+
+                scope.addMarkersByBulk = function(input) {
+                  var geoLayer = L.geoCsv(input,{
+                    titles: ['lat', 'lng'],
+                    fieldSeparator: '   ',
+                    lineSeparator: '\n',
+                    deleteDobleQuotes: true,
+                    firstLineTitles: false
+                  });
+                  map.addLayer(geoLayer);
                 };
 
                 scope.addMarker = function (latlng /* Leaflet LatLng */) {
@@ -206,11 +217,12 @@ angular.module('askApp')
                     marker.on('dragend', function(e) {
                         scope.updateMarker(marker);
                     });
-                
+
                     scope.question.markers.push(marker);
                     scope.addMarkerToMap(marker);
                     scope.addByClick = false;
                     scope.addByLatLng = false;
+                    scope.addByBulk = false;
                     scope.activeMarker = false;
                 };
 
@@ -220,7 +232,7 @@ angular.module('askApp')
                 };
 
                 scope.updateMarker = function (marker /* Leaflet Marker */) {
-                    /* Keep the latlng contained in the data used for the 
+                    /* Keep the latlng contained in the data used for the
                        answer updated with the marker's actual latlng. */
                     var ll = marker.getLatLng();
                     marker.data.lat = ll.lat;
@@ -258,7 +270,7 @@ angular.module('askApp')
                     scope.windowHeight = window.innerHeight - 300 + 'px';
                     $timeout(function () {
                         map.invalidateSize(false);
-                    });                   
+                    });
                 };
 
                 scope.updateMapSize();
