@@ -95,6 +95,10 @@ angular.module('askApp')
                 scope.activeMarker = false;
                 scope.addByClick = false;
                 scope.hoverLatLng = {};
+                
+                //cluster view for several points nearby
+                var csvmarkers = L.markerClusterGroup();
+                map.addLayer(csvmarkers);
 
                 $(".block-title").hide();
                 $(".question-title").addClass('map-question-title');
@@ -159,10 +163,6 @@ angular.module('askApp')
                 };
 
                 scope.addMarkersByBulk = function(input) {
-                  //cluster view for several points nearby
-                  var csvmarkers = L.markerClusterGroup();
-	                map.addLayer(csvmarkers);
-
                   //geocsv parser
                   var geoLayer = L.geoCsv(input,{
                     titles: ['lat', 'lng'],
@@ -236,7 +236,7 @@ angular.module('askApp')
 
 
                 scope.addMarkerToMap = function (marker /* Leaflet Marker */) {
-                    map.addLayer(marker);
+                    csvmarkers.addLayer(marker);
                 };
 
                 scope.updateMarker = function (marker /* Leaflet Marker */) {
