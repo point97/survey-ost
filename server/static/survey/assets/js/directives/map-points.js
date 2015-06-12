@@ -95,7 +95,7 @@ angular.module('askApp')
                 scope.activeMarker = false;
                 scope.addByClick = false;
                 scope.hoverLatLng = {};
-                
+
                 //cluster view for several points nearby
                 var csvmarkers = L.markerClusterGroup();
                 map.addLayer(csvmarkers);
@@ -172,12 +172,12 @@ angular.module('askApp')
                     firstLineTitles: false,
                     onEachFeature:function(f,l) {
           						var latlng = l._latlng
-                      scope.addMarker(latlng)
+                      scope.addMarker(latlng, true)
                     }
                   });
                 };
 
-                scope.addMarker = function (latlng /* Leaflet LatLng */) {
+                scope.addMarker = function (latlng, isBulk /* Leaflet LatLng */) {
                     var marker, popup;
                     var invalid = false;
 
@@ -213,14 +213,16 @@ angular.module('askApp')
                         scope.$digest();
                     });
 
-                    $timeout(function () {
-                        marker.openPopup();
-                        scope.activeMarker = marker;
-                        // The popup is added to the DOM outside of the angular framework so
-                        // its content must be compiled for any interaction with this scope.
-                        $compile(angular.element(map._popup._contentNode))(scope);
-                        scope.$digest();
-                    }, 200, false);
+                    if (!isBulk) {
+                      $timeout(function () {
+                          marker.openPopup();
+                          scope.activeMarker = marker;
+                          // The popup is added to the DOM outside of the angular framework so
+                          // its content must be compiled for any interaction with this scope.
+                          $compile(angular.element(map._popup._contentNode))(scope);
+                          scope.$digest();
+                      }, 200, false);
+                    };
 
                     marker.on('dragend', function(e) {
                         scope.updateMarker(marker);
