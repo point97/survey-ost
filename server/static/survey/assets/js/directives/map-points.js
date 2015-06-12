@@ -159,14 +159,22 @@ angular.module('askApp')
                 };
 
                 scope.addMarkersByBulk = function(input) {
+                  //cluster view for several points nearby
+                  var csvmarkers = L.markerClusterGroup();
+	                map.addLayer(csvmarkers);
+
+                  //geocsv parser
                   var geoLayer = L.geoCsv(input,{
                     titles: ['lat', 'lng'],
                     fieldSeparator: '   ',
                     lineSeparator: '\n',
                     deleteDobleQuotes: true,
-                    firstLineTitles: false
+                    firstLineTitles: false,
+                    onEachFeature:function(f,l) {
+          						var latlng = l._latlng
+                      scope.addMarker(latlng)
+                    }
                   });
-                  map.addLayer(geoLayer);
                 };
 
                 scope.addMarker = function (latlng /* Leaflet LatLng */) {

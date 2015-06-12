@@ -87,7 +87,7 @@
               <p style=margin:0;>Coordinates can be copied and pasted/entered from a .csv or .txt file</p>
               <p style=margin:0;font-size:14px;><strong>Ex:&nbsp;</strong><i>33.78695&nbsp;&nbsp;&nbsp;-118.298222</i></p>
 
-              <span>Data:</span><input type="text-area" ng-model="bulkCoords"/>
+              <span>Data:</span><textarea ng-model="bulkCoords"/></textarea>
 
               <div class="btn-group">
                   <a  class="btn btn-large btn-primary btn-add-marker"
@@ -99,7 +99,7 @@
 
               <div class="btn-group">
                   <a  class="btn btn-large btn-danger btn-primary btn-cancel"
-                      ng-click="addByBulk = false; latLngError = null;"
+                      ng-click="addByBulk = false;"
                       href="javascript:void(0)">
                       Cancel
                   </a>
