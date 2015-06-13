@@ -175,6 +175,7 @@ angular.module('askApp')
                       scope.addMarker(latlng, true)
                     }
                   });
+                  map.fitBounds(geoLayer.getBounds());
                 };
 
                 scope.addMarker = function (latlng, isBulk /* Leaflet LatLng */) {
