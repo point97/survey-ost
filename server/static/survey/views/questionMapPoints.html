@@ -83,11 +83,30 @@
 
             <!-- Bulk Data Input -->
             <div ng-show="addByBulk" class="map-controls-container clearfix">
-              <p style=margin:0;>Please enter your decimal coordinates below.</p>
-              <p style=margin:0;>Coordinates can be copied and pasted/entered from a .csv or .txt file</p>
-              <p style=margin:0;font-size:14px;><strong>Ex:&nbsp;</strong><i>33.78695&nbsp;&nbsp;&nbsp;-118.298222</i></p>
+              <p style="margin:8px;font-size:15px;">Coordinates <u>must</u> be copied and pasted directly from a .csv or .txt file - where each row includes a single set of coordinates and is comprised of two columns (latitude in the initial column and longitude in the second column). The first row should be your first set of coordinates and should <u>not</u> start with a title/header.</p>
+              <p style="font-size:15px;">We are assuming that if you've decided to use this bulk import method, your coordinates have already been tested and have been verified. Any invalid coordinates will not be shown and not recorded as answeres. Please use the example below as a guide to see how coordinates should be displayed.</p>
+                <table class="bulkCoords-example">
+                  <tr>
+                    <td>33.78695</td>
+                    <td>&nbsp;-118.298222</td>
+                  </tr>
+                  <tr>
+                    <td><i>33.34686</td>
+                    <td>&nbsp;-118.22321</td>
+                  </tr>
+                  <tr>
+                    <td><i>34.99335</td>
+                    <td>&nbsp;-117.99000</td>
+                  </tr>
+                </table>
 
-              <div style="text-align:center; height:100%"><textarea style="width:250px;max-height: 300px;overflow-y: auto;" msd-elastic ng-model="bulkCoords"/></textarea><div>
+              <div style="text-align:center; max-height:40%">
+                  <textarea
+                    style="width:250px; max-width:560px; max-height:80%; overflow-y:auto; margin-bottom:5px; text-align:center;"
+                    msd-elastic
+                    ng-model="bulkCoords">
+                  </textarea>
+                <div>
 
               <div class="btn-group">
                   <a  class="btn btn-large btn-primary btn-add-marker"
