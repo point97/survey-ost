@@ -1,4 +1,4 @@
-<!-- 
+<!--
     This is used by the survey after the user completes it. It calls surveyAnswer.html to show the answers.
 -->
 
@@ -6,7 +6,7 @@
     <div mobilemenu></div>
     <!-- Begin page content -->
     <div class="container">
-        
+
         <div ng-show="showErrorMessage" class="row">
             <div class="col-md-6 col-md-offset-3">
                 <!-- <div class="error">Problem</div> -->
@@ -28,7 +28,7 @@
                 <h3 ng-hide="respondent.complete">Incomplete Response</h3>
             </div>
 
-            <div class="row" ng-hide="respondent.complete"> 
+            <div class="row" ng-hide="respondent.complete">
                 <div class="col-xs-2 col-sm-2 col-md-2">
                     <a href="javascript:void(0)" ng-click="resumeSurvey(respondent); $event.stopPropagation();" class="btn btn-primary btn-main btn-resume">Resume</a>
                 </div>
@@ -39,7 +39,7 @@
 
             <div ng-include="viewPath + 'views/ost/answers/surveyAnswers.html'"></div>
 
-        </div>  
+        </div>
 
     </div>
 

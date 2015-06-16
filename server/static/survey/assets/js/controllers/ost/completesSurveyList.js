@@ -29,7 +29,7 @@ angular.module('askApp')
             return history.getAnswer(questionSlug, $scope.respondent);
         };
 
-        $scope.resumeSurvey = function (respondent) {
+        $scope.resumeCompletedSurvey = function (respondent) {
             $http.get(app.server + '/api/v1/respondant/' + respondent.uuid + '/?format=json').success(function(data) {
                 survey.initializeSurvey(data.survey, data.survey.pages);
                 survey.resume(respondent);
