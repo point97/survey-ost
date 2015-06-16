@@ -83,8 +83,8 @@
 
             <!-- Bulk Data Input -->
             <div ng-show="addByBulk" class="map-controls-container clearfix">
-              <p style="margin:8px;font-size:15px;">Coordinates <u>must</u> be copied and pasted directly from a .csv or .txt file - where each row includes a single set of coordinates and is comprised of two columns (latitude in the initial column and longitude in the second column). The first row should be your first set of coordinates and should <u>not</u> start with a title/header.</p>
-              <p style="font-size:15px;">We are assuming that if you've decided to use this bulk import method, your coordinates have already been tested and have been verified. Any invalid coordinates will not be shown and not recorded as answeres. Please use the example below as a guide to see how coordinates should be displayed.</p>
+              <p style="margin:8px;font-size:15px;">Coordinates <u>must</u> be copied and pasted directly from a .csv or .txt file, and cannot include any spaces, commas, etc.  Each row should be one point, comprised of two columns (latitude Y, longitude X) and the coordinate system should be WGS84 in decimal degree.</p>
+              <p style="font-size:15px;">The first row cannot be a title or a header row, and must be your first set of coordinates.  Please use the example below as a guide to see how coordinates should be displayed.</p>
                 <table class="bulkCoords-example">
                   <tr>
                     <td>33.78695</td>
