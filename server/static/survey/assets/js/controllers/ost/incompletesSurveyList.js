@@ -5,7 +5,7 @@ angular.module('askApp')
         $http.defaults.headers.post['Content-Type'] = 'application/json';
 
         if (app.user) {
-            $scope.user = app.user;    
+            $scope.user = app.user;
         } else {
             $location.path('/');
         }
@@ -28,7 +28,7 @@ angular.module('askApp')
 
             $scope.getSubmittedSurveysList($scope.surveyFilter);
         };
-        
+
         $scope.getTitle = function() {
             return history.getTitle($scope.respondent);
         };
@@ -79,10 +79,10 @@ angular.module('askApp')
         };
 
         $scope.getRespondent = function (respondent) {
-            var url = app.server 
+            var url = app.server
                   + '/api/v1/reportrespondantdetails/'
-                  + respondent.uuid 
-                  + '/?format=json';        
+                  + respondent.uuid
+                  + '/?format=json';
 
             return $http.get(url)
                 .success(function (data) {
@@ -105,16 +105,16 @@ angular.module('askApp')
                 }).error(function (err) {
                     console.log(JSON.stringify(err));
                     debugger;
-                }); 
+                });
         };
 
         $scope.getSubmittedSurveysListFromServer = function(surveyFilter) {
-            var url = $scope.next20 ? $scope.next20 : 
-                      app.server 
-                      + '/api/v1/incompleterespondant/?user__username__exact=' 
-                      + $scope.user.username 
+            var url = $scope.next20 ? $scope.next20 :
+                      app.server
+                      + '/api/v1/incompleterespondant/?user__username__exact='
+                      + $scope.user.username
                       + '&format=json';
-            
+
             if (surveyFilter.start) {
                 url += '&ts__gte=' + surveyFilter.start; //new Date(surveyFilter.start).add(1).days().toString('yyyy-MM-dd');
             }
@@ -126,7 +126,7 @@ angular.module('askApp')
             return $http.get(url).error(function (err) {
                 console.log(JSON.stringify(err));
                 debugger;
-            }).success(function (callback) { $scope.next20 = callback.meta.next; $scope.updateEnabled = false;  });  
+            }).success(function (callback) { $scope.next20 = callback.meta.next; $scope.updateEnabled = false;  });
         };
 
         $scope.showNext20 = function(surveyFilter) {
@@ -147,7 +147,7 @@ angular.module('askApp')
                     // console.log($scope.respondentList);
                 }).error(function (data) {
                     debugger;
-                }); 
+                });
         };
 
         $scope.getSubmittedSurveysList = function(surveyFilter) {
@@ -171,28 +171,28 @@ angular.module('askApp')
                     // console.log($scope.respondentList);
                 }).error(function (data) {
                     debugger;
-                }); 
+                });
 
         };
 
         $scope.getSubmittedSurveys = function () {
-            var url = app.server 
-                      + '/api/v1/incompleterespondant/?user__username__exact=' 
-                      + $scope.user.username 
+            var url = app.server
+                      + '/api/v1/incompleterespondant/?user__username__exact='
+                      + $scope.user.username
                       + '&format=json';
-            
+
             $scope.loading = true;
 
             return $http.get(url).error(function (err) {
                 console.log(JSON.stringify(err));
                 debugger;
             });
-            
-        };       
+
+        };
 
 
         $scope.showSubmittedSurveys = function() {
-            
+
             $scope.getSubmittedSurveys()
                 .success(function (data) {
                     //debugger;
@@ -228,11 +228,11 @@ angular.module('askApp')
                     $scope.showingSubmittedSurveys = true;
                 }).error(function (data) {
                     debugger;
-                });    
+                });
         };
 
         //$scope.getSubmittedSurveysList();
-        $scope.surveyFilter = {start: '2014-07-01', end: new Date().toString('yyyy-MM-dd')};
+        $scope.surveyFilter = {start: '2015-07-01', end: new Date().toString('yyyy-MM-dd')};
         $scope.getSubmittedSurveysList($scope.surveyFilter);
         $scope.$watch('surveyFilter', function(newValue) {
             if (newValue) {
