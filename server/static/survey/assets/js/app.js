@@ -69,7 +69,7 @@ if (window.browserNotSupported) {
                 reloadOnSearch: false
             })
         .when('/about', {
-            templateUrl: app.viewPath + 'views/ost/ost-about.html',
+            templateUrl: app.viewPath + 'views/ncc/ncc-about.html',
             controller: 'AboutCtrl'
         })
             .when('/author/:surveySlug', {
