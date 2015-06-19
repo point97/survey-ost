@@ -6,6 +6,7 @@ from django.db.models import signals
 from django.shortcuts import get_object_or_404
 from account.models import UserProfile
 from ordereddict import OrderedDict
+from django.db.models import Q
 
 import dateutil.parser
 import datetime
@@ -117,13 +118,15 @@ class Respondant(caching.base.CachingMixin, models.Model):
     @property
     def monitored_ecosystem_features(self):
         try:
-            return self.responses.filter(question__slug='ecosystem-features')[0].answer
+            return self.responses.filter(question__slug__contains='ecosystem-features')[0].answer
         except:
             return 'unavailable'
 
     @property
     def ecosystem_feature_answer_slugs(self):
-        answers = self.response_set.filter(question__slug__contains="ef-")
+        q1 = Q(question__slug__contains = 'ef-')
+        q2 = Q(question__slug__contains = 'ncc-')
+        answers = self.response_set.filter(q1|q2)
         return [a.question.slug for a in answers]
 
     @property
