@@ -10,7 +10,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
             numOthers = q.otherAnswers.length;
         }
 
-        if (q.groupedOptions && q.groupedOptions.length) {  
+        if (q.groupedOptions && q.groupedOptions.length) {
             standards = _.pluck(_.flatten(_.map(q.groupedOptions, function (group) { return group.options })), 'checked');
         } else {
             standards = _.pluck(q.options, 'checked');
@@ -26,9 +26,9 @@ angular.module('askApp').directive('multiquestion', function($modal) {
     function _isBlank (q /* question */) {
         if (q.type === 'single-select' || q.type === 'multi-select' || q.type === 'yes-no') {
             var others = q.otherAnswers || {},
-                hasOthers = others.length && ( ! (others.length === 1 && 
+                hasOthers = others.length && ( ! (others.length === 1 &&
                                                   others[0] === "") ),
-                options = q.groupedOptions && q.groupedOptions.length ? 
+                options = q.groupedOptions && q.groupedOptions.length ?
                             _.flatten(_.map(q.groupedOptions, function(option) {
                                 return option.options;
                             })) :
@@ -37,7 +37,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
 
             return !hasOthers && !someChecked;
         }
-        
+
         if (q.type === 'map-multipoint') {
             return ! _.isArray(q.markers) || q.markers.length < 1;
         }
@@ -47,16 +47,16 @@ angular.module('askApp').directive('multiquestion', function($modal) {
         }
 
         if (_.isArray(q.answer)) {
-            return q.answer.length === 0 || 
-                        (q.answer.length === 1 && 
-                         q.answer[0].text && 
+            return q.answer.length === 0 ||
+                        (q.answer.length === 1 &&
+                         q.answer[0].text &&
                          q.answer[0].text === 'NO_ANSWER');
-        } 
+        }
 
-        if (!q.answer) { 
+        if (!q.answer) {
             // The remaining question types should fit this case.
             return true;
-        } 
+        }
     }
 
     function _isValid (q /* question */) {
@@ -68,7 +68,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
         if (! q.required) {
             if (_.isArray(q.answer) && (q.answer.length === 0 || (q.answer.length === 1 && q.answer[0].text && q.answer[0].text === 'NO_ANSWER'))) {
                 return true;
-            } else if (!q.answer || q.type === 'single-select' || q.type === 'multi-select') { 
+            } else if (!q.answer || q.type === 'single-select' || q.type === 'multi-select') {
                 return true;
             } // else: validate the answer that is provided.
         }
@@ -90,7 +90,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
         if (q.type === 'integer' || q.type === 'number' || q.type === 'currency') {
             if (q.type === 'currency') {
                 return /^\$?(([0-9]{1,3},([0-9]{3},)*)[0-9]{3}|[0-9]{1,3})(\.[0-9]{2})?$/.test(q.answer);
-            }                    
+            }
             if (isNaN(q.answer)) {
                 return false;
             }
@@ -117,35 +117,35 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                 var groupedOptions = _.flatten(_.map(q.groupedOptions, function(option) {
                     return option.options;
                 }));
-                return _.some(_.pluck(groupedOptions, 'checked')) || otherAnswers;      
+                return _.some(_.pluck(groupedOptions, 'checked')) || otherAnswers;
             } else {
-                return _.some(_.pluck(q.options, 'checked')) || otherAnswers;      
-            }                    
-        } else if ( q.type === 'multi-select' || q.type === 'yes-no' ) {                
-            
-            var otherEntry = otherAnswers, 
+                return _.some(_.pluck(q.options, 'checked')) || otherAnswers;
+            }
+        } else if ( q.type === 'multi-select' || q.type === 'yes-no' ) {
+
+            var otherEntry = otherAnswers,
                 standardEntry = false;
-            
+
             if (otherEntry) {
                 return true;
             } else {
-                if (q.groupedOptions && q.groupedOptions.length) {  
+                if (q.groupedOptions && q.groupedOptions.length) {
                     return _.some(_.pluck(_.flatten(_.map(q.groupedOptions, function (group) { return group.options })), 'checked'));
                 } else {
-                    return _.some(_.pluck(q.options, 'checked')) || q.otherAnswers.length;        
+                    return _.some(_.pluck(q.options, 'checked')) || q.otherAnswers.length;
                 }
             }
         }
-        
+
         if (q.type === 'number-with-unit') {
             if (! _.isNumber(q.answer) || ! q.unit) {
-                return false;    
+                return false;
             }
         }
 
        if ((q.type === 'monthpicker' || q.type == 'datepicker' || q.type === 'timepicker')) {
             if (! q.answer || (new Date(scope.q.answer)).add(1).day().clearTime() > (new Date()).clearTime()) {
-                return false;    
+                return false;
             }
         }
 
@@ -210,7 +210,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
             });
 
 
-            // Keep a validity value (separate from above) synced every time the 
+            // Keep a validity value (separate from above) synced every time the
             // answer changes. Used to update UI styles.
             scope.$watch(function () {
                 return _isValid(scope.question);
@@ -239,7 +239,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                                         label: _.string.slugify(answer.text + ": " + gridAnswer),
                                         value: gridAnswer
                                     };
-                                });   
+                                });
                             } else {
                                 return answer[gridSlug];
                             }
@@ -259,7 +259,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                 //reduce to get the sum
                 return _.reduce(_.flatten(_.map(slugList, function(slug) {
                     return scope.getAnswer(slug);
-                })), function(sum, value) {                    
+                })), function(sum, value) {
                     if (_.isObject(value)) {
                         value = value.value;
                     } else if (! value) {
@@ -274,7 +274,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
             // scope.question.otherAnswers = [];
             // handle clicked multiselects
             scope.onMultiSelectClicked = function(option, question) {
-                /* Hacking this for the ecosystem-features question in OST to 
+                /* Hacking this for the ecosystem-features question in OST to
                    allow one of the options to clear all others. */
                 if (question.slug == 'ecosystem-features') {
                     if (option.text === 'Contextual Data (No Ecological Monitoring)') {
@@ -289,10 +289,10 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                     // Business as usual.
                     option.checked = !option.checked;
                 }
-                
+
                 // if (!option.checked && option.other) {
                 //     // $scope.question.otherAnswer1 = null;
-                //     // $scope.question.otherAnswer2 = null;                    
+                //     // $scope.question.otherAnswer2 = null;
                 //     // $scope.question.otherAnswer = null;
                 //     // $scope.question.otherAnswers[0] = null;
                 //     // $scope.question.otherAnswers[1] = null;
@@ -407,13 +407,13 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                 scope.question.groupedOptions = [];
                 // scope.question.answerSelected = false;
                 var groupName = "";
-                
+
                 _.each(scope.question.rows.split(linebreak(scope.question.rows)), function(row, index) {
                     var matches = [];
                     if (scope.question.answer && scope.question.answer.length) {
                         matches = _.filter(scope.question.answer, function(answer) {
                             return answer.text === row;
-                        });                        
+                        });
                     } else if (scope.question.answer.text === row) {
                         matches = [row];
                     }
@@ -465,7 +465,7 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                     });
                 }
 
-                
+
                 // scope.question.otherAnswer = scope.question.answer.text || _.findWhere(scope.question.answer, {
                 //     other: true
                 // }).text;
@@ -476,12 +476,12 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                 };
                 // scope.question.otherAnswer = null;
                 scope.question.otherAnswers = [];
-            }        
+            }
 
             // set up the options for a yes-no question
             if (scope.question.type === 'yes-no') {
                 scope.question.options = [
-                    {'text': 'Yes', 'label': "Yes"}, 
+                    {'text': 'Yes', 'label': "Yes"},
                     {'text': 'No',  'label': "No"}
                 ];
                 // set selected value (the answer is coming in with varying forms)
@@ -546,9 +546,9 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                     // scope.onSingleSelectClicked({checked: true}, scope.question);
                     // argh...basically: if there is not an other answer and no regular answer is checked, then answerSelected should be false
                     // i believe the original intention of this was to ensure that when a user removed an other option the selectable items were styled correctly
-                    if ( (!newVal.length || newVal[0]==="") && !_.some(_.pluck(scope.question.options, 'checked')) ) {  
-                        scope.question.answerSelected = false;    
-                    }                    
+                    if ( (!newVal.length || newVal[0]==="") && !_.some(_.pluck(scope.question.options, 'checked')) ) {
+                        scope.question.answerSelected = false;
+                    }
                 }
             }, true);
 
@@ -563,8 +563,13 @@ angular.module('askApp').directive('multiquestion', function($modal) {
 
 
             scope.showEcosysFeatDescs = function () {
+                if (scope.question.slug == 'ncc-ecosystem-features') {
+                  surveyPath = 'ncc';
+                } else if (scope.question.slug == 'ecosystem-features') {
+                  surveyPath = 'ost';
+                };
                 scope.modalInstance = $modal.open({
-                    templateUrl: app.viewPath + 'views/ost/ecosystem-desriptions-modal.html',
+                    templateUrl: app.viewPath + 'views/' + surveyPath +'/ecosystem-desriptions-modal.html',
                     windowClass: 'help-modal ef-descriptions-modal',
                     controller: function ($scope, $modalInstance) {
                         $scope.ok = function () {
@@ -577,17 +582,17 @@ angular.module('askApp').directive('multiquestion', function($modal) {
                             container.animate({
                                 scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 5
                             }, 200);
-                        };                        
+                        };
                     }
                 });
             };
 
             scope.numAnswers = function (q /* question */) {
-                /* Written to tend to a special case for the OceanSpaces 
+                /* Written to tend to a special case for the OceanSpaces
                    survey to allow limiting to no more than 3 answers. */
                 if ( q.type === 'multi-select') {
                     return _numAnswersForMultiSelect(q);
-                }   
+                }
             };
         }
     };
