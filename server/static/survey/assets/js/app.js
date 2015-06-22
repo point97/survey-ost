@@ -38,7 +38,11 @@ if (window.browserNotSupported) {
 
         if (window.location.pathname === '/respond') {
             app.viewPath = app.server + '/static/survey/';
-            offlinePath = 'views/online/'
+            if (window.location.href.includes('ncc-monitoring')) {
+              offlinePath = 'views/ncc/'
+            } else {
+              offlinePath = 'views/online/'
+            }
             app.offline = false;
         } else {
             app.viewPath = '';
@@ -81,7 +85,7 @@ if (window.browserNotSupported) {
             controller: 'SurveyListCtrl'
         })
             .when('/survey/:surveySlug/complete/:uuidSlug', {
-            templateUrl: app.viewPath + offlinePath + 'complete.html',
+            templateUrl: app.viewPath + offlinePath + '/complete.html',
             controller: 'CompleteCtrl'
         })
             .when('/survey/:surveySlug/complete/:uuidSlug/:action/:questionSlug', {
