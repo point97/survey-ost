@@ -1,7 +1,7 @@
 <div class="main dash-overview" ng-cloak>
     <div class="row" ost-header></div>
     <div class="main-content">
-    
+
         <div class="row">
             <h2>{{page_title}}</h2>
             <p>Color-coded dots in the map below represent monitoring sites reported in the North Central Coast Monitoring Survey. Each color represents a different ecosystem or category of human use.
@@ -19,17 +19,17 @@
          points="mapSettings.mapPoints"
          units="mapSettings.mapPlanningUnits"
          active-ecosystem-features="activeEcosystemFeatures"
-         boundary-path="'/static/survey/data/oceanspaces_ca_cc_boundary.json?v=2'"
+         boundary-path="'/static/survey/data/CA_NCC_boundary_6nm_simple.json?v=2'"
          slug-to-color="ecosystemSlugToColor(slug)"
          slug-to-label="ecosystemSlugToLabel(slug)"
          ></div>
-        
-        <div respondents-table 
+
+        <div respondents-table
              resource='respondentTable.resource'
-             params='respondentTable.params' 
+             params='respondentTable.params'
              options='respondentTable.options'
         ></div>
-        
+
     </div><!-- main-content -->
 </div>
 <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>

@@ -109,7 +109,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         function setMarkers(data){
             // Updates a LayerGroup with markers for each data item.
             scope.markersLayer.clearLayers();
-            _.each(data, function(markerData){ 
+            _.each(data, function(markerData){
                 markerData['draggable'] = false;
                 markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
                 var marker = MapUtils.createMarker(markerData);
@@ -167,9 +167,9 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             var loading = '<p ng-show="!planningUnit.data.id" class="load-indicator">Loading...</p>';
             var popup = '';
             var list = '';
-        
+
             if (scope.activeProject) {
-                list += '<h4>Ecosystem Features</h4>';            
+                list += '<h4>Ecosystem Features</h4>';
                 list += '<div ng-repeat="project in planningUnit.data.projects" ng-if="activeProject == project.project_uuid">';
                 list += '<ul class="list-unstyled" id="map-legend">';
                 list += '<li ng-repeat="slug in project.ecosystem_features">';
@@ -179,16 +179,16 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list += '</div>'; // End ng-repeat: planningUnit.data.projects
                 list += '</dl>';
             } else {
-                list += '<h4>Projects</h4>';            
-                list += '<dl>'; 
+                list += '<h4>Projects</h4>';
+                list += '<dl>';
                 list += '<div ng-repeat="project in filterProjects()"';
-                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';            
+                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
                 list += '<div id="map-legend">';
                 list += '<span tooltip="{{ecosystemSlugToLabel(slug)}}" ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
                 list += '</div>';
 
                 list += '</div>'; // End ng-repeat: planningUnit.data.projects
-                list += '</dl>';                
+                list += '</dl>';
             }
 
             var html = '<div class="popup-content planning-unit">' + loading + '<div ng-cloak>' + list + '</div></div>';
@@ -204,7 +204,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 }
             }
 
-            // Define the on click callback. 
+            // Define the on click callback.
             layer.on('click', function(e) {
                 scope.$apply(function () {
                     var unit_id = e.target.feature.properties.ID;
@@ -224,12 +224,12 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         function setPopup(marker, markerData) {
             /*
             This is the popup for a marker.
-            */ 
-            var loading = '<p ng-show="responses == false" class="load-indicator">Loading...</p>', 
+            */
+            var loading = '<p ng-show="responses == false" class="load-indicator">Loading...</p>',
                 popup = '',
                 list = '';
-            
-            if (!scope.activeProject) { 
+
+            if (!scope.activeProject) {
                 list += '<h5><a href="#/RespondentDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
             }
             list += '<dt>Ecosystem Feature:</dt>';
@@ -244,7 +244,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             popup = '<div class="marker-popup-content" ng-cloak>' + loading + list + '</div>';
 
             marker.bindPopup(popup, { closeButton: true });
-            
+
             marker.on('click', function(e) {
                 scope.responses = false;
                 getRespondent(markerData.uuid, function (responses) {
@@ -262,10 +262,10 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         }
 
         function getRespondent (uuid, success_callback) {
-            var url = app.server 
+            var url = app.server
                   + '/api/v1/reportrespondantdetails/'
-                  + uuid 
-                  + '/?format=json';        
+                  + uuid
+                  + '/?format=json';
 
             $http.get(url).success(function (data) {
                 var respondent = data,
@@ -284,21 +284,21 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 success_callback(responses);
             }).error(function (err) {
                 debugger
-            }); 
+            });
         }
 
 
         function getPlanningUnit (unit_id, success_callback) {
-            var url = app.server 
+            var url = app.server
                   + '/api/v1/planning-unit/'
-                  + unit_id 
-                  + '/?format=json';        
+                  + unit_id
+                  + '/?format=json';
 
             $http.get(url).success(function (data) {
                 success_callback(data);
             }).error(function (err) {
                 debugger
-            }); 
+            });
         }
 
 
@@ -310,7 +310,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
     var MapUtils = {
 
         initMap: function (mapElement, lat, lng, zoom) {
-            var nauticalLayer, bingLayer, map, baseMaps, options; 
+            var nauticalLayer, bingLayer, map, baseMaps, options;
 
             nauticalLayer = L.tileLayer.wms("http://egisws02.nos.noaa.gov/ArcGIS/services/RNC/NOAA_RNC/ImageServer/WMSServer", {
                 format: 'img/png',
@@ -326,7 +326,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             map = new L.Map(mapElement, { inertia: false })
                 .addLayer(bingLayer)
                 .setView(
-                    new L.LatLng(lat || 18.35, lng || -64.85), 
+                    new L.LatLng(lat || 18.35, lng || -64.85),
                     zoom || 11);
 
             map.attributionControl.setPrefix('');
@@ -361,7 +361,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         createMarker: function (config) {
             var marker = null;
             if (config.lat && config.lat) {
-                
+
                 marker = new L.circleMarker([config.lat, config.lng], {
                     radius: 6,
                     /* border */
@@ -372,13 +372,13 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                     fillColor: config.color,
                     fillOpacity: 1.0
                 });
-                
+
                 marker.on('mouseover', function (e) {
                     marker.setStyle({
                         weight: 3
                     });
                 });
-                
+
                 marker.on('mouseout', function (e) {
                     marker.setStyle({
                         weight: 1
@@ -389,7 +389,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         }
     };
 
-    
+
 
     return directive;
 });
