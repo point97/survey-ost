@@ -3,7 +3,7 @@ angular.module('askApp')
 
         var MapUtils = {
 
-            initMap: function (mapHtmlElement, questionSettings, geojsonPath) {
+            initMap: function (mapHtmlElement, questionSettings) {
                 // Setup layers
                 var nautical, bing, initPoint, initialZoom, map, baseMaps, options;
 
@@ -36,6 +36,12 @@ angular.module('askApp')
                 baseMaps = { "Satellite": bing, "Nautical Charts": nautical };
                 options = { position: 'bottomleft' };
                 L.control.layers(baseMaps, null, options).addTo(map);
+
+                if ($routeParams.surveySlug === 'ncc-monitoring') {
+                  var geojsonPath = '/static/survey/data/CA_NCC_boundary_6nm_simple.json';
+                } else {
+                  var geojsonPath = '/static/survey/data/oceanspaces_ca-cc_boundary.json';
+                };
 
                 if (geojsonPath) {
                     // Add geojson (intended for study area boundary.
@@ -85,8 +91,7 @@ angular.module('askApp')
             transclude: true,
             scope: {
                 question: "=", //scope.question.geojson, scope.question.zoom, etc
-                answer: "=", // the value to set on each marker
-                boundaryPath: "="
+                answer: "=" // the value to set on each marker
             },
             link: function(scope, element) {
 

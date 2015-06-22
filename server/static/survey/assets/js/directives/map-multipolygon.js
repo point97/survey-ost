@@ -107,8 +107,14 @@ angular.module('askApp')
                     });
                 };
 
+                if ($routeParams.surveySlug === 'ncc-monitoring') {
+                  var geojsonGridPath = '/static/survey/data/CA_NCC_boundary_6nm_PU.json';
+                } else {
+                  var geojsonGridPath = '/static/survey/data/CentralCalifornia_PlanningUnits.json';
+                };
+
                 // Add planning units grid
-                $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json").success(function(data) {
+                $http.get(geojsonGridPath).success(function(data) {
                     var geojsonLayer = L.geoJson(data, {
                         style: function(feature) {
                             return {
