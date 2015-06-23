@@ -38,13 +38,13 @@ angular.module('askApp')
     // };
 
     $scope.getResumeQuestionPath = function(lastQuestion) {
-        
+
         var resumeQuestion = $scope.survey.questions[_.indexOf($scope.survey.questions, _.findWhere($scope.survey.questions, {
             slug: lastQuestion
         })) + 1];
         return ['survey', $scope.survey.slug, resumeQuestion.slug, $routeParams.uuidSlug].join('/');
     };
-    
+
     // $scope.getResumePage = function (lastQuestion) {
     //     var resumePage = survey.getPageFromQuestion(lastQuestion);
     //     return ['survey', $scope.survey.slug, resumePage.order, $routeParams.uuidSlug].join('/');
@@ -59,7 +59,7 @@ angular.module('askApp')
             url: url,
             data: { feedback: feedback, username: app.user.username }
         }).success(function () {
-            $scope.feedback = null;    
+            $scope.feedback = null;
         })
         $scope.sendingFeedback = false;
     }
@@ -81,7 +81,7 @@ angular.module('askApp')
 
     $scope.deleteAnswer = function (questionSlug, uuidSlug) {
         var index;
-        
+
         if (app.offline) {
             if ($scope.answers[questionSlug]) {
                 delete $scope.answers[questionSlug];
@@ -135,20 +135,20 @@ angular.module('askApp')
         }
         _.each($scope.page.blocks, function(block, i) {
             if (title === "") {
-                title = block.name;    
+                title = block.name;
             } else {
                 title = title + " - " + block.name;
             }
-            
+
         });
         return title;
     };
-    
+
 
     $scope.validatePage = function (page) {
         var result = _.chain(page.questions || [])
             .map(function (question) {
-                return $scope.validateQuestion(question);    
+                return $scope.validateQuestion(question);
             })
             .every().value();
         $scope.pageIsValid = result;
@@ -167,8 +167,13 @@ angular.module('askApp')
     }
 
     $scope.showHelp = function () {
+        if ($routeParams.surveySlug === 'ncc-monitoring') {
+          var surveyAbbrv = 'ncc'
+        } else {
+          var surveyAbbrv = 'ost'
+        }
         $scope.modalInstance = $modal.open({
-            templateUrl: app.viewPath + 'views/ost/helpModal.html',
+            templateUrl: app.viewPath + 'views/' + surveyAbbrv + '/helpModal.html',
             windowClass: 'help-modal',
             controller: function ($scope, $modalInstance) {
                 $scope.ok = function () {
@@ -179,7 +184,7 @@ angular.module('askApp')
     };
 
     $scope.showErrorAlert = function () {
-        // First, set showErrors to false in this digest cycle 
+        // First, set showErrors to false in this digest cycle
         // to clear all error messages.
         $scope.showErrors = false;
         // Then set it to true in a separate digest cycle to trigger
@@ -205,7 +210,7 @@ angular.module('askApp')
                     };
                 }
             });
-        }, 0);        
+        }, 0);
     };
 
     $scope.submitPage = function (page) {
@@ -284,7 +289,7 @@ angular.module('askApp')
                     app.data.responses.push({
                         answer: answer.answer,
                         question: question.slug
-                    });                    
+                    });
                 });
                 $scope.gotoNextPage();
             }).error(function(data, status){
@@ -292,7 +297,7 @@ angular.module('askApp')
                 $scope.pageSubmitted = false;
             });
         }
-        
+
     };
 
     $scope.gotoNextPage = function () {
@@ -340,9 +345,9 @@ angular.module('askApp')
             answer = {
                 value: question.answer,
                 unit: question.unit
-            }    
+            }
         }
-        
+
         if (question.type === 'grid') {
             //check for undefined answers on the grid
             //var completed = ! _.some( _.map(question.options, function(option) { return _.contains(_.values(option), undefined); }));
@@ -352,7 +357,7 @@ angular.module('askApp')
             } else {
                 return false;
             }
-            delete question.gridOptions; // was causing a circular reference in 
+            delete question.gridOptions; // was causing a circular reference in
         }
 
         if (question.type === 'map-multipoint') {
@@ -387,27 +392,27 @@ angular.module('askApp')
                     if (col.either_or && ! currentRow[col.either_or]) {
                         overallValidity = false;
                     }
-                    
+
                 }
             });
         });
         return overallValidity;
     }
-    
+
     $scope.validateMultiSelect = function(question) {
         var hoistedAnswers,
             answers,
             isOtherAnswerValid = true;
-        
+
         if (!question.required) {
             return true;
         }
-        
+
         answers = _.filter(question.options, function(option) {
             return option.checked;
         });
-        
-        // in case of multiselect containing groups 
+
+        // in case of multiselect containing groups
         if (question.groupedOptions && question.groupedOptions.length) {
             answers = [];
             _.each(question.groupedOptions, function(groupedOption) {
@@ -448,7 +453,7 @@ angular.module('askApp')
                 });
             }
         }
-        
+
         // enable/disable continue button
         return answers.length > 0 && isOtherAnswerValid;
     };
@@ -460,7 +465,7 @@ angular.module('askApp')
      */
     $scope.answerMultiSelect = function(question) {
         var answers;
-        
+
         // if (!$scope.isAnswerValid) {
         //     return;
         // }
@@ -471,8 +476,8 @@ angular.module('askApp')
         answers = _.filter(question.options, function(option) {
             return option.checked;
         });
-        
-        // in case of multiselect containing groups 
+
+        // in case of multiselect containing groups
         if (question.groupedOptions && question.groupedOptions.length) {
             answers = [];
             _.each(question.groupedOptions, function(groupedOption) {
@@ -492,11 +497,11 @@ angular.module('askApp')
                 });
             }
         });
-        
+
         return answers;
     };
 
-    
+
     $scope.$watch('question.otherAnswers', function(newValue) {
 
         if ($scope.question && $scope.question.required && !$scope.answer) {
@@ -552,22 +557,22 @@ angular.module('askApp')
         }
     };
 
-   
+
 
     $scope.skipBack = function () {
-        
+
         var lastPage = survey.getLastPage();
         if (lastPage) {
-            $location.path(['survey', $routeParams.surveySlug, lastPage.order, $routeParams.uuidSlug].join('/'));    
+            $location.path(['survey', $routeParams.surveySlug, lastPage.order, $routeParams.uuidSlug].join('/'));
         } else {
             $location.path('/surveys');
         }
 
     };
-    
+
     $scope.hasBack = function () {
         return survey.isOnFirstPage() !== false;
-    };    
+    };
 
 
 
@@ -645,7 +650,7 @@ $scope.loadSurvey = function(data) {
         // Fill options list.
         if ($scope.question && $scope.question.options_json && $scope.question.options_json.length > 0 && !$scope.question.options_from_previous_answer) {
             // Using the provided json file to set options.
-            
+
             $http.get($scope.question.options_json).success(function(data) {
                 var groups = _.groupBy(data, function(item) {
                     return item.group;
@@ -712,7 +717,7 @@ $scope.loadSurvey = function(data) {
                     } else {
                         option.checked = false;
                     }
-                    
+
                     //distinguish group titles
                     if ( _.startsWith(option.text, '*') ) {
                         option.text = _.splice(option.text, 1);
@@ -742,7 +747,7 @@ $scope.loadSurvey = function(data) {
 
             $http.get('surveys/counties/' + stateAbrv + '.json').success(function(data, status, headers, config) {
                 $scope.question.options = data;
-                if (!$scope.answer) { 
+                if (!$scope.answer) {
                     return;
                 }
 
@@ -754,7 +759,7 @@ $scope.loadSurvey = function(data) {
                         option.checked = true;
                         $scope.isAnswerValid = true;
                     }
-                });    
+                });
             }).error(function(data, status, headers, config) {
                 $scope.gotoNextQuestion();
             });
@@ -780,21 +785,21 @@ $scope.loadSurvey = function(data) {
                 });
             }
         }
-        //commenting out on 10-21-2013 
+        //commenting out on 10-21-2013
         //$scope.nextPagePath = $scope.getNextPagePath();
         $scope.loading = false;
 
         $scope.validity = {};
-        
+
         $scope.$watch('validity', function (newValidity) {
             // if (newPage) {
-            //     $scope.validatePage(newPage);    
+            //     $scope.validatePage(newPage);
             // }
             if (newValidity) {
                 $scope.pageIsValid = _.every(_.values($scope.validity));
             }
-            
-        }, true);    
+
+        }, true);
 
     };
     $scope.viewPath = app.viewPath;
@@ -847,6 +852,6 @@ $scope.loadSurvey = function(data) {
             $scope.loadSurvey(data);
         }).error(function(data, status, headers, config) {
             $scope.survey.status = 'invalid';
-        });    
+        });
     }
 });
