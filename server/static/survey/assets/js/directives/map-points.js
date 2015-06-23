@@ -40,7 +40,7 @@ angular.module('askApp')
                 if ($routeParams.surveySlug === 'ncc-monitoring') {
                   var geojsonPath = '/static/survey/data/CA_NCC_boundary_6nm_simple.json';
                 } else {
-                  var geojsonPath = '/static/survey/data/oceanspaces_ca-cc_boundary.json';
+                  var geojsonPath = '/static/survey/data/oceanspaces_ca_cc_boundary.json';
                 };
 
                 if (geojsonPath) {

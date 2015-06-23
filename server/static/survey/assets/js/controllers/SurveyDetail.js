@@ -306,7 +306,11 @@ angular.module('askApp')
         if (nextPage) {
             $location.path(['survey', $scope.survey.slug, nextPage.order, $routeParams.uuidSlug].join('/'));
         } else {
-            $location.path(['survey', $scope.survey.slug, 'complete', $routeParams.uuidSlug, $routeParams.action].join('/'));
+            if ($scope.survey.slug === 'ncc-monitoring') {
+              $location.path(['survey', $scope.survey.slug, 'complete', $routeParams.uuidSlug, "ncc", $routeParams.action].join('/'));
+            } else {
+              $location.path(['survey', $scope.survey.slug, 'complete', $routeParams.uuidSlug, $routeParams.action].join('/'));
+            }
         }
 
     };
