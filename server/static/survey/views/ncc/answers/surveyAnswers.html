@@ -1,6 +1,6 @@
 <!--
 This is used by the survey app only
---> 
+-->
 <div class="row">
    <div class="col-sm-12 col-md-12">
        <dl class="dl-horizontal">
@@ -27,9 +27,9 @@ This is used by the survey app only
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <div dash-map-ost
-             lat="mapSettings.lat"
-             lng="mapSettings.lng"
-             zoom="mapSettings.zoom"
+             lat=38.1
+             lng=-123.1
+             zoom=8
              points="mapSettings.mapPoints"
              units="mapSettings.mapPlanningUnits"
              boundary-path="'/static/survey/data/CA_NCC_boundary_6nm_simple.json?v=2'"
@@ -44,7 +44,7 @@ This is used by the survey app only
     <div class="col-sm-12 col-md-12">
         <ul class="list-unstyled">
             <li ng-repeat="slug in uniqueEcosystemFeatureSlugs">
-                <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div> 
+                <div class="circle pull-left" ng-style="{'background-color': ecosystemSlugToColor(slug)};">&nbsp;</div>
                 {{ecosystemSlugToLabel(slug)}}
             </li>
         </ul>
@@ -54,109 +54,100 @@ This is used by the survey app only
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <div class="answer-panels">
-            <div answers-panel 
-                panel-title="'Project / Funding Information'" 
+            <div answers-panel
+                panel-title="'Project / Funding Information'"
                 html-content="viewPath + 'views/ost/answers/project.html'"
                 species-answer="''"
                 respondent="respondent"></div>
 
 
-            <div answers-panel 
+            <div answers-panel
                 panel-title="'Data Management / Collection Information'"
                 html-content="viewPath + 'views/ost/answers/data.html'"
                 species-answer="''"
                 respondent="respondent"></div>
 
-            <div ng-show="answerContains('ecosystem-features', 'Rocky Intertidal Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Rocky Intertidal Ecosystems')">
+                <div answers-panel
                     panel-title="'Rocky Intertidal Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-rockyintertidal-species')"
+                    species-answer="getAnswer('ncc-rockyintertidal-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Kelp and Shallow (0-30m) Rock')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Kelp and Shallow (0-30m) Rock')">
+                <div answers-panel
                     panel-title="'Kelp and Shallow (0-30m) Rock'"
                     html-content="''"
-                    species-answer="getAnswer('ef-kelp-and-shallow-rock-species')"
+                    species-answer="getAnswer('ncc-kelp-and-shallow-rock-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Mid depth (30-100m) Rock Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Mid depth (30-100m) Rock Ecosystems')">
+                <div answers-panel
                     panel-title="'Mid depth (30-100m) Rock Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-middepthrock-species')"
+                    species-answer="getAnswer('ncc-middepthrock-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Estuarine and Wetland Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Estuarine and Wetland Ecosystems')">
+                <div answers-panel
                     panel-title="'Estuarine and Wetland Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-estuarine-species')"
+                    species-answer="getAnswer('ncc-estuarine-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Soft-bottom Intertidal and Beach Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Soft-bottom Intertidal and Beach Ecosystems')">
+                <div answers-panel
                     panel-title="'Soft-bottom Intertidal and Beach Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-softbottomintertidal-species')"
+                    species-answer="getAnswer('ncc-softbottomintertidal-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Soft bottom Subtidal (0-100m) Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Soft bottom Subtidal (0-100m) Ecosystems')">
+                <div answers-panel
                     panel-title="'Soft bottom Subtidal (0-100m) Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-softbottomsubtidal-species')"
+                    species-answer="getAnswer('ncc-softbottomsubtidal-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Deep Ecosystems and Canyons (>100m)')">
-                <div answers-panel 
-                    panel-title="'Deep Ecosystems and Canyons (>100m)'"
-                    html-content="''"
-                    species-answer="getAnswer('ef-deep-species')"
-                    respondent="respondent"></div>
-            </div>
-
-
-            <div ng-show="answerContains('ecosystem-features', 'Nearshore Pelagic Ecosystems')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Nearshore Pelagic Ecosystems')">
+                <div answers-panel
                     panel-title="'Nearshore Pelagic Ecosystems'"
                     html-content="''"
-                    species-answer="getAnswer('ef-nearshore-species')"
+                    species-answer="getAnswer('ncc-nearshore-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Consumptive Uses')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Consumptive Uses')">
+                <div answers-panel
                     panel-title="'Consumptive Uses'"
                     html-content="''"
-                    species-answer="getAnswer('ef-consumptive-species')"
+                    species-answer="getAnswer('ncc-consumptive-species')"
                     respondent="respondent"></div>
             </div>
 
 
-            <div ng-show="answerContains('ecosystem-features', 'Non-consumptive Uses')">
-                <div answers-panel 
+            <div ng-show="answerContains('ncc-ecosystem-features', 'Non-consumptive Uses')">
+                <div answers-panel
                     panel-title="'Non-consumptive Uses'"
                     html-content="''"
-                    species-answer="getAnswer('ef-nonconsumptive-species')"
+                    species-answer="getAnswer('ncc-nonconsumptive-species')"
                     respondent="respondent"></div>
             </div>
 
-            <div answers-panel 
+            <div answers-panel
                 ng-show="getAnswer('cde-types') || getAnswer('cd-types')"
                 panel-title="'Contextual Data'"
                 html-content="viewPath + 'views/ost/answers/contextual-data.html'"

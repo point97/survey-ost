@@ -16,7 +16,7 @@ angular.module('askApp')
     };
 
     var isOnFirstPage = function() {
-        if (page) { 
+        if (page) {
             return (page.order || 2) === 2;
         }
         return false;
@@ -34,9 +34,9 @@ angular.module('askApp')
             var page = getPageFromQuestion(response.question);
             if ( !skipPageIf(page)) {
                 goodResponses.push(response);
-            } 
+            }
         });
-        
+
         if (goodResponses.length) {
             return goodResponses;
         }
@@ -49,7 +49,7 @@ angular.module('askApp')
         return _.findWhere(page.questions, {slug: slug}).resource_uri;
     };
 
-    
+
     // var getNextPagePath = function(numQsToSkips) {
     //     console.log('getNextPagePath');
     //     var start = new Date().getTime();
@@ -64,24 +64,24 @@ angular.module('askApp')
         Params
         - numPsToSkips : [Integer] Indicates the number of pages to ignore after the current
                           page before looking for the next page.
-        
+
         Returns a page object or false. This function is cllaed by getNextPage which will
         this function until a page it returned or it runs out of pages.
         */
 
         var index = _.indexOf(survey.pages, page) + 1 + (numPsToSkips || 0);
         var nextPage = survey.pages[index];
-        
+
         if (nextPage) {
-            // Check to see if this page should be skipped 
+            // Check to see if this page should be skipped
             if (skipPageIf(nextPage)) {
                 nextPage = false;
             }
-        } 
-        
+        }
+
         return nextPage ? nextPage : false;
     };
-    
+
     var getNextPage = function(numPages) {
         var foundPage = false, index = 0;
         while (foundPage === false && index < numPages) {
@@ -105,17 +105,17 @@ angular.module('askApp')
     var getLastPageWithSkip = function(numPsToSkips) {
         var index = _.indexOf(survey.pages, page) - 1 - (numPsToSkips || 0);
         var nextPage = survey.pages[index];
-        
+
         if (nextPage) {
             if (skipPageIf(nextPage)) {
                 // _.each(nextPage.questions, function (question) {
                 //     console.log('called deleteAnswer from getLastPageWithSkip');
                 //     $scope.deleteAnswer(question, $routeParams.uuidSlug);
                 // });
-                
+
                 nextPage = false;
             }
-        } 
+        }
 
         return nextPage ? nextPage : false;
     };
@@ -123,7 +123,7 @@ angular.module('askApp')
     var keepQuestion = function(op, answer, testCriteria) {
         /*
         Returns a [Boolean]. If the anser passes the test based on op against testCriteria it
-        returns false, meaning doe not keep it. 
+        returns false, meaning doe not keep it.
         */
         if (op === '<') {
             return !isNaN(answer) && answer >= testCriteria;
@@ -141,7 +141,7 @@ angular.module('askApp')
                 return ! _.contains(trimmedAnswer, testCriteria);
                 // return ! _.contains(answer, testCriteria);
             }
-        } else if (op === '!') {  
+        } else if (op === '!') {
             if ( !isNaN(answer) ) { // if it is a number
                 // keep the question if equal (not not equal)
                 return answer === testCriteria;
@@ -168,7 +168,7 @@ angular.module('askApp')
         } else {
             slug = questionSlug;
         }
-        
+
         if (answers[slug]) {
             if (gridSlug) {
                 return _.flatten(_.map(answers[slug], function (answer) {
@@ -189,8 +189,8 @@ angular.module('askApp')
 
     var skipPageIf = function(nextPage) {
         /*
-        
-        Returns a boolean, the negative of keep. So if keep = true, this function returns false 
+
+        Returns a boolean, the negative of keep. So if keep = true, this function returns false
         and the page will not be skipped.
 
         */
@@ -214,12 +214,12 @@ angular.module('askApp')
         } else {
             var blocks = []; //(return false)
         }
-    
+
         _.each(blocks, function(block) {
             if (block.skip_question === null) {
                 // Block has no skip questions.
                 keep = true;
-            
+
             } else {
                 // Block has a skip question. Find out if it calls for being skipped.
                 var questionSlug = _.findWhere(survey.questions, {resource_uri: block.skip_question}).slug,
@@ -236,15 +236,15 @@ angular.module('askApp')
                     } else if (_.isArray(answer.answer)) {
                         answer = _.pluck(answer.answer, "text");
                     } else {
-                        answer = [answer.answer ? answer.answer.text : answer.text];    
+                        answer = [answer.answer ? answer.answer.text : answer.text];
                     }
                 }
-                
+
                 keep = keep && keepQuestion(op, answer, testCriteria);
             }
 
         });
-        
+
         return !keep;
     };
 
@@ -253,7 +253,7 @@ angular.module('askApp')
     var sendRespondent = function (respondent) {
         var url = app.server + '/api/v1/offlinerespondant/';
         var responses = angular.copy(respondent.responses);
-        
+
         _.each(responses, function (response) {
             // var question_uri = response.question.resource_uri;
             var question_uri = getQuestionUriFromSlug(response.question);
@@ -269,16 +269,16 @@ angular.module('askApp')
             survey: '/api/v1/survey/' + respondent.survey + '/'
         };
         return $http.post(url, newRespondent);
-        
-    };       
+
+    };
 
     var submitSurvey = function (respondent, survey) {
-        //verify report (delete any necessary questions) 
+        //verify report (delete any necessary questions)
         // call function within survey service...
         var answers = _.indexBy(respondent.responses, function(item) {
             return item.question;
         });
-        //clean survey of any unncecessary question/answers 
+        //clean survey of any unncecessary question/answers
         initializeSurvey(survey, null, answers);
         respondent.responses = cleanSurvey(respondent);
         return sendRespondent(respondent);
@@ -286,9 +286,9 @@ angular.module('askApp')
 
 
     var resume = function(respondent) {
-        var url, 
+        var url,
             page = {order: 1};
-        
+
         if (respondent.responses.length && respondent.last_question) {
             page = getPageFromQuestion(respondent.last_question);
         }
@@ -299,7 +299,7 @@ angular.module('askApp')
             page.order,
             respondent.uuid
         ].join('/');
-        
+
        $location.path(url);
     };
 
@@ -324,7 +324,7 @@ angular.module('askApp')
         dict['Nearshore Pelagic Ecosystems'] = 'ef-nearshore-collection-';
         dict['Consumptive Uses'] = 'ef-consumptive-collection-';
         dict['Non-consumptive Uses'] = 'ef-nonconsumptive-collection-';
-       
+
 
 
         return dict[label];
@@ -343,6 +343,15 @@ angular.module('askApp')
         dict['ef-nearshore-collection-'] = 'Nearshore Pelagic Ecosystems';
         dict['ef-consumptive-collection-'] = 'Consumptive Uses';
         dict['ef-nonconsumptive-collection-'] = 'Non-consumptive Uses';
+        dict['ncc-rockyintertidal-collection-'] = 'Rocky Intertidal Ecosystems';
+        dict['ncc-kelp-and-shallow-rock-collection-'] = 'Kelp and Shallow (0-30m) Rock Ecosystems';
+        dict['ncc-middepthrock-collection-'] = 'Mid depth (30-100m) Rock Ecosystems';
+        dict['ncc-estuarine-collection-'] = 'Estuarine and Wetland Ecosystems';
+        dict['ncc-softbottomintertidal-collection-'] = 'Soft-bottom Intertidal and Beach Ecosystems';
+        dict['ncc-softbottomsubtidal-collection-'] = 'Soft bottom Subtidal (0-100m) Ecosystems';
+        dict['ncc-nearshore-collection-'] = 'Nearshore Pelagic Ecosystems';
+        dict['ncc-consumptive-collection-'] = 'Consumptive Uses';
+        dict['ncc-nonconsumptive-collection-'] = 'Non-consumptive Uses';
 
         return dict[key];
     }
@@ -361,10 +370,19 @@ angular.module('askApp')
             dict['ef-nearshore-collection-'] = '#6347E8';
             dict['ef-consumptive-collection-'] = '#317139';
             dict['ef-nonconsumptive-collection-'] = '#FE5BFF';
+            dict['ncc-rockyintertidal-collection-'] = '#E85E47';
+            dict['ncc-kelp-and-shallow-rock-collection-'] = '#3EE8D4';
+            dict['ncc-middepthrock-collection-'] = '#68C6FF';
+            dict['ncc-estuarine-collection-'] = '#28E85B';
+            dict['ncc-softbottomintertidal-collection-'] = '#ff973f';
+            dict['ncc-softbottomsubtidal-collection-'] = '#e8cd2b';
+            dict['ncc-nearshore-collection-'] = '#6347E8';
+            dict['ncc-consumptive-collection-'] = '#317139';
+            dict['ncc-nonconsumptive-collection-'] = '#FE5BFF';
 
             return dict[key];
     };
-    
+
 
 
     // Public API here
