@@ -116,47 +116,30 @@ Log into `tools-dev.oceanspaces.org` and run
 ```
 
 
-# Deploying
+# Deploying - UPDATED 6/26/2015*
 This will take whatever is in you local directory, i.e. it does not pull from github. So make sure to do a `git pull ...` if necessary.
 
-Staging site
+Staging site - this no longer exists
 ```
 fab staging:wilblack@192.241.228.91 deploy
 ```
 
 Live site
 ```
-fab staging:wilblack@tools-dev.oceanspaces.org deploy
+fab staging:wilblack@tools.oceanspaces.org deploy
+```
+
+If you're having trouble using the deploy script during pushing, run:
+```
+git pull tools.oceanspaces.org staging
 ```
 
 Make sure you update the cache in development.py
 
 
-#Phonegap 3.0
-Make sure that you have a recent version of node and install the phonegap node module.
-```bash
-brew upgrade node
-sudo npm install -g phonegap
-phonegap create mobile -n DigitalDeck -i com.pointnineseven.digitaldeck
-cd mobile && phonegap local plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-console.git
-```
-
-To run the ios simulator
-```bash
-fab vagrant emulate_ios
-```
-
-To build and stage the android app
-```bash
-fab vagrant package_android_test
-```
-
-
-
-
 ----
 
-#Heroku (old confuguration)
+#Heroku (old confuguration) -- DEPRECATED
 ##requirements
 1. Install the heroku toolbelt.
 2. Install git > 1.8
