@@ -6,6 +6,7 @@ from django.db.models import signals
 from django.shortcuts import get_object_or_404
 from account.models import UserProfile
 from ordereddict import OrderedDict
+from django.db.models import Q
 
 import dateutil.parser
 import datetime
@@ -56,7 +57,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
         """
         Make a copy of the respondant all its responses.
         Mainly used to generate test data.
-        
+
         """
 
         new_resp = self
@@ -73,13 +74,17 @@ class Respondant(caching.base.CachingMixin, models.Model):
             response.save()
 
         return new_resp
-        
+
 
 
 
     @property
     def survey_title(self):
-        if self.survey.slug == 'monitoring-project':
+        if self.survey.slug == 'monitoring-project' or 'ncc-monitoring':
+            if self.survey.slug == 'monitoring-project':
+                short_name = 'CC'
+            elif self.survey.slug == 'ncc-monitoring':
+                short_name = 'NCC'
             try:
                 org_name = self.responses.filter(question__slug='org-name')[0].answer
             except:
@@ -88,10 +93,10 @@ class Respondant(caching.base.CachingMixin, models.Model):
                 project_title = self.responses.filter(question__slug='proj-title')[0].answer
             except:
                 project_title = 'Unknown'
-            return '%s &ndash; %s' % (org_name, project_title)
+            return '%s &ndash; %s (%s)' % (org_name, project_title, short_name)
         else:
             return self.survey.name
-    
+
     @property
     def survey_slug(self):
         return self.survey.slug
@@ -113,13 +118,15 @@ class Respondant(caching.base.CachingMixin, models.Model):
     @property
     def monitored_ecosystem_features(self):
         try:
-            return self.responses.filter(question__slug='ecosystem-features')[0].answer
+            return self.responses.filter(question__slug__contains='ecosystem-features')[0].answer
         except:
             return 'unavailable'
 
     @property
     def ecosystem_feature_answer_slugs(self):
-        answers = self.response_set.filter(question__slug__contains="ef-")
+        q1 = Q(question__slug__contains = 'ef-')
+        q2 = Q(question__slug__contains = 'ncc-')
+        answers = self.response_set.filter(q1|q2)
         return [a.question.slug for a in answers]
 
     @property
@@ -141,7 +148,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
     def answers_list(self):
         answers = self.response_set.all().values('answer')
         return [a['answer'] for a in answers]
-        
+
 
     def save(self, *args, **kwargs):
         if self.uuid and ":" in self.uuid:
@@ -156,7 +163,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
             self.csv_row = CSVRow.objects.create()
 
         super(Respondant, self).save(*args, **kwargs)
-            
+
         # Do this after saving so save_related is called to catch
         # all the updated responses.
         self.update_csv_row()
@@ -265,7 +272,7 @@ class Survey(caching.base.CachingMixin, models.Model):
     @property
     def total_sites(self):
         """
-        The sum of all points and unique planning unit ids. 
+        The sum of all points and unique planning unit ids.
 
         Returns and integer
         """
@@ -273,7 +280,7 @@ class Survey(caching.base.CachingMixin, models.Model):
         num_points = Location.objects.filter(response__respondant__in=self.respondant_set.filter(complete=True)).count()
 
         return num_points + num_pus
-    
+
 
     @property
     def num_orgs(self):
@@ -282,10 +289,10 @@ class Survey(caching.base.CachingMixin, models.Model):
 
         Returns an Integer
         """
-        
+
         return Response.objects.filter(respondant__survey=self, respondant__complete = True, question__slug='org-name').values('answer').distinct().count()
 
-         
+
 
 
 
@@ -313,7 +320,7 @@ class Survey(caching.base.CachingMixin, models.Model):
                         fields[q.slug + '-' + slug] = q.label + ' - ' + text
             elif q.type != 'info':
                 fields[q.slug] = q.label
-        return fields        
+        return fields
 
     def __unicode__(self):
         return "%s" % self.name
@@ -353,7 +360,7 @@ class Option(caching.base.CachingMixin, models.Model):
     either_or = models.SlugField(max_length=64, null=True, blank=True)
     order = models.IntegerField(null=True, blank=True)
     min = models.IntegerField(default=None, null=True, blank=True)
-    max = models.IntegerField(default=None, null=True, blank=True)    
+    max = models.IntegerField(default=None, null=True, blank=True)
 
     objects = caching.base.CachingManager()
 
@@ -386,8 +393,8 @@ class Question(caching.base.CachingMixin, models.Model):
     options = models.ManyToManyField(Option, null=True, blank=True)
     options_json = models.TextField(null=True, blank=True)
     rows = models.TextField(null=True, blank=True,
-        help_text="""A newline seperated list of options. These can be placed 
-            an categories by starting a category with a '*'. DO NOT USE THE '&' 
+        help_text="""A newline seperated list of options. These can be placed
+            an categories by starting a category with a '*'. DO NOT USE THE '&'
             character anywhere in here. """)
     cols = models.TextField(null=True, blank=True)
     info = models.CharField(max_length=254, null=True, blank=True)
@@ -405,7 +412,7 @@ class Question(caching.base.CachingMixin, models.Model):
     skip_question = models.ForeignKey('self', null=True, blank=True)
     skip_condition = models.CharField(max_length=254, null=True, blank=True)
 
-    blocks = models.ManyToManyField('Block', null=True, blank=True)    
+    blocks = models.ManyToManyField('Block', null=True, blank=True)
 
     randomize_groups = models.BooleanField(default=False)
 
@@ -435,7 +442,7 @@ class Question(caching.base.CachingMixin, models.Model):
                 return answers.values('answer').annotate(locations=Sum('respondant__locations'), surveys=Count('answer'))
         else:
             return None
-        
+
 
     objects = caching.base.CachingManager()
 
@@ -481,15 +488,15 @@ class Question(caching.base.CachingMixin, models.Model):
         if self.type in ['map-multipoint']:
             locations = LocationAnswer.objects.filter(location__response__in=answers)
 
-        # Apply filters.        
+        # Apply filters.
         if filters is not None:
             for filter in filters:
                 slug = filter.keys()[0]
                 values = filter[slug]
-                
-                # Allow wildcard in slug. To do this, we merge response sets 
+
+                # Allow wildcard in slug. To do this, we merge response sets
                 # from all maching questions and use that merged response set
-                # to filter. This gives an OR filter accross the questions 
+                # to filter. This gives an OR filter accross the questions
                 # macthing the wildcard rather than an AND filter.
                 if slug.find('*') == -1:
                     filter_questions = Question.objects.filter(slug=slug, question_page__survey=survey)
@@ -512,7 +519,7 @@ class Question(caching.base.CachingMixin, models.Model):
                 else:
                     for item in values:
                         answers = answers.filter(respondant__responses__in=merged_filter_response_sets)
-        
+
         # Group for counts.
         if self.type in ['map-multipoint']:
             return locations.values('answer', 'location__lat', 'location__lng').annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
@@ -528,7 +535,7 @@ class Question(caching.base.CachingMixin, models.Model):
 
             return out
         else:
-            
+
 
             return (answers.values('answer')
                            .annotate(locations=Sum('respondant__locations'), surveys=Count('answer')))
@@ -546,7 +553,7 @@ class LocationAnswer(caching.base.CachingMixin, models.Model):
     label = models.TextField(null=True, blank=True, default=None)
     location = models.ForeignKey('Location')
     geojson = models.TextField(null=True, blank=True, default=None)
-    
+
     def __unicode__(self):
         return "%s/%s" % (self.location.response.respondant.uuid, self.answer)
 
@@ -729,9 +736,9 @@ class Response(caching.base.CachingMixin, models.Model):
                 self.planningunitanswer_set.all().delete()
                 for pu_obj in simplejson.loads(self.answer_raw):
                     pua = PlanningUnitAnswer(unit=pu_obj['id'],
-                                             answer=simplejson.dumps(pu_obj), 
-                                             related_question_slug=pu_obj['qSlug'], 
-                                             response=self, 
+                                             answer=simplejson.dumps(pu_obj),
+                                             related_question_slug=pu_obj['qSlug'],
+                                             response=self,
                                              respondant=self.respondant)
                     pua.save()
 

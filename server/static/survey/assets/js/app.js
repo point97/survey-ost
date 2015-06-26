@@ -8,7 +8,7 @@ if (window.browserNotSupported) {
 
 } else {
 
-    angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid'])
+    angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid', 'monospaced.elastic'])
         .config(function($routeProvider, $httpProvider) {
 
         var offlinePath;
@@ -23,7 +23,7 @@ if (window.browserNotSupported) {
                 app = JSON.parse(localStorage.getItem('hapifis-' + app.username));
             }
         } else {
-            
+
         }
 
         if (_.string.startsWith(window.location.protocol, "http")) {
@@ -38,11 +38,9 @@ if (window.browserNotSupported) {
 
         if (window.location.pathname === '/respond') {
             app.viewPath = app.server + '/static/survey/';
-            offlinePath = 'views/online/'
             app.offline = false;
         } else {
             app.viewPath = '';
-            offlinePath = 'views/'
             app.offline = true;
         }
 
@@ -69,7 +67,7 @@ if (window.browserNotSupported) {
                 reloadOnSearch: false
             })
         .when('/about', {
-            templateUrl: app.viewPath + 'views/ost/ost-about.html',
+            templateUrl: app.viewPath + 'views/ncc/ncc-about.html',
             controller: 'AboutCtrl'
         })
             .when('/author/:surveySlug', {
@@ -80,12 +78,16 @@ if (window.browserNotSupported) {
             templateUrl: app.viewPath + 'views/SurveyList.html',
             controller: 'SurveyListCtrl'
         })
+            .when('/survey/:surveySlug/complete/:uuidSlug/ncc', {
+            templateUrl: app.viewPath + 'views/ncc/complete.html',
+            controller: 'CompleteCtrl'
+        })
             .when('/survey/:surveySlug/complete/:uuidSlug', {
-            templateUrl: app.viewPath + offlinePath + 'complete.html',
+            templateUrl: app.viewPath + 'views/online/complete.html',
             controller: 'CompleteCtrl'
         })
             .when('/survey/:surveySlug/complete/:uuidSlug/:action/:questionSlug', {
-            templateUrl: app.viewPath + offlinePath + 'complete.html',
+            templateUrl: app.viewPath + 'complete.html',
             controller: 'CompleteCtrl'
         })
             .when('/survey/:surveySlug/:pageID/:uuidSlug/landing', {
@@ -169,7 +171,7 @@ if (window.browserNotSupported) {
 
 
     $(document).ready(function () {
-        $(document).on('focusin touchstart', '.question input, .question select', function (e) { 
+        $(document).on('focusin touchstart', '.question input, .question select', function (e) {
             var $this = $(this),
                 $wrapper = $this.closest('.question-wrapper');
                 // && ! $wrapper.hasClass('grid-question')
@@ -178,25 +180,25 @@ if (window.browserNotSupported) {
             }
             if ($wrapper.length) {
                 if (! $wrapper.hasClass('non-focus-question')) {
-                    $('body').addClass("keyboard-open");    
+                    $('body').addClass("keyboard-open");
                     $wrapper.addClass('active');
                     if (e.type === 'touchstart') {
-                        $this.focus();    
-                    }    
+                        $this.focus();
+                    }
                 } else {
-                    $('body').addClass("grid-keyboard-open");    
+                    $('body').addClass("grid-keyboard-open");
                 }
-                
-                
+
+
             }
         });
-        
-        $(document).on('blur', '.question input, .question select', function (e) { 
+
+        $(document).on('blur', '.question input, .question select', function (e) {
             var $this = $(this);
             $('body').removeClass("keyboard-open");
             $('body').removeClass("grid-keyboard-open");
             $this.closest('.question-wrapper').removeClass('active');
-        });        
+        });
     });
 
 }

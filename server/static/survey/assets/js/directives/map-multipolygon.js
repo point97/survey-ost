@@ -24,6 +24,12 @@ angular.module('askApp')
                 $(".question-title").addClass('map-question-title');
                 $("body").addClass('map-question');
 
+                if ($routeParams.surveySlug === 'ncc-monitoring') {
+                  scope.geojsonGridPath = '/static/survey/data/CA_NCC_boundary_6nm_PU.json';
+                } else {
+                  scope.geojsonGridPath = '/static/survey/data/CentralCalifornia_PlanningUnits.json';
+                };
+
                 // Layer init
                 var nautical = L.tileLayer.wms("http://egisws02.nos.noaa.gov/ArcGIS/services/RNC/NOAA_RNC/ImageServer/WMSServer", {
                     format: 'img/png',
@@ -108,7 +114,7 @@ angular.module('askApp')
                 };
 
                 // Add planning units grid
-                $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json").success(function(data) {
+                $http.get(scope.geojsonGridPath).success(function(data) {
                     var geojsonLayer = L.geoJson(data, {
                         style: function(feature) {
                             return {

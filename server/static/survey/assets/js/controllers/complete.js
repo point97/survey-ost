@@ -5,7 +5,7 @@ angular.module('askApp')
     var url = '/respond/complete/' + [$routeParams.surveySlug, $routeParams.uuidSlug].join('/');
     $http.defaults.headers.post['Content-Type'] = 'application/json';
 
-   
+
     if (app.user) {
         $scope.user = app.user;
     } else {
@@ -13,7 +13,6 @@ angular.module('askApp')
     }
     $scope.path = false;
 
-    
     if ($routeParams.action === 'terminate' && $routeParams.questionSlug) {
         url = [url, 'terminate', $routeParams.questionSlug].join('/');
     }
@@ -30,17 +29,17 @@ angular.module('askApp')
         delete app.user.resumePath;
         app.message = "You have completed a catch report.";
 
-        storage.saveState(app);  
+        storage.saveState(app);
 
         $scope.respondent = app.respondents[$routeParams.uuidSlug];
     } else {
         $http.post(url).success(function (data) {
             app.data.state = $routeParams.action;
-        });    
+        });
     }
 
     if (app.data) {
-        $scope.responses =app.data.responses;    
+        $scope.responses =app.data.responses;
         app.data.responses = [];
     }
     $scope.completeView = '/static/survey/survey-pages/' + $routeParams.surveySlug + '/complete.html';
@@ -58,7 +57,7 @@ angular.module('askApp')
     $scope.getAnswer = function(questionSlug) {
         return history.getAnswer(questionSlug, $scope.respondent);
     };
-    
+
     $scope.gearTypeIncludes = function(type) {
         return history.gearTypeIncludes(type, $scope.respondent);
     };
@@ -71,7 +70,7 @@ angular.module('askApp')
     $scope.submitReport = function () {
         $scope.working = true;
         var newRespondent = app.respondents[$routeParams.uuidSlug];
-        
+
         delete app.user.resumePath;
         survey.submitSurvey(newRespondent, $scope.survey).success(function () {
             delete app.respondents[$routeParams.uuidSlug]
@@ -92,7 +91,7 @@ angular.module('askApp')
         delete app.user.resumePath;
         storage.saveState(app);
         $location.path('/main');
-    }   
+    }
 
     $scope.newReportOnline = function (surveySlug) {
         var url = app.server + "/respond/" + surveySlug + "?get-uid=true";
@@ -106,6 +105,6 @@ angular.module('askApp')
             .error(function (err, status) {
                 $scope.showError = err;
             });
-    };    
-    
+    };
+
   });

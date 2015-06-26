@@ -1,6 +1,7 @@
 from path import path
 from config.settings import *
 
+# LOGIN_REDIRECT_URL = '/admin'
 
 DATABASES = {
     'default': {

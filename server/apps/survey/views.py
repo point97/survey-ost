@@ -41,8 +41,8 @@ def delete_incomplete_respondent(request, uuid):
 
 
 def survey(request, survey_slug=None, template='survey/survey.html'):
-    if not request.user.is_staff:
-        return redirect('/dash')
+    # if not request.user.is_staff:
+    #     return redirect('/dash')
     if survey_slug is not None:
         survey = get_object_or_404(Survey, slug=survey_slug, anon=True)
         respondant = Respondant(survey=survey, user=request.user)
@@ -69,15 +69,15 @@ def fisher(request, uuid=None, template='survey/fisher-dash.html'):
         respondent = Respondant.objects.get(uuid=uuid)
         template='survey/fisher-detail.html'
         return render_to_response(template, RequestContext(request, {'respondent': respondent}))
-    
+
 def set_profile_responses(request, survey_slug, uuid):
     if request.method == 'POST':
         survey = get_object_or_404(Survey, slug=survey_slug)
         respondant = get_object_or_404(Respondant, uuid=uuid)
-        
+
         if respondant.complete is True and not request.user.is_staff:
             return HttpResponse(simplejson.dumps({'success': False, 'complete': True}))
-        
+
         # Get email
         email = request.user.email
 
@@ -112,17 +112,17 @@ def submit_page(request, survey_slug, uuid): #, survey_slug, question_slug, uuid
     if request.method == 'POST':
         survey = get_object_or_404(Survey, slug=survey_slug)
         respondant = get_object_or_404(Respondant, uuid=uuid)
-        
+
         if respondant.complete is True and not request.user.is_staff:
             return HttpResponse(simplejson.dumps({'success': False, 'complete': True}))
-        
+
         keys = request.POST.keys()
         answers = simplejson.loads(keys[0]).get('answers', None)
 
         for answerDict in answers:
             answer = answerDict['answer']
             question_slug = answerDict['slug']
-            
+
             question = get_object_or_404(Question, slug=question_slug, question_page__survey=survey)
             response, created = Response.objects.get_or_create(question=question,respondant=respondant)
             response.answer_raw = simplejson.dumps(answer)
@@ -190,7 +190,7 @@ def send_email(email, uuid):
     from django.contrib.sites.models import Site
 
     current_site = Site.objects.get_current()
-    
+
     plaintext = get_template('survey/email.txt')
     htmly = get_template('survey/email.html')
 
