@@ -92,6 +92,23 @@ fab staging:username@162.243.146.75 restore_db:backups/2013-11-111755-geosurvey.
 fab staging:username@162.243.146.75 migrate_db
 ```
 
+If you get an error in the code - it probably restored
+```
+[usr@tools.oceanspaces.org:22] out: pg_restore: setting owner and privileges for FK CONSTRAINT user_id_refs_id_990aee10
+[usr@tools.oceanspaces.org:22] out: pg_restore: setting owner and privileges for FK CONSTRAINT user_id_refs_id_9a1c674c
+[usr@tools.oceanspaces.org:22] out: WARNING: errors ignored on restore: 20
+[usr@tools.oceanspaces.org:22] out:
+
+
+Fatal error: run() received nonzero return code 1 while executing!
+
+Requested: pg_restore --verbose --clean --no-acl --no-owner -U postgres -d geosurvey /tmp/2015-06-26_1101-geosurvey.dump
+Executed: /bin/bash -l -c "pg_restore --verbose --clean --no-acl --no-owner -U postgres -d geosurvey /tmp/2015-06-26_1101-geosurvey.dump"
+
+Aborting.
+Disconnecting from tools.oceanspaces.org... done.
+```
+
 # Running Tests
 
 Unit tests will run whenever you save a file:
