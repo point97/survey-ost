@@ -5,7 +5,7 @@
     <!-- Begin page content -->
     <div class="container">
         <div class="feedback" ng-show="sendingFeedback" ng-cloak>
-            <form ng-submit="submitFeedback(feedback)">    
+            <form ng-submit="submitFeedback(feedback)">
                 <textarea rows="5" placeholder="{{ question.label }}" ng-model="feedback"></textarea>
                 <button type="button" class="btn btn-main btn-default btn-lg btn-block" ng-click="submitFeedback(feedback)">Submit</button>
                 <a type="button" class="btn btn-main btn-default btn-lg btn-block" ng-click="sendingFeedback = false">Cancel</a>
@@ -33,17 +33,17 @@
                     <div class="block-title"> {{ getPageBlockTitle() }} </div>
                     <div class="question-wrapper" ng-class="{ 'grid-question': question.type == 'grid', 'non-focus-question': question.type == 'grid' || question.type=='number-with-unit' }" ng-repeat="question in page.questions">
                         <h4 class="question-title" ng-hide="{{question.type == 'info'}}">
-                            <span class="required-indicator" 
+                            <span class="required-indicator"
                                   ng-show="{{question.required}}"
                                   data-toggle="tooltip"
                                   title="Required">*
                             </span>
                             <i class="icon icon-eye-close not-public-icon"
                                ng-show="{{!question.public}}"
-                               data-toggle="tooltip" 
+                               data-toggle="tooltip"
                                title="Will not be made public">
                             </i>
-                            <span ng-bind-html-unsafe="question.title"></span> 
+                            <span ng-bind-html-unsafe="question.title"></span>
                         </h4>
                         <div ng-switch on="question.type">
                             <div ng-switch-when="grid">
@@ -62,11 +62,11 @@
 
 
                 <div id="page-controls" class="clearfix">
-                    <a class="btn btn-main btn-nav btn-primary pull-left valid" ng-click="showHelp()"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help</a>
+                    <a class="btn btn-main btn-nav btn-primary pull-left valid" ng-click="showHelp()"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Survey help</a>
 
                     <a id="next-button"
-                       class="btn btn-main btn-nav btn-primary pull-right ladda-button" 
-                       ng-class="{ 'valid': pageIsValid, 'invalid': !pageIsValid }" 
+                       class="btn btn-main btn-nav btn-primary pull-right ladda-button"
+                       ng-class="{ 'valid': pageIsValid, 'invalid': !pageIsValid }"
                        ng-click="submitPage(page)"
                        data-style="zoom-out"
                        data-spinner-color="#01415C">
