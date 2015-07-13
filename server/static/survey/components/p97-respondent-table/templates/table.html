@@ -2,25 +2,25 @@
     <thead>
     <tr>
         <th class="orderable" ng-click="setOrderBy('project_name');" >Project Name
-            <span class="glyphicon" 
-                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'project_name', 
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'project_name',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-project_name',
                              'glyphicon-sort':orderBy !== 'project_name'
                              }">
             </span>
         </th>
-        
-        <th class="orderable" ng-click="setOrderBy('organization_name');">Organization Name 
-            <span class="glyphicon" 
-                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'organization_name', 
+
+        <th class="orderable" ng-click="setOrderBy('organization_name');">Organization Name
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'organization_name',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-organization_name',
                              'glyphicon-sort':orderBy !== 'organization_name'
                              }">
             </span>
         </th>
         <th>Ecosystem Features</th>
-        <th class="orderable" ng-click="setOrderBy('duration');" >Project Duration 
-            <span class="glyphicon" 
+        <th class="orderable" ng-click="setOrderBy('duration');" >Project Duration
+            <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'duration',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-duration',
                              'glyphicon-sort':orderBy !== 'duration'
@@ -28,7 +28,7 @@
             </span>
         </th>
         <th class="orderable" ng-click="setOrderBy('frequency');" >Sampling Frequency (times per year)
-            <span class="glyphicon" 
+            <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'frequency',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-frequency',
                              'glyphicon-sort':orderBy !== 'frequency '
@@ -37,7 +37,7 @@
         </th>
 
         <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('complete');" >Complete
-            <span class="glyphicon" 
+            <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'complete',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-complete',
                              'glyphicon-sort':orderBy !== 'complete'
@@ -46,7 +46,7 @@
         </th>
 
         <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('last_question');" >Last Question
-            <span class="glyphicon" 
+            <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'last_question',
                              'glyphicon-sort-by-alphabet-alt':orderBy === '-last_question',
                              'glyphicon-sort':orderBy !== 'last_question '
@@ -58,7 +58,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class='respondent' ng-repeat="respondent in respondents | orderBy:orderBy" ng-click='showRespondent(respondent)'>
+    <tr class='respondent' ng-repeat="respondent in respondents | orderBy:orderBy | filter: {survey_slug: 'monitoring-project'}" ng-click='showRespondent(respondent)'>
         <td>{{ respondent.project_name }}</td>
         <td>{{ respondent.organization_name }}</td> <!-- link if availble? -->
         <!-- <td>{{ respondent.ecosystem_features }}</td> -->
@@ -82,15 +82,15 @@
       Showing {{ results_from }} - {{ results_to }} of {{ meta.total_count }}
   </div>
   <div class="pull-right" >
-      <div pagination 
-          total-items="meta.total_count" 
-          items-per-page="options.limit" 
-          max-size="8" 
+      <div pagination
+          total-items="meta.total_count"
+          items-per-page="options.limit"
+          max-size="8"
           page="currentPage"
-          previous-text="&lsaquo;" 
-          next-text="&rsaquo;" 
-          first-text="&laquo;" 
-          last-text="&raquo;" 
+          previous-text="&lsaquo;"
+          next-text="&rsaquo;"
+          first-text="&laquo;"
+          last-text="&raquo;"
           on-select-page="goToPage(page)">
       </div>
   </div>
