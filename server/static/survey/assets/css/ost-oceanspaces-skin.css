@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* Change all uppercase text to normal */
 .btn-main,
 #history-wrap .panel-heading,
-.select-content, 
+.select-content,
 .accordion-heading,
 .block-title,
 .question-title,
@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /*
  *  White background container around page.
- */ 
+ */
 
 .page-content {
 	padding: 20px;
@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .form-control.ng-pristine, .unit-select.ng-pristine {
     border: 1px solid #BBB;
-    color: #555; 
+    color: #555;
 }
 
 #wrap.menu-page > .container {
@@ -87,8 +87,12 @@ h1, h2, h3, h4, h5 {
 	font-size: 22px;
 }
 .info-content p {
-    font-size: 14px;
-    line-height: 20px;
+  color: rgb(0, 37, 53);
+  display: block;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 24px;
 }
 .block-title,
 .question-title {
@@ -186,7 +190,7 @@ p.intro {
       .select .option-unchecked .select-content .select-name,
       .select .option-checked   .select-unchecked .select-name,
 .grouped-options .panel-title {
-	color: white !important;      	
+	color: white !important;
 }
 
 /* Light blue if selected */
@@ -213,7 +217,7 @@ p.intro {
 	color: #000;
 }
 .question .panel-body .select-checked .select-content .select-name {
-	color: #000;	
+	color: #000;
 }
 /* Grouped multi-select needs this extra bit */
 .info .panel-heading h4, .question .panel-title,
@@ -234,7 +238,7 @@ p.intro {
 /*
  *
  *  Increase page width for maps.
- * 
+ *
  */
 body.map-question .container {
 	margin: 0;
@@ -254,8 +258,8 @@ body.map-question .container {
 
 
 /**
- * Changes made day before launch to better 
- * match the OceanSpaces.org that was also just 
+ * Changes made day before launch to better
+ * match the OceanSpaces.org that was also just
  * now launched.
  */
 .os-red-link,
@@ -316,7 +320,7 @@ body.map-question .container {
 
 
 
-.dash-map-ost { 
+.dash-map-ost {
     height: 500px;
 }
 .dash-map-ost .leaflet-control-zoom a {
@@ -325,18 +329,18 @@ body.map-question .container {
 .dash-map-ost .leaflet-control-zoom a.leaflet-control-zoom-in {
     -moz-border-top-left-radius: 2px !important;
     -webkit-border-top-left-radius: 2px !important;
-    border-top-left-radius: 2px !important;    
+    border-top-left-radius: 2px !important;
     -moz-border-top-right-radius: 2px !important;
     -webkit-border-top-right-radius: 2px !important;
-    border-top-right-radius: 2px !important;    
+    border-top-right-radius: 2px !important;
 }
 .dash-map-ost .leaflet-control-zoom a.leaflet-control-zoom-out {
     -moz-border-bottom-left-radius: 2px !important;
     -webkit-border-bottom-left-radius: 2px !important;
-    border-bottom-left-radius: 2px !important;    
+    border-bottom-left-radius: 2px !important;
     -moz-border-bottom-right-radius: 2px !important;
     -webkit-border-bottom-right-radius: 2px !important;
-    border-bottom-right-radius: 2px !important;    
+    border-bottom-right-radius: 2px !important;
 }
 .dash-map-ost .map-controls {
     position: absolute;
