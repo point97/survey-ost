@@ -136,10 +136,6 @@ Log into `tools-dev.oceanspaces.org` and run
 # Deploying - UPDATED 6/26/2015*
 This will take whatever is in you local directory, i.e. it does not pull from github. So make sure to do a `git pull ...` if necessary.
 
-Staging site - this no longer exists
-```
-fab staging:wilblack@192.241.228.91 deploy
-```
 
 Live site
 ```
@@ -151,7 +147,18 @@ If you're having trouble using the deploy script during pushing, run:
 git pull tools.oceanspaces.org staging
 ```
 
-Make sure you update the cache in development.py
+You may also need to load a new database.
+
+```
+fab staging:wilblack@tools.oceanspaces.org restore_db:backups/DUMP_FILE
+
+```
+
+Sometimes Elastic Search goes down and the deploy script will break on deployment. If this happens you can try restarting elastic seach.
+
+```
+sudo /etc/init.d/elasticsearch restart
+```
 
 
 ----
