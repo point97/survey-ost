@@ -478,9 +478,19 @@ class Question(caching.base.CachingMixin, models.Model):
         return out
 
     def sort_by_rows(self, x):
+        """
+        Returns a number
+
+        """
+
         choices = self.rows2list
         _map = dict((val, i) for i, val in enumerate(choices))
-        return _map[x['answer']]
+
+        if str(x['answer']).startswith('[Other]'):
+            out = x['surveys']
+        else:  
+            out = _map[x['answer']]
+        return out
 
     def get_answer_domain(self, survey, filters=None):
         # Get the full response set.
@@ -532,7 +542,6 @@ class Question(caching.base.CachingMixin, models.Model):
             res = (answers.values('answer')
                            .annotate(locations=Sum('respondant__locations'), surveys=Count('answer')))
             out = sorted(res, key=self.sort_by_rows)
-
             return out
         else:
 
