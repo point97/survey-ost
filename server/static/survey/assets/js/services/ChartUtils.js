@@ -51,7 +51,9 @@ angular.module('askApp')
             _.each(formattedData, function (grouping, i) {
                 if (grouping.name.substr(0,7) == '[Other]') {
                     othersGroup.y = othersGroup.y + grouping.y;
-                    formattedData = _.without(formattedData, _.findWhere(formattedData, grouping));
+                    formattedData = _.reject(formattedData, function(elm) {
+                        return elm === grouping;
+                    })
                 }
             });
 
