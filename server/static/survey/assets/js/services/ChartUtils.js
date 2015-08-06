@@ -47,18 +47,18 @@ angular.module('askApp')
             });
            
             // Put all [Other] answers into a single group.
-            var othersGroup = ['Other', 0];
+            var othersGroup = { name: 'Other', y: 0 };
             _.each(formattedData, function (grouping, i) {
                 if (grouping.name.substr(0,7) == '[Other]') {
-                    othersGroup[1] = othersGroup[1] + grouping.y;
-                    formattedData[i].y = othersGroup[1];
+                    othersGroup.y = othersGroup.y + grouping.y;
                     formattedData = _.without(formattedData, _.findWhere(formattedData, grouping));
                 }
             });
 
-            if (othersGroup[1] > 0) {
+            if (othersGroup.y > 0) {
                 formattedData.push(othersGroup);
             }
+
             formattedData = _.reject(formattedData, function (item) {
                 return item.y === 0;
             });
