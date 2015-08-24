@@ -132,13 +132,26 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
 })
 .run(function($rootScope){
     $rootScope.survey = {
-        slug: "monitoring-project"
+        slug: "ncc-monitoring"
     }
     $rootScope.user = app.user || {}
 })
 .controller('DashStatsCtrl', function($scope, surveyFactory) {
-    surveyFactory.getSurvey(function (data) {
-        data.questions.reverse();
+    surveyFactory.getAllSurveys(function (data) {
+        var totals;
         $scope.survey = data;
+
+        //only map neccessary data
+        var arr = _.map(data.objects, function(i) {
+            return _.pick(i, 'num_orgs', 'completes', 'total_sites')
+        });
+
+        //reduce and sum survey data
+        _(arr).reduce(function(acc, obj) {
+          _(obj).each(function(value, key) { acc[key] = (acc[key] ? acc[key] : 0) + value });
+          return totals = acc;
+        }, {});
+
+        $scope.totals = totals;
     });
 })

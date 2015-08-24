@@ -1,22 +1,21 @@
 <div class="print-hide" id="sidenav" ng-style="style()" full-height>
-
     <a href="http://oceanspaces.org">
         <img src="/static/survey/assets/img/ost/oceanspaces_logo.png">
     </a>
-    <div class="stats" ng-controller="DashStatsCtrl" ng-show="survey.completes">
+    <div class="stats" ng-controller="DashStatsCtrl" ng-show="totals.completes">
         <div class="row">
             <div id="side_total" class="col-xs-12 box">
-                <h1>{{survey.completes || 0}}</h1>
+                <h1>{{totals.completes || 0}}</h1>
                 <p>Total Projects</p>
             </div>
         </div>
         <div class="row">
             <div id="side_started" class="col-xs-6 box">
-                <h1>{{survey.num_orgs || 0}}</h1>
+                <h1>{{totals.num_orgs || 0}}</h1>
                 <p>Participants</p>
             </div>
             <div id="side_completed" class="col-xs-6 box">
-                <h1>{{survey.total_sites || 0}}</h1>
+                <h1>{{totals.total_sites || 0}}</h1>
                 <p>Total Sites</p>
             </div>
         </div>
@@ -39,8 +38,8 @@
                          class=""
                          placeholder-text="'Filter by Ecosystem'"
                          allow-multi-select="true"
-                         survey-slug="'monitoring-project'"
-                         question-slug="'ecosystem-features'"
+                         survey-slug="'ncc-monitoring'"
+                         question-slug="'ncc-ecosystem-features'"
                          selected-values="filters.ecosystemFeatures"
                          ></div>
                 </div>
@@ -53,7 +52,7 @@
             </li>
 
             <li ng-show="user.is_staff">
-                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/{{survey.slug}}">Download</a>
+                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/monitoring-project">Download</a>
             </li>
 
             <li class="leaf">
