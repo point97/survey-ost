@@ -57,7 +57,11 @@
             </li>
 
             <li ng-show="user.is_staff">
-                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/monitoring-project">Download</a>
+                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/monitoring-project">Download CC Data</a>
+            </li>
+
+            <li ng-show="user.is_staff">
+                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/ncc-monitoring">Download NCC Data</a>
             </li>
 
             <li class="leaf">
