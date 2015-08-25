@@ -1,6 +1,15 @@
 <table id="report-table" class="table" >
     <thead>
     <tr>
+        <th class="orderable" ng-click="setOrderBy('survey_slug');" >Region
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'survey_slug',
+                             'glyphicon-sort-by-alphabet-alt':orderBy === '-survey_slug',
+                             'glyphicon-sort':orderBy !== 'survey_slug'
+                             }">
+            </span>
+        </th>
+
         <th class="orderable" ng-click="setOrderBy('project_name');" >Project Name
             <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'project_name',
@@ -19,6 +28,7 @@
             </span>
         </th>
         <th>Ecosystem Features</th>
+
         <th class="orderable" ng-click="setOrderBy('duration');" >Project Duration
             <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'duration',
@@ -27,6 +37,7 @@
                              }">
             </span>
         </th>
+
         <th class="orderable" ng-click="setOrderBy('frequency');" >Sampling Frequency (times per year)
             <span class="glyphicon"
                   ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'frequency',
@@ -36,32 +47,18 @@
             </span>
         </th>
 
-        <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('complete');" >Complete
-            <span class="glyphicon"
-                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'complete',
-                             'glyphicon-sort-by-alphabet-alt':orderBy === '-complete',
-                             'glyphicon-sort':orderBy !== 'complete'
-                             }">
-            </span>
-        </th>
-
-        <th ng-if='options.user.username' class="orderable" ng-click="setOrderBy('last_question');" >Last Question
-            <span class="glyphicon"
-                  ng-class="{'glyphicon-sort-by-alphabet':orderBy === 'last_question',
-                             'glyphicon-sort-by-alphabet-alt':orderBy === '-last_question',
-                             'glyphicon-sort':orderBy !== 'last_question '
-                             }">
-            </span>
-        </th>
-
 
     </tr>
     </thead>
     <tbody>
-    <tr class='respondent' ng-repeat="respondent in respondents | orderBy:orderBy | filter: {survey_slug: 'monitoring-project'}" ng-click='showRespondent(respondent)'>
+    <tr class='respondent' ng-repeat="respondent in respondents | orderBy:orderBy" ng-click='showRespondent(respondent)'>
+        <td> 
+          <span ng-if="respondent.survey_slug === 'monitoring-project'">CC</span>
+          <span ng-if="respondent.survey_slug === 'ncc-monitoring'">NCC</span>
+        </td>
         <td>{{ respondent.project_name }}</td>
         <td>{{ respondent.organization_name }}</td> <!-- link if availble? -->
-        <!-- <td>{{ respondent.ecosystem_features }}</td> -->
+<!--         <td>{{ respondent.ecosystem_features }}</td> -->
         <td>
             <ul class="table-ef-list">
                 <li ng-repeat="(slug, label) in respondent.parsed_ecosystem_features"><span class="point" ng-style="{'color': ecosystemSlugToColor(slug)}">●</span> {{label}}</li>
@@ -69,8 +66,6 @@
         </td>
         <td>{{ respondent.duration }}</td>
         <td>{{ respondent.frequency }}</td>
-        <td ng-if='options.user.username'>{{ respondent.complete }}</td>
-        <td ng-if='options.user.username'>{{ respondent.last_question }}</td>
 
     </tr>
     </tbody>

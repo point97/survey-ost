@@ -1,7 +1,7 @@
 angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootScope, $http, $routeParams, $location, dashData, chartUtils) {
     $scope.page_title = 'Community Overview';
     $rootScope.activePage = 'explore';
-    
+    $scope.surveyName = $location.path().slice(9); 
     // Setup respondent table params and options
     var complete = ($scope.user.is_staff !== true)
     $scope.respondentTable={
@@ -33,10 +33,10 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootSco
 
         
         if (options.type === 'pie') {
-            chartUtils.buildPieChart($routeParams.surveySlug, questionSlug,
+            chartUtils.buildPieChart($scope.surveyName, questionSlug,
                 [], options, onSuccess, onFail);
         } else if (options.type === 'bar') {
-            chartUtils.buildStackedBarChart($routeParams.surveySlug, questionSlug,
+            chartUtils.buildStackedBarChart($scope.surveyName, questionSlug,
                 [], options, onSuccess, onFail);
         }
     }
