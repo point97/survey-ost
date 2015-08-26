@@ -26,13 +26,13 @@ tr.respondent {
   &:nth-child(even){
     background:$os-lightred;
   }
-  td:first-child {
+  td:nth-child(2) {
     color:$os-red;
   }
   &:hover {
     // background:  #eee;
     cursor: pointer;
-    td:first-child {
+    td:nth-child(2) {
       color: $os-lightblue;
     }
   }

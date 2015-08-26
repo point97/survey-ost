@@ -318,11 +318,11 @@ tr.respondent:nth-child(odd) {
   background: #fff; }
 tr.respondent:nth-child(even) {
   background: #FBF8F2; }
-tr.respondent td:first-child {
+tr.respondent td:nth-child(2) {
   color: #c04504; }
 tr.respondent:hover {
   cursor: pointer; }
-  tr.respondent:hover td:first-child {
+  tr.respondent:hover td:nth-child(2) {
     color: #70afb6; }
 
 /******************************************************
