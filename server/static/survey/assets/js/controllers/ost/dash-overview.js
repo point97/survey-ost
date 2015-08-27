@@ -5,6 +5,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
     $scope.loadingSurveys = true;
     function initPage () {
         $rootScope.activePage = 'overview';
+        console.log($rootScope.survey.slug)
 
         // Setup respondent table params and options
         var complete = ($scope.user.is_staff !== true)
@@ -16,7 +17,7 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
 
         $scope.mapSettings = {
             questionSlugPattern: '*-collection-points',
-            lat: 35.8336630,
+            lat: 36.8336630,
             lng: -122.0000000,
             zoom: 7
         };
@@ -57,17 +58,17 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
         var filtersJson = _.map($rootScope.filters.ecosystemFeatures, function (label) {
             var slug = ecosystemLabelToSlug(label);
             if (slug.length>0) {
-                return {'ecosystem-features': slug};
+                return {'ncc-ecosystem-features': slug};
             } else {
                 return null;
             }
         });
         filtersJson = _.flatten(filtersJson);
 
-        var pointsUrl = pointsApiUrl($routeParams.surveySlug, '*-collection-points', filtersJson),
-            polysUrl = polysApiUrl($routeParams.surveySlug, '*-collection-areas', filtersJson);
+        var pointsUrl = pointsApiUrl('ncc-monitoring', '*-collection-points', filtersJson),
+            polysUrl = polysApiUrl('ncc-monitoring', '*-collection-areas', filtersJson);
         
-        $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ecosystem-features')
+        $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ncc-ecosystem-features')
         getPoints(pointsUrl, function (points) {
             $scope.mapSettings.mapPoints = points;
             var uniq = [];

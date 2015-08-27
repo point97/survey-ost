@@ -30,7 +30,7 @@
             </li>
             <li class="leaf" ng-class="{'current': activePage == 'overview'}">
                 <a ng-class="{'active': activePage == 'overview'}" 
-                   href="#/overview/monitoring-project/"
+                   href="#/overview"
                    >Monitoring Activities</a>
                 <div class="control" ng-cloak ng-show="activePage == 'overview'">
                     <span help-modal class="center" ng-show="activePage == 'overview'"></span>
@@ -53,7 +53,7 @@
             </li>
 
             <li ng-show="user.is_superuser">
-                <a ng-class="{'active': activePage == 'responses'}" href="#/RespondentList/{{survey.slug}}">Projects</a>
+                <a ng-class="{'active': activePage == 'responses'}" href="#/RespondentList">Projects</a>
             </li>
 
             <li ng-show="user.is_staff">
@@ -65,7 +65,7 @@
             </li>
 
             <li class="leaf">
-                <a ng-class="{'active': activePage == 'about'}" href="#/about/{{survey.slug}}">About</a>
+                <a ng-class="{'active': activePage == 'about'}" href="#/about/">About</a>
             </li>
 
         </ul>

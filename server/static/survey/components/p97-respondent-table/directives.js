@@ -137,7 +137,7 @@ angular.module('askApp')
 
                 // Add any ecosystem filters if necessary
                 if (scope.params.ef && scope.params.ef.length > 0){
-                    var txt = '&ef='+scope.params.ef.join(',');
+                    var txt = '&ncc='+scope.params.ef.join(',');
                     url.push(txt);
                 }
                 

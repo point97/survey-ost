@@ -29,7 +29,7 @@ angular.module('askApp')
             scope.orderBy = null;
             scope.meta = null;
             scope.http = http;
-            scope.surveySlug = surveyFactory.survey.slug;
+            scope.surveySlug = 'ncc-monitoring';
             scope.location = location;
 
             scope.resource = '/api/v1/dashrespondant/';

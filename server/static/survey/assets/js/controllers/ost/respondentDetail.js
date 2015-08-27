@@ -107,8 +107,8 @@ angular.module('askApp')
     };
 
     $scope.updateMap = function () {
-        var apiUrl = pointsApiUrl($rootScope.survey.slug, '*-collection-points', $scope.filtersJson, $scope.uuid),
-                     polysUrl = polysApiUrl($rootScope.survey.slug, '*-collection-areas');
+        var apiUrl = pointsApiUrl($scope.surveyName(), '*-collection-points', $scope.filtersJson, $scope.uuid),
+                     polysUrl = polysApiUrl($scope.surveyName(), '*-collection-areas');
 
         getPoints(apiUrl, function (points) {
             $scope.mapSettings.mapPoints = points;
