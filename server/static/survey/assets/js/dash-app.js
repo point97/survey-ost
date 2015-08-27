@@ -62,12 +62,12 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     })
 
     /* Routes for dashboard side nav */
-    .when('/welcome/:surveySlug', {
+    .when('/welcome/', {
         templateUrl: '/static/survey/views/ost/dash-welcome.html',
         controller: 'DashWelcomeCtrl',
         reloadOnSearch: false
     })
-    .when('/about/:surveySlug', {
+    .when('/about/', {
         templateUrl: '/static/survey/views/ost/dash-about.html',
         controller: 'DashAboutCtrl',
         reloadOnSearch: false
@@ -77,7 +77,7 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         controller: 'DashExploreCtrl',
         reloadOnSearch: false
     })
-    .when('/overview/:surveySlug', {
+    .when('/overview/', {
         templateUrl: '/static/survey/views/ost/dash-overview.html',
         controller: 'DashOverviewCtrl',
         reloadOnSearch: false
@@ -100,15 +100,26 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         reloadOnSearch: false
     })
 
-    .when('/RespondentDetail/:surveySlug/:uuidSlug', {
+    .when('/RespondentDetail/monitoring-project/:uuidSlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-detail.html',
         controller: 'RespondentDetailCtrl'  // <-- This is in controllers/ost/respondentDetail.js
     })
     
-    .when('/responses/:surveySlug/:uuidSlug', {
+    .when('/responses/monitoring-project/:uuidSlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-detail.html',
         controller: 'RespondentDetailCtrl', // <-- This is in controllers/ost/respondentDetail.js
     })
+
+    .when('/RespondentDetail/ncc-monitoring/:uuidSlug', {
+        templateUrl: '/static/survey/views/ncc/dash-respondent-detail.html',
+        controller: 'RespondentDetailCtrl'  // <-- This is in controllers/ost/respondentDetail.js
+    })
+    
+    .when('/responses/ncc-monitoring/:uuidSlug', {
+        templateUrl: '/static/survey/views/ncc/dash-respondent-detail.html',
+        controller: 'RespondentDetailCtrl', // <-- This is in controllers/ost/respondentDetail.js
+    })
+
     .when('/ecosystems/:surveySlug', {
         templateUrl: '/static/survey/views/ost/dash-ecosystems.html',
         controller: 'DashEcosystemsCtrl'
@@ -127,13 +138,20 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
     //     controller: 'DashDownloadCtrl',
     // })
     .otherwise({
-        redirectTo: '/welcome/monitoring-project'
+        redirectTo: '/welcome/'
     });
 })
-.run(function($rootScope){
-    $rootScope.survey = {
-        slug: "ncc-monitoring"
-    }
+.run(function($rootScope, $location){
+    if ($location.path().indexOf('monitoring-project') > -1) {
+        $rootScope.survey = {
+            slug: "monitoring-project"
+        }
+    } else {
+        $rootScope.survey = {
+            slug: "ncc-monitoring"
+        }
+    };
+    
     $rootScope.user = app.user || {}
 })
 .controller('DashStatsCtrl', function($scope, surveyFactory) {

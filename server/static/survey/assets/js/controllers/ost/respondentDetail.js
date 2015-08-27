@@ -5,6 +5,15 @@ angular.module('askApp')
     
     $scope.viewPath = app.viewPath;
     $scope.uuid = $routeParams.uuidSlug;
+    $scope.surveyName = function() {
+        var cc = 'monitoring-project';
+        var ncc = 'ncc-monitoring';
+        if ($location.path().indexOf(cc) > -1) {
+            return cc;
+        } else {
+            return ncc;
+        }
+    };
 
     $scope.addhttp = function(s){return s.indexOf("://") == -1 ? "http://"+s : s }
     $scope.getRespondent = function (respondent_uuid, survey_slug, onSuccess) {
@@ -70,7 +79,7 @@ angular.module('askApp')
         });
     };
 
-    $scope.getRespondent($routeParams.uuidSlug, $routeParams.survey_slug, function (respondent) {
+    $scope.getRespondent($routeParams.uuidSlug, $rootScope.survey.slug, function (respondent) {
         
         $scope.respondent = respondent;
         $scope.parseResponses(respondent);
@@ -98,8 +107,8 @@ angular.module('askApp')
     };
 
     $scope.updateMap = function () {
-        var apiUrl = pointsApiUrl($routeParams.surveySlug, '*-collection-points', $scope.filtersJson, $scope.uuid),
-                     polysUrl = polysApiUrl($routeParams.surveySlug, '*-collection-areas');
+        var apiUrl = pointsApiUrl($rootScope.survey.slug, '*-collection-points', $scope.filtersJson, $scope.uuid),
+                     polysUrl = polysApiUrl($rootScope.survey.slug, '*-collection-areas');
 
         getPoints(apiUrl, function (points) {
             $scope.mapSettings.mapPoints = points;
