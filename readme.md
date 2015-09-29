@@ -161,6 +161,23 @@ sudo /etc/init.d/elasticsearch restart
 ```
 
 
+## Adding a new user using Fab/Chef
+1) add the user as normal
+2) add the new user the the `depoy` group
+    
+    usermod -a -G deploy newuser 
+
+3) Replace the new user's .bashrc with the contents of `scripts/apps/tempalates/default/bashrc.erb` replacing the variables `<%= node[:project] %>` with `geosurvey` and `<%= node[:user] %>` with `www-data`.
+
+4) Replace the new user's .profile with the contents of `scripts/apps/files/default/bashrc.erb`
+
+5) Add the users ssh keys to ~/.ssh/authroized_keys
+
+6) restart ssh `service ssh restart`
+
+
+
+
 ----
 
 #Heroku (old confuguration) -- DEPRECATED
