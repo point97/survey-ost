@@ -12,6 +12,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             points: '=',
             units: '=',
             boundaryPath: '=',
+            gridPath: '=',
             activeProject: '=',
             activeEcosystemFeatures: '=',
             showPopups: '=',
@@ -43,8 +44,15 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 scope.boundaryLayer.bringToBack()
             });
 
-            puPromise = $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json")
-            scope.$watch('units', updatePuLayer);
+            puPromise = $http.get(scope.gridPath);
+
+            scope.$watch('units', function(newVal, oldVal) {
+                if (newVal === oldVal) return;
+
+                if (newVal !== undefined) {
+                    updatePuLayer(newVal);
+                }
+            });
 
             scope.boundaryLayer = L.featureGroup();
             map.addLayer(scope.boundaryLayer);
