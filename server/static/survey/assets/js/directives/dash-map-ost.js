@@ -86,7 +86,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 return survey.ecosystemSlugToColor(slug);
             };
 
-
             scope.$watch('points', setMarkers);
 
             updateMapSize();
@@ -124,6 +123,16 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 setPopup(marker, markerData);
                 scope.markersLayer.addLayer(marker);
             });
+        };
+
+        function setSurveyPath(layer) {
+            //swtiches previously hardcoded popup url path based on grid IDs (1200+ is ncc) 
+            if (layer.feature.properties.NAME) {
+                scope.surveyPath = 'ncc-monitoring';
+            } else {
+                scope.surveyPath = 'monitoring-project';
+            };
+            return scope.surveyPath;
         };
 
 
@@ -190,7 +199,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list += '<h4>Projects</h4>';
                 list += '<dl>';
                 list += '<div ng-repeat="project in filterProjects()"';
-                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
+                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/{{surveyPath}}/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
                 list += '<div id="map-legend">';
                 list += '<span tooltip="{{ecosystemSlugToLabel(slug)}}" ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
                 list += '</div>';
@@ -215,6 +224,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             // Define the on click callback.
             layer.on('click', function(e) {
                 scope.$apply(function () {
+                    setSurveyPath(e.target);
                     var unit_id = e.target.feature.properties.ID;
                     scope.count = e.target.feature.properties.count;
                     getPlanningUnit(unit_id, function(res){
