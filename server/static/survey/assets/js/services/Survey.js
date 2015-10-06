@@ -313,17 +313,26 @@ angular.module('askApp')
     };
 
     var ecosystemLabelToSlug = function(label) {
+        var slug,
+            parens;
+        if (label.indexOf('(NCC)') > -1) {
+            slug = "ncc";
+            parens = " (NCC)"
+        } else {
+            slug = "ef";
+            parens = ""
+        }
         var dict = {};
-        dict['Rocky Intertidal Ecosystems'] = 'ef-rockyintertidal-collection-';
-        dict['Kelp and Shallow (0-30m) Rock Ecosystems'] = 'ef-kelp-and-shallow-rock-collection-';
-        dict['Mid depth (30-100m) Rock Ecosystems'] = 'ef-middepthrock-collection-';
-        dict['Estuarine and Wetland Ecosystems'] = 'ef-estuarine-collection-';
-        dict['Soft-bottom Intertidal and Beach Ecosystems'] = 'ef-softbottomintertidal-collection-';
-        dict['Soft bottom Subtidal (0-100m) Ecosystems'] = 'ef-softbottomsubtidal-collection-';
-        dict['Deep Ecosystems and Canyons (>100m)'] = 'ef-deep-collection-';
-        dict['Nearshore Pelagic Ecosystems'] = 'ef-nearshore-collection-';
-        dict['Consumptive Uses'] = 'ef-consumptive-collection-';
-        dict['Non-consumptive Uses'] = 'ef-nonconsumptive-collection-';
+        dict['Rocky Intertidal Ecosystems' + parens] = slug + '-rockyintertidal-collection-';
+        dict['Kelp and Shallow (0-30m) Rock Ecosystems' + parens] = slug + '-kelp-and-shallow-rock-collection-';
+        dict['Mid depth (30-100m) Rock Ecosystems' + parens] = slug + '-middepthrock-collection-';
+        dict['Estuarine and Wetland Ecosystems' + parens] = slug + '-estuarine-collection-';
+        dict['Soft-bottom Intertidal and Beach Ecosystems' + parens] = slug + '-softbottomintertidal-collection-';
+        dict['Soft bottom Subtidal (0-100m) Ecosystems' + parens] = slug + '-softbottomsubtidal-collection-';
+        dict['Deep Ecosystems and Canyons (>100m)' + parens] = slug + '-deep-collection-';
+        dict['Nearshore Pelagic Ecosystems'] = slug + '-nearshore-collection-';
+        dict['Consumptive Uses' + parens] = slug + '-consumptive-collection-';
+        dict['Non-consumptive Uses' + parens] = slug + '-nonconsumptive-collection-';
 
 
 
