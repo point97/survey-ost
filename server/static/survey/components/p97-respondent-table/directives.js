@@ -47,6 +47,22 @@ angular.module('askApp')
             // Get the search term from the URL
             scope.searchTerm = scope.location.search().q;
 
+            scope.filteredRespondents = function (ef) {
+                var filteredArray = [];
+                if (ef === undefined || ef.length === 0) {
+                    return scope.respondents;
+                } else {
+                    _.each(scope.respondents, function(respondent) {
+                        _.each(ef, function (i) {
+                            if (respondent.ecosystem_features.indexOf(i) > -1) {
+                                filteredArray.push(respondent)
+                            }
+                        })
+                    })
+                    return filteredArray;
+                }
+            };
+
             // Paginated respondent table
             scope.goToPage = function (page) {
                 /*
@@ -136,10 +152,10 @@ angular.module('askApp')
                 }
 
                 // Add any ecosystem filters if necessary
-                if (scope.params.ef && scope.params.ef.length > 0){
-                    var txt = '&ncc='+scope.params.ef.join(',');
-                    url.push(txt);
-                }
+                // if (scope.params.ef && scope.params.ef.length > 0){
+                //     var txt = '&ef='+scope.params.ef.join(',');
+                //     url.push(txt);
+                // }
                 
                 url = url.join('');
                 return url;

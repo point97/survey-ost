@@ -56,10 +56,10 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
             //$scope.$apply();
         }
 
-        var filtersJson = _.map($rootScope.filters.ecosystemFeatures, function (label) {
-            var slug = ecosystemLabelToSlug(label);
-            if (slug.length>0) {
-                return {'ecosystem-features': slug};
+        var filtersJson = _.map(filteredEcosystemSlugs($rootScope.filters.ecosystemFeatures), function (label) {
+            // var slug = filteredEcosystemSlugs(label);
+            if (label.length>0) {
+                return {'ecosystem-features': label};
             } else {
                 return null;
             }
@@ -72,7 +72,9 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
             nccPolysUrl = polysApiUrl('ncc-monitoring', '*-collection-areas', filtersJson),
             ccPolysUrl = polysApiUrl('monitoring-project', '*-collection-areas', filtersJson);
         
-        $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ncc-ecosystem-features');
+        $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ecosystem-features');
+
+        // $scope.activeEcosystemFeatures = filteredEcosystemSlugs($rootScope.filters.ecosystemFeatures)
 
         $scope.ccMapPoints = [];
         $scope.nccMapPoints = [];
@@ -146,6 +148,34 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
     
     function ecosystemLabelToSlug (label) {
         return survey.ecosystemLabelToSlug(label);
+    }
+
+    function filteredEcosystemSlugs(ef) {
+        var filteredArray = [];
+        _.each(ef, function(i) {
+            if (i === 'Rocky Intertidal Ecosystems') {
+                filteredArray.push('ef-rockyintertidal-collection-', 'ncc-rockyintertidal-collection-');
+            } else if (i === 'Kelp and Shallow (0-30m) Rock Ecosystems') {
+                filteredArray.push('ef-kelp-and-shallow-rock-collection-', 'ncc-kelp-and-shallow-rock-collection-');
+            } else if (i === 'Mid depth (30-100m) Rock Ecosystems') {
+                filteredArray.push('ef-middepthrock-collection-', 'ncc-middepthrock-collection-');
+            } else if (i === 'Estuarine and Wetland Ecosystems') {
+                filteredArray.push('ef-estuarine-collection-', 'ncc-estuarine-collection-');
+            } else if (i === 'Soft-bottom Intertidal and Beach Ecosystems') {
+                filteredArray.push('ef-softbottomintertidal-collection-', 'ncc-softbottomintertidal-collection-');
+            } else if (i === 'Soft bottom Subtidal (0-100m) Ecosystems') {
+                filteredArray.push('ef-softbottomsubtidal-collection-', 'ncc-softbottomsubtidal-collection-');
+            } else if (i === 'Deep Ecosystems and Canyons (>100m)') {
+                filteredArray.push('ef-deep-collection-')
+            } else if (i === 'Nearshore Pelagic Ecosystems') {
+                filteredArray.push('ef-nearshore-collection-', 'ncc-nearshore-collection-')
+            } else if (i === 'Consumptive Uses') {
+                filteredArray.push('ef-consumptive-collection-', 'ncc-consumptive-collection-')
+            } else if (i === 'Non-consumptive Uses') {
+                filteredArray.push('ef-nonconsumptive-collection-', 'ncc-nonconsumptive-collection-')
+            }
+        })
+        return filteredArray; 
     }
 
     $scope.ecosystemSlugToLabel = function (slug) {
