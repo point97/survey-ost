@@ -81,10 +81,12 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
         var nccPolys = $http.get(nccPolysUrl);
         var ccPolys = $http.get(ccPolysUrl);
 
-        $q.all([nccPoints, ccPoints, nccPolys, ccPolys]).then(function(data) {
+        $q.all([ccPoints, nccPoints, ccPolys, nccPolys]).then(function(data) {
             $scope.ccMapPoints = processGeojson(data[0].data);
             $scope.nccMapPoints = processGeojson(data[1].data);
-            // $scope.mapSettings.mapPlanningUnits = data[3].data.answers;
+            $scope.ccPUs = data[2].data.answers;
+            $scope.nccPUs = data[3].data.answers;
+            $scope.mapSettings.mapPlanningUnits = _.extend($scope.ccPUs, $scope.nccPUs);
             var uniqNCC = [];
             var uniqCC = [];
 
