@@ -112,6 +112,14 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             }, 3000);
         }
 
+        function markerSurveySlug(markerData) {
+            if (markerData.qSlug.indexOf("ncc") > -1) {
+                markerData['path'] = "ncc-monitoring";
+            } else {
+                markerData['path'] = "monitoring-project";
+            }
+        }
+
 
         function setMarkers(data){
             // Updates a LayerGroup with markers for each data item.
@@ -119,6 +127,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             _.each(data, function(markerData){
                 markerData['draggable'] = false;
                 markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
+                markerSurveySlug(markerData);
                 var marker = MapUtils.createMarker(markerData);
                 setPopup(marker, markerData);
                 scope.markersLayer.addLayer(marker);
@@ -126,7 +135,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         };
 
         function setSurveyPath(layer) {
-            //swtiches previously hardcoded popup url path based on grid IDs (1200+ is ncc) 
+            //swtiches previously hardcoded popup url path based on NAME propery
             if (layer.feature.properties.NAME) {
                 scope.surveyPath = 'ncc-monitoring';
             } else {
@@ -248,7 +257,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list = '';
 
             if (!scope.activeProject) {
-                list += '<h5><a href="#/RespondentDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
+                list += '<h5><a href="#/RespondentDetail/{{markerSurveySlug}}/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
             }
             list += '<dt>Ecosystem Feature:</dt>';
             list += '<dd><span class="point" ng-style="{\'color\': ecosystemColor}">●</span> {{ ecosystemLabel }}</dd>';
@@ -267,7 +276,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 scope.responses = false;
                 getRespondent(markerData.uuid, function (responses) {
                     scope.responses = responses;
-                    scope.uuid = markerData.uuid
+                    scope.uuid = markerData.uuid;
+                    scope.markerSurveySlug = markerData.path;
                     scope.ecosystemLabel =  scope.slugToLabel({slug: markerData.qSlug});
                     scope.ecosystemColor = scope.ecosystemSlugToColor(scope.ecosystemLabelToSlug(scope.ecosystemLabel)+'point');
                     // The popup is added to the DOM outside of the angular framework so
@@ -388,7 +398,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                     weight: 1,
                     /* fill */
                     fillColor: config.color,
-                    fillOpacity: 1.0
+                    fillOpacity: 1.0,
+                    qSlug: config.qSlug
                 });
 
                 marker.on('mouseover', function (e) {
