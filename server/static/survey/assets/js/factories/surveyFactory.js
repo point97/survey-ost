@@ -17,7 +17,7 @@ angular.module('askApp').factory('surveyFactory', function($http, $location) {
         },
 
         searchRespondants : function(q){
-            $location.path('/RespondentList/monitoring-project/').search({q: q});
+            $location.path('/RespondentList/').search({q: q});
         }
 
         

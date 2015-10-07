@@ -48,9 +48,9 @@ angular.module('askApp')
                         scope.resource + '?format=json&limit='+scope.limit,
                         '&offset='+offset,
                       ];
-                if (scope.searchTerm) {
-                    url.push('&q='+scope.searchTerm);
-                };
+                // if (scope.searchTerm) {
+                //     url.push('&q='+scope.searchTerm);
+                // };
                 if (!scope.$parent.user.is_staff){
                     url.push('&complete=true')
                 }

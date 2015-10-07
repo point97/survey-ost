@@ -74,8 +74,6 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
         
         $scope.activeEcosystemFeatures = _.pluck(filtersJson, 'ecosystem-features');
 
-        // $scope.activeEcosystemFeatures = filteredEcosystemSlugs($rootScope.filters.ecosystemFeatures)
-
         $scope.ccMapPoints = [];
         $scope.nccMapPoints = [];
         var nccPoints = $http.get(nccPointsUrl);

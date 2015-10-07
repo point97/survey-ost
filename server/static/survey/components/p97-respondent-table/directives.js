@@ -49,8 +49,16 @@ angular.module('askApp')
 
             scope.filteredRespondents = function (ef) {
                 var filteredArray = [];
-                if (ef === undefined || ef.length === 0) {
+                if ((ef === undefined || ef.length === 0) && (scope.location.path().indexOf('overview') > -1)) {
                     return scope.respondents;
+                } else if (scope.searchTerm !== "") {
+                    var term = angular.copy(scope.searchTerm);
+                    var searchTermFilter = _.filter(scope.respondents, function(i) {
+                        return (containsTerm(i.project_name, term) || containsTerm(i.organization_name, term) || containsTerm(i.survey_title, term) || 
+                                containsTerm(i.user.username, term) || containsTerm(i.ecosystem_features, term) || containsTerm(i.user.first_name, term) ||
+                                containsTerm(i.user.last_name, term))
+                    })
+                    return searchTermFilter;
                 } else {
                     _.each(scope.respondents, function(respondent) {
                         _.each(ef, function (i) {
@@ -63,6 +71,10 @@ angular.module('askApp')
                 }
             };
 
+            function containsTerm (obj, term) {
+                return obj.toLowerCase().indexOf(term) > -1;
+            }
+
             // Paginated respondent table
             scope.goToPage = function (page) {
                 /*
@@ -72,7 +84,11 @@ angular.module('askApp')
                 var meta = scope.meta || {}
                     , offset = scope.options.limit * (page - 1);
 
-                var url = scope.build_url(offset, page);
+                if (scope.location.path() === "/RespondentList") {
+                    var url = "/api/v1/dashrespondant/?format=json&limit=500&offset=0&complete=true";
+                } else {
+                    var url = scope.build_url(offset, page);
+                }
                 console.log("Fetching results from " + url);
 
                 scope.http.get(url).success(function (data) {
