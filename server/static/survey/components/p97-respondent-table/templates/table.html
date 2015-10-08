@@ -51,7 +51,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class='respondent' ng-repeat="respondent in filteredRespondents(params.ef) track by $index | orderBy:orderBy" ng-click='showRespondent(respondent)'>
+    <tr class='respondent' ng-repeat="respondent in filteredRespondents(params.ef) | orderBy:orderBy track by $index" ng-click='showRespondent(respondent)'>
         <td> 
           <span ng-if="respondent.survey_slug === 'monitoring-project'">CC</span>
           <span ng-if="respondent.survey_slug === 'ncc-monitoring'">NCC</span>
