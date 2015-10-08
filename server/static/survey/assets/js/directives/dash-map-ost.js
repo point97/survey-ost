@@ -340,12 +340,13 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         initMap: function (mapElement, lat, lng, zoom) {
             var nauticalLayer, bingLayer, map, baseMaps, options;
 
-            nauticalLayer = L.tileLayer.wms("http://egisws02.nos.noaa.gov/ArcGIS/services/RNC/NOAA_RNC/ImageServer/WMSServer", {
+            nauticalLayer = L.esri.imageMapLayer({
+                url: "http://seamlessrnc.nauticalcharts.noaa.gov/arcgis/rest/services/RNC/NOAA_RNC/ImageServer",
                 format: 'img/png',
                 transparent: true,
                 layers: null,
-                attribution: "NOAA Nautical Charts"
-            });
+                attribution: "Tiles Courtesy of <a href=\"http://www.nauticalcharts.noaa.gov/csdl/seamlessraster.html\">NOAA &reg;</a> &mdash; <a href=\"http://www.nauticalcharts.noaa.gov/mcd/Raster/download_agreement.htm\">User Agreement</a>"
+            }).bringToBack();
 
             bingLayer = new L.BingLayer("Av8HukehDaAvlflJLwOefJIyuZsNEtjCOnUB_NtSTCwKYfxzEMrxlKfL1IN7kAJF", {
                 type: "AerialWithLabels"
