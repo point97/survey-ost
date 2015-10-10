@@ -1,7 +1,7 @@
 /*
 
 DO NOT EDIT THE .CSS VERSION OF THIS FILE. Instead run
-`sass ost-dash.scss > ast-dash.css` in this file's directory 
+`sass ost-dash.scss > ost-dash.css` in this file's directory 
 to build it. 
 
 */
@@ -33,6 +33,9 @@ img.welcome-small {
 .dashboard {
   margin: 0; }
 
+.pointer {
+  cursor: pointer; }
+
 .main, footer {
   margin-left: 295px; }
 
@@ -58,7 +61,7 @@ footer, .main:after {
   min-height: 100%; }
 
 .dash-map-ost {
-  height: 500px; }
+  height: 575px; }
 
 .leaflet-control-zoom a {
   background-color: white !important; }

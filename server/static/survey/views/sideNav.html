@@ -6,7 +6,7 @@
         <div class="row">
             <div id="side_total" class="col-xs-12 box">
                 <h1>{{totals.completes || 0}}</h1>
-                <p>Total Projects</p>
+                <p>CC & NCC Projects</p>
             </div>
         </div>
         <div class="row">
@@ -31,7 +31,7 @@
             <li class="leaf" ng-class="{'current': activePage == 'overview'}">
                 <a ng-class="{'active': activePage == 'overview'}" 
                    href="#/overview"
-                   >Monitoring Activities</a>
+                   >Interactive Monitoring Map</a>
                 <div class="control" ng-cloak ng-show="activePage == 'overview'">
                     <span help-modal class="center" ng-show="activePage == 'overview'"></span>
                      <div dash-filter 
@@ -45,11 +45,11 @@
                 </div>
             </li>
             <li>
-                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/monitoring-project">Community Overview - CC</a>
+                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/monitoring-project">Community Overview: </br>Central Coast (CC)</a>
             </li>
 
             <li>
-                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/ncc-monitoring">Community Overview - NCC</a>
+                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/ncc-monitoring">Community Overview: </br>North Central Coast (NCC)</a>
             </li>
 
             <li ng-show="user.is_superuser">

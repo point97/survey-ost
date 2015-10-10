@@ -51,7 +51,7 @@ angular.module('askApp')
                 var filteredArray = [];
                 if ((ef === undefined || ef.length === 0) && (scope.location.path().indexOf('overview') > -1)) {
                     return scope.respondents;
-                } else if (scope.searchTerm !== "") {
+                } else if (scope.searchTerm !== undefined && scope.searchTerm !== "") {
                     var term = angular.copy(scope.searchTerm);
                     var searchTermFilter = _.filter(scope.respondents, function(i) {
                         return (containsTerm(i.project_name, term) || containsTerm(i.organization_name, term) || containsTerm(i.survey_title, term) || 
