@@ -15,12 +15,28 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
             options:{limit:500, user:$scope.user}
         };
 
-        $scope.mapSettings = {
-            questionSlugPattern: '*-collection-points',
-            lat: 36.8336630,
-            lng: -122.0000000,
-            zoom: 7
-        };
+
+        if ($location.path().indexOf('ncc') > -1) {
+            $scope.mapSettings = {
+                lat: 38.1,
+                lng: -123.1,
+                zoom: 8
+            };
+        } else if ($location.path().indexOf('monitoring') > -1) {
+            $scope.mapSettings = {
+                lat: 35.833,
+                lng: -122.0,
+                zoom: 8,
+            };
+        } else {
+            $scope.mapSettings = {
+                lat: 36.8336630,
+                lng: -122.0000000,
+                zoom: 7
+            };
+        }
+
+        $scope.mapSettings.questionSlugPatter = '*-collection-points';
 
         $rootScope.$watch('filters.ecosystemFeatures', function(newVal, oldVal) {
             

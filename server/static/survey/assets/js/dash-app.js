@@ -87,6 +87,16 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         controller: 'DashOverviewCtrl',
         reloadOnSearch: false
     })
+    .when('/overview/ncc-monitoring', {
+        templateUrl: '/static/survey/views/ost/dash-overview.html',
+        controller: 'DashOverviewCtrl',
+        reloadOnSearch: false
+    })
+    .when('/overview/monitoring-project', {
+        templateUrl: '/static/survey/views/ost/dash-overview.html',
+        controller: 'DashOverviewCtrl',
+        reloadOnSearch: false
+    })
     .when('/RespondentList/:surveySlug', {
         templateUrl: '/static/survey/views/ost/dash-respondent-list.html',
         controller: 'RespondantListCtrl',
