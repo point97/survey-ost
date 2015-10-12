@@ -1,7 +1,12 @@
 angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootScope, $http, $routeParams, $location, dashData, chartUtils) {
-    $scope.page_title = 'Community Overview';
     $rootScope.activePage = 'explore';
-    $scope.surveyName = $location.path().slice(9); 
+    $scope.surveyName = $location.path().slice(9);
+    if ($scope.surveyName === 'monitoring-project') {
+        $scope.page_title = 'Central Coast Community Overview';
+    } else {
+        $scope.page_title = 'North Central Coast Community Overview';
+    }
+
     // Setup respondent table params and options
     var complete = ($scope.user.is_staff !== true)
     $scope.respondentTable={

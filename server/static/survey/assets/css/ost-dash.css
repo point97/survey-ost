@@ -36,6 +36,17 @@ img.welcome-small {
 .pointer {
   cursor: pointer; }
 
+.survey-counts {
+  color: #005072;
+  font-size: 23px;
+  white-space: pre-wrap; }
+
+.font-mid {
+  font-size: 17px; }
+
+.padding-top {
+  padding-top: 10px; }
+
 .main, footer {
   margin-left: 295px; }
 

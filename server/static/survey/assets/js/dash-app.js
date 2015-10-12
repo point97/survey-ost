@@ -174,6 +174,14 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         var totals;
         $scope.survey = data;
 
+        _.each(data.objects, function(survey) {
+            if (survey.name === 'Monitoring Project'){
+                $scope.ccSurvey = survey;
+            } else {
+                $scope.nccSurvey = survey;
+            }
+        })
+        
         //only map neccessary data
         var arr = _.map(data.objects, function(i) {
             return _.pick(i, 'num_orgs', 'completes', 'total_sites')
@@ -186,5 +194,6 @@ angular.module('askApp', ['ngRoute', 'mgcrea.ngStrap.datepicker', 'mgcrea.ngStra
         }, {});
 
         $scope.totals = totals;
+
     });
 })

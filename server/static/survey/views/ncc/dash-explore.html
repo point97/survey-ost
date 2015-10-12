@@ -4,7 +4,18 @@
     <div class="main-content">
         <div class="row">
             <h2>{{page_title}}</h2>
-            <div class="col-sm-12">
+            <div class="col-sm-12" ng-controller="DashStatsCtrl" ng-show="nccSurvey.completes">
+                <div>
+                    <span class="survey-counts">{{nccSurvey.completes}}     </span> <span class="font-mid"> Projects</span>
+                </div>
+                <div>
+                    <span class="survey-counts">{{nccSurvey.num_orgs}}     </span> <span class="font-mid"> Participants</span>
+                </div>
+                <div>
+                    <span class="survey-counts">{{nccSurvey.total_sites}} </span> <span class="font-mid">Sites</span>
+                </div>
+            </div>
+            <div class="col-sm-12 padding-top">
                 <p>Many different kinds of organizations and projects are gathering data in the North Central Coast. The figures below help to characterize this community though the type, size, and duration of projects. 
                 </p>
             </div>
