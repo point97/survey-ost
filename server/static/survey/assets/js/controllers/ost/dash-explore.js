@@ -3,8 +3,10 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootSco
     $scope.surveyName = $location.path().slice(9);
     if ($scope.surveyName === 'monitoring-project') {
         $scope.page_title = 'Central Coast Community Overview';
+        var year = "(2013-2014)";
     } else {
         $scope.page_title = 'North Central Coast Community Overview';
+        var year = "(2014-2015)";
     }
 
     // Setup respondent table params and options
@@ -52,8 +54,9 @@ angular.module('askApp').controller('DashExploreCtrl', function($scope, $rootSco
             }
         }
     });
+
     buildChart('org-type', {type: 'pie', title: "Primary organization type", yLabel: "Org Type"});
-    buildChart('proj-num-people', {type: 'pie', title: "Number of project participants over the last year (2013-2014)", yLabel: "Number of Projects"});
+    buildChart('proj-num-people', {type: 'pie', title: "Number of project participants over the last year " + year, yLabel: "Number of Projects"});
     buildChart('proj-data-years', {type: 'pie', title: "Project Duration", yLabel: "Number of Projects"});
     buildChart('proj-data-frequency', {type: 'pie', title: "Sampling frequency at a typical project site (times/year)", yLabel: "Number of Projects"});
 
