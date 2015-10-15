@@ -1,5 +1,5 @@
 
-angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootScope, $http, $routeParams, $location, $q, dashData, chartUtils, survey) {
+angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootScope, $http, $routeParams, $location, $q, $anchorScroll, dashData, chartUtils, survey) {
 
     $scope.page_title = "Monitoring Activities";
     $scope.loadingSurveys = true;
@@ -48,6 +48,11 @@ angular.module('askApp').controller('DashOverviewCtrl', function($scope, $rootSc
 
 
         });
+
+        $scope.goToTable = function() {
+            $location.hash('report-table');
+            $anchorScroll();
+        }
     }
 
     //
