@@ -4,19 +4,26 @@
     </a>
     <div class="stats" ng-controller="DashStatsCtrl" ng-show="totals.completes">
         <div class="row">
-            <div id="side_total" class="col-xs-12 box">
-                <h1>{{totals.completes || 0}}</h1>
-                <p>CC & NCC Projects</p>
+            <div id="side_text" class="col-xs-12 box">
+                <p>Central Coast and North Central Coast Combined Totals</p>
             </div>
         </div>
         <div class="row">
+           <div id="side_completed" class="col-xs-12 box">
+               <h1>{{totals.total_sites || 0}}</h1>
+               <p>Total</br>
+               Sites</p>
+           </div>
+        </div>
+        <div class="row">
+            <div id="side_total" class="col-xs-6 box">
+                <h1>{{totals.completes || 0}}</h1>
+                <p>Projects</p>
+            </div>
             <div id="side_started" class="col-xs-6 box">
                 <h1>{{totals.num_orgs || 0}}</h1>
-                <p>Participants</p>
-            </div>
-            <div id="side_completed" class="col-xs-6 box">
-                <h1>{{totals.total_sites || 0}}</h1>
-                <p>Total Sites</p>
+                <p>Survey</br>
+                Participants</p>
             </div>
         </div>
     </div>

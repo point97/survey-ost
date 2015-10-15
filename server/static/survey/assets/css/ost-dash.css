@@ -372,13 +372,24 @@ End Respondent Table Styles
   .stats h1 {
     margin-top: 10px; }
   .stats #side_total {
-    background: #004C72; }
-    .stats #side_total h1 {
-      font-size: 4em; }
+    background: #62A0A6; }
+    .stats #side_total p {
+      margin-bottom: 20px;
+      padding-top: 7px; }
   .stats #side_completed {
-    background: #C24118; }
+    background: #004C72; }
+    .stats #side_completed h1 {
+      font-size: 2.75em; }
+    .stats #side_completed p {
+      font-size: 1em; }
   .stats #side_started {
-    background: #70AFB6; }
+    background: #9DB1B3; }
+  .stats #side_text {
+    background: #C24118; }
+    .stats #side_text p {
+      font-size: 1.45em;
+      color: #ffffff;
+      padding: 20px 5px 5px 0px; }
 
 .row .box {
   padding-bottom: 10px; }
