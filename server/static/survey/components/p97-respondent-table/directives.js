@@ -37,15 +37,20 @@ angular.module('askApp')
 
         link: function (scope, element, attrs) {
             scope.respondents = null;
-            scope.orderBy = null;
             scope.meta = null;
             scope.http = http;
+            scope.orderBy = "survey_slug";
             scope.surveySlug = surveyFactory.survey.slug;
             scope.location = location;
             scope.ecosystemLabelToSlug = survey.ecosystemLabelToSlug
             scope.ecosystemSlugToColor = survey.ecosystemSlugToColor
             // Get the search term from the URL
             scope.searchTerm = scope.location.search().q;
+
+            //set to reverse sort and show NCC surveys on top
+            if (scope.location.path().indexOf('ncc-monitoring') > -1) {
+                scope.orderBy = "-survey_slug";
+            };
 
             scope.filteredRespondents = function (ef) {
                 var filteredArray = [];
