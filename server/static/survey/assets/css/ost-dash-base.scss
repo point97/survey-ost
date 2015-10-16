@@ -44,16 +44,13 @@ img.welcome-small {
     cursor: pointer;
 }
 
-.survey-counts {
-    color:#005072;
-    font-size: 23px;
-    white-space: pre-wrap;
-}
-
 .font-mid {
-    font-size: 17px;
+    font-size: 16px;
 }
 
+.no-left {
+    padding-left: 0px;
+}
 .padding-top {
     padding-top: 10px;
 }
@@ -210,6 +207,48 @@ footer, .main:after {
     margin-top: 15px;
 }
 
+/*Box Counts - Overview*/
+.overview-grid {
+    width: 225px;
+}
+
+
+.overview-grid {
+    #side_total, 
+    #side_started,
+    #side_completed {
+        h2, p {
+            color: #ffffff;
+            text-align: center;
+        }
+        h2 {
+            padding-top: 15px;
+            margin-bottom: 5px;
+        }
+        p {
+            margin-bottom: 0px;
+        }
+    }
+    #side_total, 
+    #side_started {
+        p {
+            font-size: 14px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+    #side_completed {
+        p {
+            font-size: 12px;
+        }
+    }
+    #side_started {
+        p {
+            padding-bottom: 7px;
+        }
+    }
+}
 
 @import 'dash-oceanspaces';
 @import 'surgical';

@@ -36,13 +36,11 @@ img.welcome-small {
 .pointer {
   cursor: pointer; }
 
-.survey-counts {
-  color: #005072;
-  font-size: 23px;
-  white-space: pre-wrap; }
-
 .font-mid {
-  font-size: 17px; }
+  font-size: 16px; }
+
+.no-left {
+  padding-left: 0px; }
 
 .padding-top {
   padding-top: 10px; }
@@ -169,6 +167,37 @@ footer, .main:after {
 
 .def-container dt {
   margin-top: 15px; }
+
+/*Box Counts - Overview*/
+.overview-grid {
+  width: 225px; }
+
+.overview-grid #side_total h2, .overview-grid #side_total p,
+.overview-grid #side_started h2,
+.overview-grid #side_started p,
+.overview-grid #side_completed h2,
+.overview-grid #side_completed p {
+  color: #ffffff;
+  text-align: center; }
+.overview-grid #side_total h2,
+.overview-grid #side_started h2,
+.overview-grid #side_completed h2 {
+  padding-top: 15px;
+  margin-bottom: 5px; }
+.overview-grid #side_total p,
+.overview-grid #side_started p,
+.overview-grid #side_completed p {
+  margin-bottom: 0px; }
+.overview-grid #side_total p,
+.overview-grid #side_started p {
+  font-size: 14px; }
+.overview-grid #side_total h2,
+.overview-grid #side_started h2 {
+  font-size: 24px; }
+.overview-grid #side_completed p {
+  font-size: 12px; }
+.overview-grid #side_started p {
+  padding-bottom: 7px; }
 
 /*
 
