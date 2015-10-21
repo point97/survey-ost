@@ -4,8 +4,23 @@
     <div class="main-content">
         <div class="row">
             <h2>{{page_title}}</h2>
-            <div class="col-sm-12">
-                <p>Many different kinds of organizations and projects are gathering data in the Central Coast. The figures below help to characterize this community though the type, size, and duration of projects.
+            <div class="overview-grid col stats" ng-controller="DashStatsCtrl" ng-show="nccSurvey.completes">
+                <div class="row">
+                    <div id="side_completed" class="col-xs-12 box">
+                        <h2>{{ccSurvey.total_sites}} </h2><p>Sites</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="side_total" class="col-xs-6 box">
+                        <h2>{{ccSurvey.completes}}</h2><p>Projects</p>
+                    </div>
+                    <div id="side_started" class="col-xs-6 box">
+                        <h2>{{ccSurvey.num_orgs}}</h2><p>Survey Participants</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 padding-top no-left">
+                <p class="font-mid">Many different kinds of organizations and projects are gathering data in the Central Coast. The figures below help to characterize this community though the type, size, and duration of projects.
                 </p>
             </div>
         </div>

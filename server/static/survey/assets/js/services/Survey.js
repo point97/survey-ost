@@ -313,17 +313,26 @@ angular.module('askApp')
     };
 
     var ecosystemLabelToSlug = function(label) {
+        var slug,
+            parens;
+        if (label.indexOf('(NCC)') > -1) {
+            slug = "ncc";
+            parens = " (NCC)"
+        } else {
+            slug = "ef";
+            parens = ""
+        }
         var dict = {};
-        dict['Rocky Intertidal Ecosystems'] = 'ef-rockyintertidal-collection-';
-        dict['Kelp and Shallow (0-30m) Rock Ecosystems'] = 'ef-kelp-and-shallow-rock-collection-';
-        dict['Mid depth (30-100m) Rock Ecosystems'] = 'ef-middepthrock-collection-';
-        dict['Estuarine and Wetland Ecosystems'] = 'ef-estuarine-collection-';
-        dict['Soft-bottom Intertidal and Beach Ecosystems'] = 'ef-softbottomintertidal-collection-';
-        dict['Soft bottom Subtidal (0-100m) Ecosystems'] = 'ef-softbottomsubtidal-collection-';
-        dict['Deep Ecosystems and Canyons (>100m)'] = 'ef-deep-collection-';
-        dict['Nearshore Pelagic Ecosystems'] = 'ef-nearshore-collection-';
-        dict['Consumptive Uses'] = 'ef-consumptive-collection-';
-        dict['Non-consumptive Uses'] = 'ef-nonconsumptive-collection-';
+        dict['Rocky Intertidal Ecosystems' + parens] = slug + '-rockyintertidal-collection-';
+        dict['Kelp and Shallow (0-30m) Rock Ecosystems' + parens] = slug + '-kelp-and-shallow-rock-collection-';
+        dict['Mid depth (30-100m) Rock Ecosystems' + parens] = slug + '-middepthrock-collection-';
+        dict['Estuarine and Wetland Ecosystems' + parens] = slug + '-estuarine-collection-';
+        dict['Soft-bottom Intertidal and Beach Ecosystems' + parens] = slug + '-softbottomintertidal-collection-';
+        dict['Soft bottom Subtidal (0-100m) Ecosystems' + parens] = slug + '-softbottomsubtidal-collection-';
+        dict['Deep Ecosystems and Canyons (>100m)' + parens] = slug + '-deep-collection-';
+        dict['Nearshore Pelagic Ecosystems'] = slug + '-nearshore-collection-';
+        dict['Consumptive Uses' + parens] = slug + '-consumptive-collection-';
+        dict['Non-consumptive Uses' + parens] = slug + '-nonconsumptive-collection-';
 
 
 
@@ -343,15 +352,15 @@ angular.module('askApp')
         dict['ef-nearshore-collection-'] = 'Nearshore Pelagic Ecosystems';
         dict['ef-consumptive-collection-'] = 'Consumptive Uses';
         dict['ef-nonconsumptive-collection-'] = 'Non-consumptive Uses';
-        dict['ncc-rockyintertidal-collection-'] = 'Rocky Intertidal Ecosystems';
-        dict['ncc-kelp-and-shallow-rock-collection-'] = 'Kelp and Shallow (0-30m) Rock Ecosystems';
-        dict['ncc-middepthrock-collection-'] = 'Mid depth (30-100m) Rock Ecosystems';
+        dict['ncc-rockyintertidal-collection-'] = 'Rocky Intertidal Ecosystems (NCC)';
+        dict['ncc-kelp-and-shallow-rock-collection-'] = 'Kelp and Shallow (0-30m) Rock Ecosystems (NCC)';
+        dict['ncc-middepthrock-collection-'] = 'Mid depth (30-100m) Rock Ecosystems (NCC)';
         dict['ncc-estuarine-collection-'] = 'Estuarine and Wetland Ecosystems';
-        dict['ncc-softbottomintertidal-collection-'] = 'Soft-bottom Intertidal and Beach Ecosystems';
-        dict['ncc-softbottomsubtidal-collection-'] = 'Soft bottom Subtidal (0-100m) Ecosystems';
-        dict['ncc-nearshore-collection-'] = 'Nearshore Pelagic Ecosystems';
-        dict['ncc-consumptive-collection-'] = 'Consumptive Uses';
-        dict['ncc-nonconsumptive-collection-'] = 'Non-consumptive Uses';
+        dict['ncc-softbottomintertidal-collection-'] = 'Soft-bottom Intertidal and Beach Ecosystems (NCC)';
+        dict['ncc-softbottomsubtidal-collection-'] = 'Soft bottom Subtidal (0-100m) Ecosystems (NCC)';
+        dict['ncc-nearshore-collection-'] = 'Nearshore Pelagic Ecosystems (NCC)';
+        dict['ncc-consumptive-collection-'] = 'Consumptive Uses (NCC)';
+        dict['ncc-nonconsumptive-collection-'] = 'Non-consumptive Uses (NCC)';
 
         return dict[key];
     }

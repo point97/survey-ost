@@ -50,6 +50,15 @@ angular.module('askApp')
                              'ef-nearshore-point-vs-grid',
                              'ef-consumptive-point-vs-grid',
                              'ef-nonconsumptive-point-vs-grid',
+                             'ncc-rockyintertidal-point-vs-grid',
+                             'ncc-kelp-and-shallow-rock-point-vs-grid',
+                             'ncc-middepthrock-point-vs-grid',
+                             'ncc-estuarine-point-vs-grid',
+                             'ncc-softbottomintertidal-point-vs-grid',
+                             'ncc-softbottomsubtidal-point-vs-grid',
+                             'ncc-nearshore-point-vs-grid',
+                             'ncc-consumptive-point-vs-grid',
+                             'ncc-nonconsumptive-point-vs-grid',                             
                              'cd-collection-locations',
                              'cde-where',
                              'proj-data-availability', 
@@ -59,8 +68,9 @@ angular.module('askApp')
                              'proj-financial-support-timeline'],
                 
                 multiSelects = 
-                             ['proj-operational-capacity-if-funded', 
+                             ['proj-operational-capacity-if-funded',
                               'ecosystem-features', 
+                              'ncc-ecosystem-features', 
                               'future-monitoring-ecosystems',
                               'proj-operational-capacity-if-funded'],
                 
@@ -75,7 +85,16 @@ angular.module('askApp')
                               'ef-deep-species',
                               'ef-nearshore-species',
                               'ef-consumptive-species',
-                              'ef-nonconsumptive-species'],
+                              'ef-nonconsumptive-species',
+                              'ncc-rockyintertidal-species',
+                              'ncc-kelp-and-shallow-rock-species',
+                              'ncc-middepthrock-species',
+                              'ncc-estuarine-species',
+                              'ncc-softbottomintertidal-species',
+                              'ncc-softbottomsubtidal-species',
+                              'ncc-nearshore-species',
+                              'ncc-consumptive-species',
+                              'ncc-nonconsumptive-species'],
 
                 mapPolys =  ['ef-rockyinteridal-collection-areas',
                              'ef-kelp-and-shallow-rock-collection-areas',
@@ -86,7 +105,16 @@ angular.module('askApp')
                              'ef-deep-collection-areas',
                              'ef-nearshore-collection-areas',
                              'ef-consumptive-collection-areas',
-                             'ef-nonconsumptive-collection-areas'],
+                             'ef-nonconsumptive-collection-areas',
+                             'ncc-rockyinteridal-collection-areas',
+                             'ncc-kelp-and-shallow-rock-collection-areas',
+                             'ncc-middepthrock-collection-areas',
+                             'ncc-estuarine-collection-areas',
+                             'ncc-softbottomintertidal-collection-areas',
+                             'ncc-softbottomsubtidal-collection-areas',
+                             'ncc-nearshore-collection-areas',
+                             'ncc-consumptive-collection-areas',
+                             'ncc-nonconsumptive-collection-areas'],
                 
                 mapPoints = ['ef-rockyintertidal-collection-points',
                              'ef-kelp-and-shallow-rock-collection-points',
@@ -97,7 +125,16 @@ angular.module('askApp')
                              'ef-deep-collection-points',
                              'ef-nearshore-collection-points',
                              'ef-consumptive-collection-points',
-                             'ef-nonconsumptive-collection-points'];
+                             'ef-nonconsumptive-collection-points',
+                             'ncc-rockyintertidal-collection-points',
+                             'ncc-kelp-and-shallow-rock-collection-points',
+                             'ncc-middepthrock-collection-points',
+                             'ncc-estuarine-collection-points',
+                             'ncc-softbottomintertidal-collection-points',
+                             'ncc-softbottomsubtidal-collection-points',
+                             'ncc-nearshore-collection-points',
+                             'ncc-consumptive-collection-points',
+                             'ncc-nonconsumptive-collection-points'];
 
 
 
@@ -108,6 +145,10 @@ angular.module('askApp')
             } else if (_.contains(multiSelects, questionSlug)) {
                 var objs = question.answer;
                 _.each(objs, function(obj, index) {
+                    
+                    if (question.question === 'ncc-ecosystem-features') {
+                        obj.text = obj.text + ' (NCC)';
+                    }
                     answer += answer.length > 0 ? ", " + obj.text : obj.text;
                 });
 

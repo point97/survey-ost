@@ -4,30 +4,26 @@
     <div class="main-content">
         <div class="row">
             <h2>{{page_title}}</h2>
-            <div class="col-sm-7">
-                <p>This interactive dashboard provides a platform for you to explore results of the Central Coast Monitoring Survey. The California Ocean Science Trust, together with its partners at the California Department of Fish and Wildlife and the California Ocean Protection Council, will use these results to help design and implement the next phase of MPA monitoring in the Central Coast. <p>
+            <div class="col">
+                <p>This interactive dashboard provides a platform for you to explore results of the Central Coast and North Central Coast Monitoring Surveys. California Ocean Science Trust, together with its partners at the California Department of Fish and Wildlife and the California Ocean Protection Council, is using these results to help design and implement the next phase of MPA monitoring in these regions.</p>
+                <p>We encourage you to explore this site to learn about the monitoring projects in these regions, make new connections, and continue to build up the network of the monitoring community!</p>
+                <p>Use the tabs on the left for the following information:</p>
                 <ul>
-                    <li><a href="#/overview/{{survey.slug}}">Monitoring Activities</a> - Explore the types and locations of data collected in the Central Coast.</li>
-                    <li><a href="#/explore/{{survey.slug}}">Community Overview</a> - Learn about the organizations that are collecting data in the Central Coast.</li>
-                    <li><a href="#/about/{{survey.slug}}">About</a> - Learn more about this dashboard, the Central Coast Monitoring Survey, and the monitoring planning effort that is currently underway.</li>
+                    <li><a href="#/overview">Monitoring Activities</a> - Use the interactive map to find the types and locations of data collected in the Central Coast and North Central Coast.</li>
+                    <li><a href="#/explore/monitoring-project">Central Coast (CC) Community Overview</a> - Learn about the organizations that are collecting data in the Central Coast.</li>
+                    <li><a href="#/explore/ncc-monitoring">North Central Coast (NCC) Community Overview</a> - Learn about the organizations that are collecting data in the North Central Coast.</li>
+                    <li><a href="#/about">About</a> - Learn more about this dashboard, the Central Coast and North Central Coast Monitoring Surveys, and the monitoring planning efforts that are underway.</li>
                 </ul> 
-
-                <p class="centered">
-                    <a href="#/overview/{{survey.slug}}" class="os-btn default">
-                        Learn More – Monitoring Activities
-                    </a>
+                <p>
+                    <div class="col-md-6">
+                        <img class="welcome pointer" src="/static/survey/assets/img/CA_CC_region.jpg" ng-click="go('monitoring-project')"></img>
+                    </div>
+                    <div class="col-md-6">
+                        <img class="welcome pointer" src="/static/survey/assets/img/CA_NCC_region.jpg" ng-click="go('ncc-monitoring')"></img>
+                    </div>
                 </p>
-
-            </div>
-            <div class="col-sm-5 center">
-                <img class="welcome" src="/static/survey/assets/img/oceanspaces_ca_cc_region.jpg" alt="">
             </div>
         </div>
-
-        <div class="row centered">
-            <div class="col-sm-12">
-            </div>
-        </div>
-        </div> <!-- End main content -->
+    </div> <!-- End main content -->
 </div>
 <div ng-include="'/static/survey/views/ost/dash-footer.html'"></div>
