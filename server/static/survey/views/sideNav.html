@@ -1,23 +1,29 @@
 <div class="print-hide" id="sidenav" ng-style="style()" full-height>
-
     <a href="http://oceanspaces.org">
         <img src="/static/survey/assets/img/ost/oceanspaces_logo.png">
     </a>
-    <div class="stats" ng-controller="DashStatsCtrl" ng-show="survey.completes">
+    <div class="stats" ng-controller="DashStatsCtrl" ng-show="totals.completes">
         <div class="row">
-            <div id="side_total" class="col-xs-12 box">
-                <h1>{{survey.completes || 0}}</h1>
-                <p>Total Projects</p>
+            <div id="side_text" class="col-xs-12 box">
+                <p>Central Coast and North Central Coast Combined Totals</p>
             </div>
         </div>
         <div class="row">
-            <div id="side_started" class="col-xs-6 box">
-                <h1>{{survey.num_orgs || 0}}</h1>
-                <p>Participants</p>
+           <div id="side_completed" class="col-xs-12 box">
+               <h1>{{totals.total_sites || 0}}</h1>
+               <p>Total</br>
+               Sites</p>
+           </div>
+        </div>
+        <div class="row">
+            <div id="side_total" class="col-xs-6 box">
+                <h1>{{totals.completes || 0}}</h1>
+                <p>Projects</p>
             </div>
-            <div id="side_completed" class="col-xs-6 box">
-                <h1>{{survey.total_sites || 0}}</h1>
-                <p>Total Sites</p>
+            <div id="side_started" class="col-xs-6 box">
+                <h1>{{totals.num_orgs || 0}}</h1>
+                <p>Survey</br>
+                Participants</p>
             </div>
         </div>
     </div>
@@ -27,37 +33,46 @@
         <ul class="menu nav">
             
             <li class="leaf">
-                <a ng-class="{'active': activePage == 'welcome'}" href="#/welcome/{{survey.slug}}">Welcome</a>
+                <a ng-class="{'active': activePage == 'welcome'}" href="#/welcome">Welcome</a>
             </li>
             <li class="leaf" ng-class="{'current': activePage == 'overview'}">
                 <a ng-class="{'active': activePage == 'overview'}" 
-                   href="#/overview/monitoring-project/"
-                   >Monitoring Activities</a>
+                   href="#/overview"
+                   >Interactive Monitoring Map</a>
                 <div class="control" ng-cloak ng-show="activePage == 'overview'">
                     <span help-modal class="center" ng-show="activePage == 'overview'"></span>
                      <div dash-filter 
                          class=""
                          placeholder-text="'Filter by Ecosystem'"
                          allow-multi-select="true"
-                         survey-slug="'monitoring-project'"
-                         question-slug="'ecosystem-features'"
+                         survey-slug="'ncc-monitoring'"
+                         question-slug="'ncc-ecosystem-features'"
                          selected-values="filters.ecosystemFeatures"
                          ></div>
                 </div>
             </li>
             <li>
-                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/{{survey.slug}}">Community Overview</a>
+                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/monitoring-project">Community Overview: </br>Central Coast (CC)</a>
             </li>
+
+            <li>
+                <a ng-class="{'active': activePage == 'explore'}" href="#/explore/ncc-monitoring">Community Overview: </br>North Central Coast (NCC)</a>
+            </li>
+
             <li ng-show="user.is_superuser">
-                <a ng-class="{'active': activePage == 'responses'}" href="#/RespondentList/{{survey.slug}}">Projects</a>
+                <a ng-class="{'active': activePage == 'responses'}" href="#/RespondentList">Projects</a>
             </li>
 
             <li ng-show="user.is_staff">
-                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/{{survey.slug}}">Download</a>
+                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/monitoring-project">Download CC Data</a>
+            </li>
+
+            <li ng-show="user.is_staff">
+                <a ng-class="{'active': activePage == 'download'}" href="/reports/full-survey-data/ncc-monitoring">Download NCC Data</a>
             </li>
 
             <li class="leaf">
-                <a ng-class="{'active': activePage == 'about'}" href="#/about/{{survey.slug}}">About</a>
+                <a ng-class="{'active': activePage == 'about'}" href="#/about/">About</a>
             </li>
 
         </ul>

@@ -12,6 +12,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             points: '=',
             units: '=',
             boundaryPath: '=',
+            gridPath: '=',
             activeProject: '=',
             activeEcosystemFeatures: '=',
             showPopups: '=',
@@ -43,8 +44,15 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 scope.boundaryLayer.bringToBack()
             });
 
-            puPromise = $http.get("/static/survey/data/CentralCalifornia_PlanningUnits.json")
-            scope.$watch('units', updatePuLayer);
+            puPromise = $http.get(scope.gridPath);
+
+            scope.$watch('units', function(newVal, oldVal) {
+                if (newVal === oldVal) return;
+
+                if (newVal !== undefined) {
+                    updatePuLayer(newVal);
+                }
+            });
 
             scope.boundaryLayer = L.featureGroup();
             map.addLayer(scope.boundaryLayer);
@@ -78,7 +86,6 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 return survey.ecosystemSlugToColor(slug);
             };
 
-
             scope.$watch('points', setMarkers);
 
             updateMapSize();
@@ -105,6 +112,14 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             }, 3000);
         }
 
+        function markerSurveySlug(markerData) {
+            if (markerData.qSlug.indexOf("ncc") > -1) {
+                markerData['path'] = "ncc-monitoring";
+            } else {
+                markerData['path'] = "monitoring-project";
+            }
+        }
+
 
         function setMarkers(data){
             // Updates a LayerGroup with markers for each data item.
@@ -112,10 +127,21 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             _.each(data, function(markerData){
                 markerData['draggable'] = false;
                 markerData['color'] = scope.slugToColor({slug: markerData.qSlug});
+                markerSurveySlug(markerData);
                 var marker = MapUtils.createMarker(markerData);
                 setPopup(marker, markerData);
                 scope.markersLayer.addLayer(marker);
             });
+        };
+
+        function setSurveyPath(layer) {
+            //swtiches previously hardcoded popup url path based on NAME propery
+            if (layer.feature.properties.NAME) {
+                scope.surveyPath = 'ncc-monitoring';
+            } else {
+                scope.surveyPath = 'monitoring-project';
+            };
+            return scope.surveyPath;
         };
 
 
@@ -182,7 +208,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list += '<h4>Projects</h4>';
                 list += '<dl>';
                 list += '<div ng-repeat="project in filterProjects()"';
-                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/monitoring-project/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
+                list += '<h5 ng-hide="activeProject"><a href="#/RespondentDetail/{{surveyPath}}/{{project.project_uuid}}">{{project.project_name}}</a></h5>';
                 list += '<div id="map-legend">';
                 list += '<span tooltip="{{ecosystemSlugToLabel(slug)}}" ng-repeat="slug in project.ecosystem_features" class="point" ng-style="{\'color\': ecosystemSlugToColor(slug)};">●</span>';
                 list += '</div>';
@@ -207,6 +233,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
             // Define the on click callback.
             layer.on('click', function(e) {
                 scope.$apply(function () {
+                    setSurveyPath(e.target);
                     var unit_id = e.target.feature.properties.ID;
                     scope.count = e.target.feature.properties.count;
                     getPlanningUnit(unit_id, function(res){
@@ -230,7 +257,7 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 list = '';
 
             if (!scope.activeProject) {
-                list += '<h5><a href="#/RespondentDetail/monitoring-project/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
+                list += '<h5><a href="#/RespondentDetail/{{markerSurveySlug}}/{{uuid}}">{{responses["proj-title"]}}</a></h5>';
             }
             list += '<dt>Ecosystem Feature:</dt>';
             list += '<dd><span class="point" ng-style="{\'color\': ecosystemColor}">●</span> {{ ecosystemLabel }}</dd>';
@@ -249,7 +276,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                 scope.responses = false;
                 getRespondent(markerData.uuid, function (responses) {
                     scope.responses = responses;
-                    scope.uuid = markerData.uuid
+                    scope.uuid = markerData.uuid;
+                    scope.markerSurveySlug = markerData.path;
                     scope.ecosystemLabel =  scope.slugToLabel({slug: markerData.qSlug});
                     scope.ecosystemColor = scope.ecosystemSlugToColor(scope.ecosystemLabelToSlug(scope.ecosystemLabel)+'point');
                     // The popup is added to the DOM outside of the angular framework so
@@ -312,12 +340,13 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
         initMap: function (mapElement, lat, lng, zoom) {
             var nauticalLayer, bingLayer, map, baseMaps, options;
 
-            nauticalLayer = L.tileLayer.wms("http://egisws02.nos.noaa.gov/ArcGIS/services/RNC/NOAA_RNC/ImageServer/WMSServer", {
+            nauticalLayer = L.esri.imageMapLayer({
+                url: "http://seamlessrnc.nauticalcharts.noaa.gov/arcgis/rest/services/RNC/NOAA_RNC/ImageServer",
                 format: 'img/png',
                 transparent: true,
                 layers: null,
-                attribution: "NOAA Nautical Charts"
-            });
+                attribution: "Tiles Courtesy of <a href=\"http://www.nauticalcharts.noaa.gov/csdl/seamlessraster.html\">NOAA &reg;</a> &mdash; <a href=\"http://www.nauticalcharts.noaa.gov/mcd/Raster/download_agreement.htm\">User Agreement</a>"
+            }).bringToBack();
 
             bingLayer = new L.BingLayer("Av8HukehDaAvlflJLwOefJIyuZsNEtjCOnUB_NtSTCwKYfxzEMrxlKfL1IN7kAJF", {
                 type: "AerialWithLabels"
@@ -370,7 +399,8 @@ angular.module('askApp').directive('dashMapOst', function($http, $compile, $time
                     weight: 1,
                     /* fill */
                     fillColor: config.color,
-                    fillOpacity: 1.0
+                    fillOpacity: 1.0,
+                    qSlug: config.qSlug
                 });
 
                 marker.on('mouseover', function (e) {

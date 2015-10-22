@@ -1,7 +1,7 @@
 /*
 
 DO NOT EDIT THE .CSS VERSION OF THIS FILE. Instead run
-`sass ost-dash.scss > ast-dash.css` in this file's directory 
+`sass ost-dash.scss > ost-dash.css` in this file's directory 
 to build it. 
 
 */
@@ -40,8 +40,22 @@ img.welcome-small {
     margin:0;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+.font-mid {
+    font-size: 16px;
+}
+
+.no-left {
+    padding-left: 0px;
+}
+.padding-top {
+    padding-top: 10px;
+}
 .main, footer {
-    margin-left: 275px;
+    margin-left: 295px;
 }
 
 // Sticky footer
@@ -66,14 +80,14 @@ footer, .main:after {
     margin-right: 0;
 }
 #sidenav {
-    width:275px;
+    width:295px;
     // margin-right:275px;
     position:absolute;
     min-height: 100%;
 }
 
 .dash-map-ost { 
-    height: 500px;
+    height: 575px;
 }
 .leaflet-control-zoom a {
     background-color: white !important;
@@ -193,6 +207,48 @@ footer, .main:after {
     margin-top: 15px;
 }
 
+/*Box Counts - Overview*/
+.overview-grid {
+    width: 225px;
+}
+
+
+.overview-grid {
+    #side_total, 
+    #side_started,
+    #side_completed {
+        h2, p {
+            color: #ffffff;
+            text-align: center;
+        }
+        h2 {
+            padding-top: 15px;
+            margin-bottom: 5px;
+        }
+        p {
+            margin-bottom: 0px;
+        }
+    }
+    #side_total, 
+    #side_started {
+        p {
+            font-size: 14px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+    #side_completed {
+        p {
+            font-size: 12px;
+        }
+    }
+    #side_started {
+        p {
+            padding-bottom: 7px;
+        }
+    }
+}
 
 @import 'dash-oceanspaces';
 @import 'surgical';
